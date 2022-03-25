@@ -4,15 +4,24 @@
 }
 
 body {
-  background: linear-gradient(45deg, #3d0066, #06002b);
+  background: linear-gradient(45deg, #100049, #6a00c0);
   height: 100vh;
 }
 
-.title-app {
+#root {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  height: 100vh;
+}
+
+.navigation {
   color: white;
-}
-
-.container {
-  height: 100vh;
+  background: #180f2a;
+  width: 200px;
 }
 /*# sourceMappingURL=style.css.map */

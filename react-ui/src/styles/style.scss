@@ -8,14 +8,18 @@ $font-white: white;
 }
 
 body{
-    background: linear-gradient(45deg, #3d0066, #06002b);
+    background: linear-gradient(45deg, #100049, #6a00c0);
     height: 100vh;    
 }
 
-.title-app{
-    color: $font-white;
+#root{
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
 }
 
-.container{
-    height: 100vh;
+.navigation{
+    color: $font-white;
+    background: #180f2a;
+    width: 200px;
 }
