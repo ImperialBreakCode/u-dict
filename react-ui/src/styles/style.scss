@@ -1,0 +1,17 @@
+$main-color: #5900ff;
+$font-black: black;
+$font-white: white;
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background: linear-gradient(45deg, #3d0066, #06002b);
+    height: 100vh;    
+}
+
+.title-app{
+    color: $font-white;
+}
