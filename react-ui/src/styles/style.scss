@@ -22,4 +22,11 @@ body{
     color: $font-white;
     background: #130f1d;
     width: 200px;
+
+    .app-title{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100px;
+    }
 }
