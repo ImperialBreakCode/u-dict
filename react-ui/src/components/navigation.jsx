@@ -37,7 +37,13 @@ class Navigation extends React.Component{
                     elements[i].classList.remove(activeNavClass);
                 }
             }
-            e.target.classList.add(activeNavClass);
+
+            const path = e.nativeEvent.path;
+            for (let i = 0; i < path.length; i++) {
+                if (path[i].nodeName == 'BUTTON') {
+                    path[i].classList.add(activeNavClass); 
+                }
+            }
         } 
 
     }

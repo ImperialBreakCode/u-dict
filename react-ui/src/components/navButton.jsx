@@ -7,7 +7,7 @@ function NavButton(props) {
 
     return(
         <div className='button-box-nav'>
-            <button onClick={(e) => {props.onClick(e)}} className={classNameStr}>{props.children} {props.text}</button>
+            <button onClick={(e) => props.onClick(e)} className={classNameStr}>{props.children} {props.text}</button>
         </div>
     );
 }
