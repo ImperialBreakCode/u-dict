@@ -53,7 +53,7 @@ body {
 }
 
 .navigation .app-title h3 {
-  font-size: 30px;
+  font-size: 40px;
 }
 
 .navigation .nav-control {
@@ -70,7 +70,7 @@ body {
 }
 
 .navigation .button-box-nav .nav-btn {
-  font-size: 20px;
+  font-size: 18px;
   text-transform: capitalize;
   border: none;
   background-color: transparent;
