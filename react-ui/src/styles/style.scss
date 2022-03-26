@@ -43,7 +43,7 @@ body{
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100px;
+        height: 15vh;
 
         h3{
             font-size: 30px;
@@ -51,7 +51,7 @@ body{
     }
 
     .nav-control{
-        margin-top: 10vh;
+        height: 85vh;
     }
 
     .button-box-nav{
@@ -65,7 +65,7 @@ body{
             background-color: transparent;
             color: $font-white;
             width: 90%;
-            padding: 7px 0;
+            padding: 10px 0;
             margin: 10px 0;
             transition: 0.2s;
             border-radius: 10px;
