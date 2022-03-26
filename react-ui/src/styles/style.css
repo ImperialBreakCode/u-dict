@@ -1,6 +1,20 @@
+@font-face {
+  font-family: 'Quicksand';
+  src: url("./fonts/Quicksand-Medium.ttf") format("truetype");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url("./fonts/Quicksand-Regular.ttf") format("truetype");
+  font-weight: 400;
+}
+
 * {
   margin: 0;
   padding: 0;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 400;
 }
 
 body {
@@ -67,6 +81,12 @@ body {
   -webkit-transition: 0.2s;
   transition: 0.2s;
   border-radius: 10px;
+  text-align: start;
+}
+
+.navigation .button-box-nav .nav-btn svg {
+  padding: 0 10px;
+  margin-left: 10px;
 }
 
 .navigation .button-box-nav .nav-btn:hover {
