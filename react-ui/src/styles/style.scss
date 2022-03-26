@@ -8,10 +8,62 @@ $font-white: white;
 }
 
 body{
-    background: linear-gradient(45deg, #3d0066, #06002b);
+    //background: linear-gradient(45deg, #31133f, #10003b);
+    background: linear-gradient(45deg, #6b1172, #06005c);
     height: 100vh;    
 }
 
-.title-app{
+#root{
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+.navigation{
     color: $font-white;
+    background: #130f1d;
+    width: 250px;
+
+    .app-title{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100px;
+
+        h3{
+            font-size: 30px;
+        }
+    }
+
+    .nav-control{
+        margin-top: 10vh;
+    }
+
+    .button-box-nav{
+        display: flex;
+        justify-content: center;
+
+        .nav-btn{
+            font-size: 20px;
+            text-transform: capitalize;
+            border: none;
+            background-color: transparent;
+            color: $font-white;
+            width: 90%;
+            padding: 7px 0;
+            margin: 10px 0;
+            transition: 0.2s;
+            border-radius: 10px;
+
+            &:hover{
+                background-color: #2b2240;
+            }
+        }
+
+        .active-nav{
+            background: linear-gradient(90deg, #ab00ab,#7700ff);
+            box-shadow: 0 0 20px 1px #8300ffc4;
+            transition: 0.2s;
+        }
+    }
 }
