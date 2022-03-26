@@ -4,7 +4,7 @@
 }
 
 body {
-  background: linear-gradient(45deg, #31133f, #10003b);
+  background: linear-gradient(45deg, #6b1172, #06005c);
   height: 100vh;
 }
 
@@ -22,7 +22,7 @@ body {
 .navigation {
   color: white;
   background: #130f1d;
-  width: 200px;
+  width: 250px;
 }
 
 .navigation .app-title {
@@ -36,5 +36,49 @@ body {
       -ms-flex-align: center;
           align-items: center;
   height: 100px;
+}
+
+.navigation .app-title h3 {
+  font-size: 30px;
+}
+
+.navigation .nav-control {
+  margin-top: 10vh;
+}
+
+.navigation .button-box-nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.navigation .button-box-nav .nav-btn {
+  font-size: 20px;
+  text-transform: capitalize;
+  border: none;
+  background-color: transparent;
+  color: white;
+  width: 90%;
+  padding: 7px 0;
+  margin: 10px 0;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  border-radius: 10px;
+}
+
+.navigation .button-box-nav .nav-btn:hover {
+  background-color: #2b2240;
+}
+
+.navigation .button-box-nav .active-nav {
+  background: -webkit-gradient(linear, left top, right top, from(#ab00ab), to(#7700ff));
+  background: linear-gradient(90deg, #ab00ab, #7700ff);
+  -webkit-box-shadow: 0 0 20px 1px #8300ffc4;
+          box-shadow: 0 0 20px 1px #8300ffc4;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
 }
 /*# sourceMappingURL=style.css.map */
