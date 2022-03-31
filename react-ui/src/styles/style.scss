@@ -59,6 +59,7 @@ body{
         justify-content: center;
 
         .nav-btn{
+            position: relative;
             font-size: 18px;
             text-transform: capitalize;
             border: none;
@@ -71,10 +72,20 @@ body{
             border-radius: 10px;
             text-align: start;
 
-            svg{
-                padding: 0 10px;
-                margin-left: 10px;
+            span{
+                padding: 30px;
+                position: relative;
+
+                svg{
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    padding: 0 10px;
+                }
             }
+
+            
 
             &:hover{
                 background-color: #2b2240;
@@ -83,7 +94,7 @@ body{
 
         .active-nav{
             background: linear-gradient(90deg, #ab00ab,#7700ff);
-            box-shadow: 0 0 20px 1px #8300ffc4;
+            box-shadow: 0 3px 20px 1px #b400ffad;
             transition: 0.2s;
         }
     }

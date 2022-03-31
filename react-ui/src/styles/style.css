@@ -70,6 +70,7 @@ body {
 }
 
 .navigation .button-box-nav .nav-btn {
+  position: relative;
   font-size: 18px;
   text-transform: capitalize;
   border: none;
@@ -84,9 +85,18 @@ body {
   text-align: start;
 }
 
-.navigation .button-box-nav .nav-btn svg {
+.navigation .button-box-nav .nav-btn span {
+  padding: 30px;
+  position: relative;
+}
+
+.navigation .button-box-nav .nav-btn span svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
   padding: 0 10px;
-  margin-left: 10px;
 }
 
 .navigation .button-box-nav .nav-btn:hover {
@@ -96,8 +106,8 @@ body {
 .navigation .button-box-nav .active-nav {
   background: -webkit-gradient(linear, left top, right top, from(#ab00ab), to(#7700ff));
   background: linear-gradient(90deg, #ab00ab, #7700ff);
-  -webkit-box-shadow: 0 0 20px 1px #8300ffc4;
-          box-shadow: 0 0 20px 1px #8300ffc4;
+  -webkit-box-shadow: 0 3px 20px 1px #b400ffad;
+          box-shadow: 0 3px 20px 1px #b400ffad;
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }

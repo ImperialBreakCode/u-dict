@@ -1,7 +1,7 @@
 import React from 'react';
 import NavButton from './navButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse, faLanguage } from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faLanguage, faA } from '@fortawesome/free-solid-svg-icons';
 
 const activeNavClass = 'active-nav';
 
@@ -61,10 +61,10 @@ class Navigation extends React.Component{
                     <NavButton onClick={this.handleClickNavButton} active={false} text='languages'>
                         <FontAwesomeIcon icon={faLanguage}/>
                     </NavButton>
-                    <NavButton onClick={this.handleClickNavButton} active={false} text='exercise'>
-                        <FontAwesomeIcon icon={faLanguage}/>
+                    <NavButton onClick={this.handleClickNavButton} active={false} text='words'>
+                        <FontAwesomeIcon icon={faA}/>
                     </NavButton>
-                    <NavButton onClick={this.handleClickNavButton} active={false} text='more..'>
+                    <NavButton onClick={this.handleClickNavButton} active={false} text='exercise'>
                         <FontAwesomeIcon icon={faLanguage}/>
                     </NavButton>
                 </NavControl>
