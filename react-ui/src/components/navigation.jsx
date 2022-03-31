@@ -1,5 +1,7 @@
 import React from 'react';
 import NavButton from './navButton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHouse, faLanguage, faA, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 const activeNavClass = 'active-nav';
 
@@ -35,7 +37,13 @@ class Navigation extends React.Component{
                     elements[i].classList.remove(activeNavClass);
                 }
             }
-            e.target.classList.add(activeNavClass);
+
+            const path = e.nativeEvent.path;
+            for (let i = 0; i < path.length; i++) {
+                if (path[i].nodeName == 'BUTTON') {
+                    path[i].classList.add(activeNavClass); 
+                }
+            }
         } 
 
     }
@@ -47,10 +55,18 @@ class Navigation extends React.Component{
                 <AppTitle/>
 
                 <NavControl>
-                    <NavButton onClick={this.handleClickNavButton} active={true} text='home'/>
-                    <NavButton onClick={this.handleClickNavButton} active={false} text='languages'/>
-                    <NavButton onClick={this.handleClickNavButton} active={false} text='exercise'/>
-                    <NavButton onClick={this.handleClickNavButton} active={false} text='more..'/>
+                    <NavButton onClick={this.handleClickNavButton} active={true} text='home'>
+                        <FontAwesomeIcon icon={faHouse} />
+                    </NavButton>
+                    <NavButton onClick={this.handleClickNavButton} active={false} text='languages'>
+                        <FontAwesomeIcon icon={faLanguage}/>
+                    </NavButton>
+                    <NavButton onClick={this.handleClickNavButton} active={false} text='words'>
+                        <FontAwesomeIcon icon={faA}/>
+                    </NavButton>
+                    <NavButton onClick={this.handleClickNavButton} active={false} text='exercises'>
+                        <FontAwesomeIcon icon={faCheck}/>
+                    </NavButton>
                 </NavControl>
             </nav>
 
