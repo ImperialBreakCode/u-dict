@@ -4,7 +4,7 @@ import React from 'react';
 function NavButton(props) {
 
     const classNameStr = props.active === true ? 'nav-btn active-nav': 'nav-btn';
-    const view = props.toView ?? 'undefined';
+    const view = props.toView;
 
     return(
         <div className='button-box-nav'>

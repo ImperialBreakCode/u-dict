@@ -29,7 +29,7 @@ class Navigation extends React.Component{
         this.handleClickNavButton.bind(this);
     }
 
-    handleClickNavButton(e){
+    handleClickNavButton(e, delegate){
         if(!e.target.classList.contains(activeNavClass)){
             const elements = document.getElementsByClassName('nav-btn');
 
@@ -44,12 +44,10 @@ class Navigation extends React.Component{
                 if (path[i].nodeName == 'BUTTON') {
                     path[i].classList.add(activeNavClass);
 
-                    const view = document.querySelector(`.${activeNavClass}`).dataset.toview;
-                    console.log(view);
+                    const view = path[i].getAttribute('toview');
+                    this.props.changeView(view);
                 }
             }
-
-            this.props.ChangeView();
         }
 
     }
@@ -61,16 +59,16 @@ class Navigation extends React.Component{
                 <AppTitle/>
 
                 <NavControl>
-                    <NavButton onClick={this.handleClickNavButton} active={true} toView={ViewNames.home} text='home'>
+                    <NavButton onClick={(e) => this.handleClickNavButton(e)} active={true} toView={ViewNames.home} text='home'>
                         <FontAwesomeIcon icon={faHouse} />
                     </NavButton>
-                    <NavButton onClick={this.handleClickNavButton} active={false} text='languages'>
+                    <NavButton onClick={(e) => this.handleClickNavButton(e)} active={false} text='languages'>
                         <FontAwesomeIcon icon={faLanguage}/>
                     </NavButton>
-                    <NavButton onClick={this.handleClickNavButton} active={false} text='words'>
+                    <NavButton onClick={(e) => this.handleClickNavButton(e)} active={false} text='words'>
                         <FontAwesomeIcon icon={faA}/>
                     </NavButton>
-                    <NavButton onClick={this.handleClickNavButton} active={false} text='exercises'>
+                    <NavButton onClick={(e) => this.handleClickNavButton(e)} active={false} text='exercises'>
                         <FontAwesomeIcon icon={faCheck}/>
                     </NavButton>
                 </NavControl>
