@@ -1,6 +1,20 @@
+@font-face {
+  font-family: 'Quicksand';
+  src: url("./fonts/Quicksand-Medium.ttf") format("truetype");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url("./fonts/Quicksand-Regular.ttf") format("truetype");
+  font-weight: 400;
+}
+
 * {
   margin: 0;
   padding: 0;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 400;
 }
 
 body {
@@ -35,15 +49,15 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  height: 100px;
+  height: 15vh;
 }
 
 .navigation .app-title h3 {
-  font-size: 30px;
+  font-size: 40px;
 }
 
 .navigation .nav-control {
-  margin-top: 10vh;
+  height: 85vh;
 }
 
 .navigation .button-box-nav {
@@ -56,17 +70,33 @@ body {
 }
 
 .navigation .button-box-nav .nav-btn {
-  font-size: 20px;
+  position: relative;
+  font-size: 18px;
   text-transform: capitalize;
   border: none;
   background-color: transparent;
   color: white;
   width: 90%;
-  padding: 7px 0;
+  padding: 10px 0;
   margin: 10px 0;
   -webkit-transition: 0.2s;
   transition: 0.2s;
   border-radius: 10px;
+  text-align: start;
+}
+
+.navigation .button-box-nav .nav-btn span {
+  padding: 30px;
+  position: relative;
+}
+
+.navigation .button-box-nav .nav-btn span svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  padding: 0 10px;
 }
 
 .navigation .button-box-nav .nav-btn:hover {
@@ -76,8 +106,8 @@ body {
 .navigation .button-box-nav .active-nav {
   background: -webkit-gradient(linear, left top, right top, from(#ab00ab), to(#7700ff));
   background: linear-gradient(90deg, #ab00ab, #7700ff);
-  -webkit-box-shadow: 0 0 20px 1px #8300ffc4;
-          box-shadow: 0 0 20px 1px #8300ffc4;
+  -webkit-box-shadow: 0 3px 20px 1px #b400ffad;
+          box-shadow: 0 3px 20px 1px #b400ffad;
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
