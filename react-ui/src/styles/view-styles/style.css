@@ -9,12 +9,49 @@
 
 .langview .table-override {
   width: 100%;
+  font-size: 20px;
 }
 
-.langview .table-override td {
-  background-color: #1f1a2c;
+.langview .table-override thead th {
+  padding: 20px;
+}
+
+.langview .table-override thead th:first-child {
+  border-top-left-radius: 20px;
+}
+
+.langview .table-override thead th:last-child {
+  border-top-right-radius: 20px;
+}
+
+.langview .table-override tbody {
+  border-top: 1px solid;
+}
+
+.langview .table-override tbody tr:last-child {
+  border-bottom: transparent;
+}
+
+.langview .table-override tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 20px;
+}
+
+.langview .table-override tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 20px;
+}
+
+.langview .table-override tbody tr:hover td {
+  background-color: #4c3f6b;
+}
+
+.langview .table-override tbody td {
+  background-color: #352c4b;
+  padding: 20px;
   -webkit-box-shadow: none;
           box-shadow: none;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  cursor: pointer;
 }
 
 .row {

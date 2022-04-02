@@ -7,10 +7,53 @@
     }
 
     .table-override{
+        $border-radius: 20px;
+
         width: 100%;
-        td{
-            background-color: #1f1a2c;
-            box-shadow: none;
+        font-size: 20px;
+
+        thead{ 
+            th{
+                padding: 20px;
+            }
+
+            th:first-child{
+                border-top-left-radius: $border-radius;
+            }
+
+            th:last-child{
+                border-top-right-radius: $border-radius;
+            }
+        }
+
+        tbody{
+            border-top: 1px solid;
+
+            tr:last-child{
+                td:first-child{
+                    border-bottom-left-radius: $border-radius;
+                }
+
+                td:last-child{
+                    border-bottom-right-radius: $border-radius;
+                }
+
+                border-bottom: transparent;
+            }
+
+            tr:hover{
+                td{
+                    background-color: #4c3f6b;
+                }
+            }
+    
+            td{
+                background-color: #352c4b;
+                padding: 20px;
+                box-shadow: none;
+                transition: 0.2s;
+                cursor: pointer;
+            }
         }
 
     }
