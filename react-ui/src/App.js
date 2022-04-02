@@ -10,25 +10,25 @@ import { ViewNames } from './constants';
 
 function App() {
 
-  const [state, setState] = useState(<HomeView/>);
+  const [view, setView] = useState(<LangView/>);
 
   function changeView(toView) {
 
     switch (toView) {
       case ViewNames.home:
-        setState(<HomeView/>);
+        setView(<HomeView/>);
         break;
 
       case ViewNames.lang:
-        setState(<LangView/>);
+        setView(<LangView/>);
         break;
 
       case ViewNames.words:
-        setState(<WordsView/>);
+        setView(<WordsView/>);
         break;
 
       case ViewNames.exercises:
-        setState(<ExercView/>);
+        setView(<ExercView/>);
         break;
     }
 
@@ -38,7 +38,10 @@ function App() {
   return (
     <>
       <Navigation changeView={changeView}/>
-      {state}
+      <main>
+        {view}
+      </main>
+      
     </>
   );
 

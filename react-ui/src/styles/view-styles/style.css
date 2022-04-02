@@ -1,4 +1,23 @@
-h1 {
-  color: white;
+.langview {
+  height: 100vh;
+}
+
+.langview h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.langview .table-override {
+  width: 100%;
+}
+
+.langview .table-override td {
+  background-color: #1f1a2c;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.row {
+  width: 70%;
 }
 /*# sourceMappingURL=style.css.map */
