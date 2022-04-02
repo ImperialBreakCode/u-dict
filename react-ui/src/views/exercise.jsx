@@ -2,14 +2,14 @@ import React from 'react';
 import "../styles/view-styles/style.css";
 
 
-class HomeView extends React.Component{
+class ExercView extends React.Component{
 
     render(){
         return(
-            <h1>Home</h1>
+            <h1>Test</h1>
         );
     }
 
 }
 
-export default HomeView;
+export default ExercView;

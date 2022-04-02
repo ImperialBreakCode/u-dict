@@ -62,13 +62,13 @@ class Navigation extends React.Component{
                     <NavButton onClick={(e) => this.handleClickNavButton(e)} active={true} toView={ViewNames.home} text='home'>
                         <FontAwesomeIcon icon={faHouse} />
                     </NavButton>
-                    <NavButton onClick={(e) => this.handleClickNavButton(e)} active={false} text='languages'>
+                    <NavButton onClick={(e) => this.handleClickNavButton(e)} active={false} toView={ViewNames.lang} text='languages'>
                         <FontAwesomeIcon icon={faLanguage}/>
                     </NavButton>
-                    <NavButton onClick={(e) => this.handleClickNavButton(e)} active={false} text='words'>
+                    <NavButton onClick={(e) => this.handleClickNavButton(e)} active={false} toView={ViewNames.words} text='words'>
                         <FontAwesomeIcon icon={faA}/>
                     </NavButton>
-                    <NavButton onClick={(e) => this.handleClickNavButton(e)} active={false} text='exercises'>
+                    <NavButton onClick={(e) => this.handleClickNavButton(e)} active={false} toView={ViewNames.exercises} text='exercises'>
                         <FontAwesomeIcon icon={faCheck}/>
                     </NavButton>
                 </NavControl>
