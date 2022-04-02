@@ -4,10 +4,11 @@ import React from 'react';
 function NavButton(props) {
 
     const classNameStr = props.active === true ? 'nav-btn active-nav': 'nav-btn';
+    const view = props.toView;
 
     return(
         <div className='button-box-nav'>
-            <button onClick={(e) => props.onClick(e)} className={classNameStr}>
+            <button toview={view} onClick={(e) => props.onClick(e)} className={classNameStr}>
                 <span>
                     {props.children}
                 </span>
