@@ -10,10 +10,11 @@
 .langview .table-override {
   width: 100%;
   font-size: 20px;
+  text-transform: capitalize;
 }
 
 .langview .table-override thead th {
-  padding: 20px;
+  padding: 15px;
 }
 
 .langview .table-override thead th:first-child {
@@ -26,6 +27,8 @@
 
 .langview .table-override tbody {
   border-top: 1px solid;
+  max-height: 70vh;
+  overflow-y: scroll;
 }
 
 .langview .table-override tbody tr:last-child {
@@ -46,12 +49,28 @@
 
 .langview .table-override tbody td {
   background-color: #352c4b;
-  padding: 20px;
+  padding: 15px;
   -webkit-box-shadow: none;
           box-shadow: none;
   -webkit-transition: 0.2s;
   transition: 0.2s;
   cursor: pointer;
+}
+
+.langview #add-lang {
+  font-size: 20px;
+  text-transform: capitalize;
+  width: 100%;
+  background-color: #352c4b;
+  border: 1px solid #51466e;
+  border-radius: 10px;
+  padding: 10px 0;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.langview #add-lang:hover {
+  background-color: #4c3f6b;
 }
 
 .row {

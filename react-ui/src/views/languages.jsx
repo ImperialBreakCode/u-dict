@@ -1,5 +1,7 @@
 import React from 'react';
 import { Table } from '../components/table';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import "../styles/view-styles/style.css";
 
 
@@ -29,6 +31,7 @@ class LangView extends React.Component{
 
                     <Row>
                         <Table overStyle='table-override' head={this.headTable} data={data}/>
+                        <AddButton text='add language'/>
                     </Row>
                 </div>
             </div>
@@ -43,6 +46,14 @@ function Row(props) {
                 {props.children}
             </div>
         </div>
+    );
+}
+
+function AddButton(props) {
+    return(
+        <button id='add-lang'>
+            <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon> {props.text}
+        </button>
     );
 }
 

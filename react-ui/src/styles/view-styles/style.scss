@@ -11,10 +11,11 @@
 
         width: 100%;
         font-size: 20px;
+        text-transform: capitalize;
 
         thead{ 
             th{
-                padding: 20px;
+                padding: 15px;
             }
 
             th:first-child{
@@ -28,6 +29,8 @@
 
         tbody{
             border-top: 1px solid;
+            max-height: 70vh;
+            overflow-y: scroll;
 
             tr:last-child{
                 td:first-child{
@@ -49,13 +52,28 @@
     
             td{
                 background-color: #352c4b;
-                padding: 20px;
+                padding: 15px;
                 box-shadow: none;
                 transition: 0.2s;
                 cursor: pointer;
             }
         }
 
+    }
+
+    #add-lang{
+        font-size: 20px;
+        text-transform: capitalize;
+        width: 100%;
+        background-color: #352c4b;
+        border: 1px solid #51466e;
+        border-radius: 10px;
+        padding: 10px 0;
+        transition: 0.2s;
+
+        &:hover{
+            background-color: #4c3f6b;
+        }
     }
 }
 
