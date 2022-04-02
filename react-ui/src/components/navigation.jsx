@@ -29,7 +29,7 @@ class Navigation extends React.Component{
         this.handleClickNavButton.bind(this);
     }
 
-    handleClickNavButton(e, delegate){
+    handleClickNavButton(e){
         if(!e.target.classList.contains(activeNavClass)){
             const elements = document.getElementsByClassName('nav-btn');
 
