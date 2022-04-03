@@ -10,7 +10,7 @@ import { ViewNames } from './constants';
 
 function App() {
 
-  const [view, setView] = useState(<LangView/>);
+  const [view, setView] = useState(<HomeView/>);
 
   function changeView(toView) {
 

@@ -73,6 +73,18 @@
   background-color: #4c3f6b;
 }
 
+.home-view {
+  height: 100vh;
+}
+
+.home-view .home-title {
+  text-align: center;
+}
+
+.home-view .dash-card {
+  background-color: #352c4b;
+}
+
 .row {
   width: 70%;
 }
