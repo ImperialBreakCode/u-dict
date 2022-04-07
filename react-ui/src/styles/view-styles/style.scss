@@ -1,3 +1,159 @@
-h1{
-    color: white;
+@import "../../../node_modules/bootstrap/scss/functions";
+@import "../../../node_modules/bootstrap/scss/variables";
+@import "../../../node_modules/bootstrap/scss/mixins";
+@import "../../../node_modules/bootstrap/scss/root";
+
+$backcolor: #544474;
+$cardColor: linear-gradient(90deg, $purple-600, $purple-500 );
+$backcolorHover: #735c9e;
+$main-color: #4f09ac;
+
+.langview{
+    height: 100vh;
+
+    h1{
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .table-override{
+        $border-radius: 20px;
+
+        width: 100%;
+        font-size: 20px;
+        text-transform: capitalize;
+        border-radius: $border-radius;
+        box-shadow: 0 0 20px 3px #1e1a2c63;
+
+        thead{ 
+            th{
+                padding: 15px;
+            }
+
+            th:first-child{
+                border-top-left-radius: $border-radius;
+            }
+
+            th:last-child{
+                border-top-right-radius: $border-radius;
+            }
+        }
+
+        tbody{
+            border-top: 1px solid;
+            max-height: 70vh;
+            overflow-y: scroll;
+
+            tr:last-child{
+                td:first-child{
+                    border-bottom-left-radius: $border-radius;
+                }
+
+                td:last-child{
+                    border-bottom-right-radius: $border-radius;
+                }
+
+                border-bottom: transparent;
+            }
+
+            tr:hover{
+                td{
+                    background-color: $backcolorHover;
+                }
+            }
+    
+            td{
+                background-color: $backcolor;
+                padding: 15px;
+                box-shadow: none;
+                transition: 0.2s;
+                cursor: pointer;
+            }
+        }
+
+    }
+
+    #add-lang{
+        font-size: 20px;
+        text-transform: capitalize;
+        width: 100%;
+        background-color: $backcolor;
+        border: 1px solid #51466e;
+        border-radius: 10px;
+        padding: 10px 0;
+        transition: 0.2s;
+
+        &:hover{
+            background-color: $backcolorHover;
+        }
+    }
+}
+
+.home-view{
+    height: 100vh;
+
+    .home-title{
+        text-align: center;
+    }
+
+    .dash-card{
+        background: $cardColor;
+        border-radius: 20px;
+        text-transform: capitalize;
+        margin: 10px 0;
+    }
+}
+
+.word-view{
+    height: 100vh;
+    background-color: $main-color;
+
+    .cont-view{
+        padding: 0 8%;
+    }
+
+    .title-box{
+        margin: 6vh 0;
+
+        h1{
+            text-align: center;
+            font-size: 50px;
+        }
+    }
+
+    .content-box{
+        background: $purple-900;
+        padding: 20px;
+        margin: 15px 0;
+        border-radius: 20px;
+        box-shadow: 0 0 20px 3px #1e1a2c63;
+
+        .content-row{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            border: 1px solid $purple-600;
+            border-radius: 10px;
+            background: $purple-800;
+            margin: 10px 0;
+            padding: 5px 10px;
+            transition: 0.2s;
+
+            &:hover{
+                background: $purple-700;
+            }
+
+            h5{
+                margin: 0;
+            }
+        }
+    }
+
+    .row{
+        width: auto;
+    }
+}
+
+.row{
+    width: 70%;
 }
