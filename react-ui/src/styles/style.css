@@ -15,11 +15,16 @@
   padding: 0;
   font-family: 'Quicksand', sans-serif;
   font-weight: 400;
+  color: white;
 }
 
 body {
   background: linear-gradient(45deg, #6b1172, #06005c);
   height: 100vh;
+}
+
+main {
+  width: 100%;
 }
 
 #root {
@@ -33,10 +38,33 @@ body {
   height: 100vh;
 }
 
+.purple-button {
+  background: #6000c9;
+  border: 1px solid #9b4eff;
+  padding: 7px 10px;
+  margin: 5px 10px;
+  border-radius: 10px;
+  font-weight: 500;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.purple-button:hover {
+  background: #7d1aff;
+}
+
+.cont-view {
+  height: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
 .navigation {
   color: white;
   background: #130f1d;
-  width: 250px;
+  width: 20em;
 }
 
 .navigation .app-title {
