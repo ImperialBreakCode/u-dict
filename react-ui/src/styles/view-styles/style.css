@@ -148,6 +148,7 @@
 
 .word-view {
   height: 100vh;
+  background-color: #4f09ac;
 }
 
 .word-view .cont-view {
@@ -164,9 +165,9 @@
 }
 
 .word-view .content-box {
-  background: -webkit-gradient(linear, left top, right top, from(#160d27), to(#6610f2));
-  background: linear-gradient(90deg, #160d27, #6610f2);
+  background: #160d27;
   padding: 20px;
+  margin: 15px 0;
   border-radius: 20px;
   -webkit-box-shadow: 0 0 20px 3px #1e1a2c63;
           box-shadow: 0 0 20px 3px #1e1a2c63;
@@ -183,6 +184,21 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  border: 1px solid #59359a;
+  border-radius: 10px;
+  background: #2c1a4d;
+  margin: 10px 0;
+  padding: 5px 10px;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.word-view .content-box .content-row:hover {
+  background: #432874;
+}
+
+.word-view .content-box .content-row h5 {
+  margin: 0;
 }
 
 .word-view .row {

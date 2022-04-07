@@ -39,7 +39,18 @@ main {
 }
 
 .purple-button {
-  background: purple;
+  background: #6000c9;
+  border: 1px solid #9b4eff;
+  padding: 7px 10px;
+  margin: 5px 10px;
+  border-radius: 10px;
+  font-weight: 500;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.purple-button:hover {
+  background: #7d1aff;
 }
 
 .cont-view {

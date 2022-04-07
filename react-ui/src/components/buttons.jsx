@@ -1,14 +1,17 @@
 import React from 'react';
 
-export class PrimaryButton extends React{
+class PrimaryButton extends React.Component{
 
     constructor(props){
-        super(props)
+        super(props);
+        this.style = `purple-button ${props.style ?? ''}`;
     }
 
     render(){
         return(
-            <button className="purple-button">{this.props.children}</button>
+            <button className={this.style}>{this.props.children}</button>
         );
     }
 }
+
+export default PrimaryButton;

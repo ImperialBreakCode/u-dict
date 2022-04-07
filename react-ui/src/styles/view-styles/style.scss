@@ -6,6 +6,7 @@
 $backcolor: #544474;
 $cardColor: linear-gradient(90deg, $purple-600, $purple-500 );
 $backcolorHover: #735c9e;
+$main-color: #4f09ac;
 
 .langview{
     height: 100vh;
@@ -105,6 +106,7 @@ $backcolorHover: #735c9e;
 
 .word-view{
     height: 100vh;
+    background-color: $main-color;
 
     .cont-view{
         padding: 0 8%;
@@ -120,8 +122,9 @@ $backcolorHover: #735c9e;
     }
 
     .content-box{
-        background: linear-gradient(90deg, $purple-900, $indigo-500);
+        background: $purple-900;
         padding: 20px;
+        margin: 15px 0;
         border-radius: 20px;
         box-shadow: 0 0 20px 3px #1e1a2c63;
 
@@ -129,6 +132,20 @@ $backcolorHover: #735c9e;
             display: flex;
             flex-direction: row;
             align-items: center;
+            border: 1px solid $purple-600;
+            border-radius: 10px;
+            background: $purple-800;
+            margin: 10px 0;
+            padding: 5px 10px;
+            transition: 0.2s;
+
+            &:hover{
+                background: $purple-700;
+            }
+
+            h5{
+                margin: 0;
+            }
         }
     }
 

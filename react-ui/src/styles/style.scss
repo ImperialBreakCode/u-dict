@@ -10,7 +10,7 @@
     font-weight: 400;
 }
 
-$main-color: #5900ff;
+$main-color: #6000c9;
 $font-black: black;
 $font-white: white;
 
@@ -39,7 +39,19 @@ main{
 }
 
 .purple-button{
-    background: purple;
+    background: $main-color;
+    border: 1px solid #9b4eff;
+    padding: 7px 10px;
+    margin: 5px 10px;
+    border-radius: 10px;
+    font-weight: 500;
+    transition: 0.2s;
+
+
+    &:hover{
+        background: #7d1aff;
+    }
+
 }
 
 .cont-view{
