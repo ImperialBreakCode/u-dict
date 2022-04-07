@@ -1,5 +1,11 @@
-$backcolor: #352c4b;
-$backcolorHover: #4c3f6b;
+@import "../../../node_modules/bootstrap/scss/functions";
+@import "../../../node_modules/bootstrap/scss/variables";
+@import "../../../node_modules/bootstrap/scss/mixins";
+@import "../../../node_modules/bootstrap/scss/root";
+
+$backcolor: #544474;
+$cardColor: linear-gradient(90deg, $purple-600, $purple-500 );
+$backcolorHover: #735c9e;
 
 .langview{
     height: 100vh;
@@ -15,6 +21,8 @@ $backcolorHover: #4c3f6b;
         width: 100%;
         font-size: 20px;
         text-transform: capitalize;
+        border-radius: $border-radius;
+        box-shadow: 0 0 20px 3px #1e1a2c63;
 
         thead{ 
             th{
@@ -88,7 +96,10 @@ $backcolorHover: #4c3f6b;
     }
 
     .dash-card{
-        background-color: $backcolor;
+        background: $cardColor;
+        border-radius: 20px;
+        text-transform: capitalize;
+        margin: 10px 0;
     }
 }
 
