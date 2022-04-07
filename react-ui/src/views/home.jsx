@@ -1,5 +1,6 @@
 import React from 'react';
 import "../styles/view-styles/style.css";
+import Row from '../components/row';
 
 
 class HomeView extends React.Component{
@@ -36,16 +37,6 @@ function Card(props) {
             <div className="card-body">
                 <h5 className="card-title">{props.title}</h5>
                 <h3 className="mb-2">{props.data}</h3>
-            </div>
-        </div>
-    );
-}
-
-function Row(props) {
-    return(
-        <div className="row">
-            <div className='col'>
-                {props.children}
             </div>
         </div>
     );

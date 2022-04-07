@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table } from '../components/table';
+import Row from '../components/row';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import "../styles/view-styles/style.css";
@@ -37,16 +38,6 @@ class LangView extends React.Component{
             </div>
         );
     }
-}
-
-function Row(props) {
-    return(
-        <div className="row">
-            <div className='col'>
-                {props.children}
-            </div>
-        </div>
-    );
 }
 
 function AddButton(props) {

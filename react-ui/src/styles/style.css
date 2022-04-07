@@ -38,6 +38,10 @@ main {
   height: 100vh;
 }
 
+.purple-button {
+  background: purple;
+}
+
 .cont-view {
   height: 100%;
   -webkit-box-orient: vertical;

@@ -103,6 +103,40 @@ $backcolorHover: #735c9e;
     }
 }
 
+.word-view{
+    height: 100vh;
+
+    .cont-view{
+        padding: 0 8%;
+    }
+
+    .title-box{
+        margin: 6vh 0;
+
+        h1{
+            text-align: center;
+            font-size: 50px;
+        }
+    }
+
+    .content-box{
+        background: linear-gradient(90deg, $purple-900, $indigo-500);
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 0 0 20px 3px #1e1a2c63;
+
+        .content-row{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+    }
+
+    .row{
+        width: auto;
+    }
+}
+
 .row{
     width: 70%;
 }
