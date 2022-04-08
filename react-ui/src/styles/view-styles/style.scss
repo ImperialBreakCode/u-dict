@@ -107,6 +107,7 @@ $main-color: #4f09ac;
 .word-view{
     height: 100vh;
     background-color: $main-color;
+    overflow-y: scroll;
 
     .cont-view{
         padding: 0 8%;
@@ -145,6 +146,14 @@ $main-color: #4f09ac;
 
             h5{
                 margin: 0;
+            }
+
+            @media(max-width: 1099px){
+
+                h5, button{
+                    font-size: 15px;
+                }
+                
             }
         }
     }

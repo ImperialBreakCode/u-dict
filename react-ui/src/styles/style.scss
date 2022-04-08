@@ -22,6 +22,27 @@ $font-white: white;
     color: $font-white;
 }
 
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+  
+  /* Track */
+::-webkit-scrollbar-track {
+    background: transparent; 
+}
+   
+  /* Handle */
+::-webkit-scrollbar-thumb {
+    background: #d3a0ff; 
+    border-radius: 20px;
+}
+  
+  /* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #c4a4ff; 
+}
+
 body{
     //background: linear-gradient(45deg, #31133f, #10003b);
     background: linear-gradient(45deg, #6b1172, #06005c);
