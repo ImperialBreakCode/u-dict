@@ -31,7 +31,6 @@ function App() {
         setView(<ExercView/>);
         break;
     }
-
   }
 
 
