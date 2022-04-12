@@ -149,6 +149,7 @@
 .word-view {
   height: 100vh;
   background-color: #4f09ac;
+  overflow-y: scroll;
 }
 
 .word-view .cont-view {
@@ -199,6 +200,12 @@
 
 .word-view .content-box .content-row h5 {
   margin: 0;
+}
+
+@media (max-width: 1099px) {
+  .word-view .content-box .content-row h5, .word-view .content-box .content-row button {
+    font-size: 15px;
+  }
 }
 
 .word-view .row {
