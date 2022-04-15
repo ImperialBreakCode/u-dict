@@ -1,8 +1,11 @@
-// main.js
-
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
+const { AppDatabse } = require('./database/database.js');
+
+
+const appDb = new AppDatabse('./database.sqlite');
+
 
 // create main window
 const createWindow = () => {
@@ -23,13 +26,10 @@ const createWindow = () => {
 	mainWindow.removeMenu()
 }
 
-const createDbTables = () => {
-
-}
-
 
 // startup
 app.whenReady().then(() => {
+	appDb.createTables('./database/createTables.sql');
 	createWindow()
 
 	app.on('activate', () => {
@@ -40,4 +40,14 @@ app.whenReady().then(() => {
 // events
 app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') app.quit()
+})
+
+// renderer communication
+ipcMain.handle('get-langs', async (e, args) => {
+	const rows = await appDb.db.all('SELECT * FROM Languages');
+	return rows;
+})
+
+ipcMain.on('new-lang', () => {
+	appDb.db.exec('INSERT INTO Languages (language, wordCount) VALUES ("english", 100)')
 })

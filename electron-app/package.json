@@ -13,6 +13,7 @@
     "electron": "^17.2.0"
   },
   "dependencies": {
+    "sqlite": "^4.0.25",
     "sqlite3": "^5.0.2"
   }
 }
