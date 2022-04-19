@@ -1,8 +1,7 @@
-// main.js
-
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
+
 
 // create main window
 const createWindow = () => {
@@ -12,24 +11,21 @@ const createWindow = () => {
 		height: 600,
 		webPreferences: {
 			preload: path.join(__dirname, 'preload.js'),
-			nodeIntegration: true
+			//nodeIntegration: true
 		}
 	})
 
-	mainWindow.loadURL('http://localhost:3000')
-	//mainWindow.loadFile('views/index.html')
+	//mainWindow.loadURL('http://localhost:3000')
+	mainWindow.loadFile('views/index.html')
 
 	mainWindow.webContents.openDevTools()
 	mainWindow.removeMenu()
 }
 
-const createDbTables = () => {
-
-}
-
 
 // startup
 app.whenReady().then(() => {
+	appDb.createTables('./database/createTables.sql');
 	createWindow()
 
 	app.on('activate', () => {
@@ -40,4 +36,13 @@ app.whenReady().then(() => {
 // events
 app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') app.quit()
+})
+
+// renderer communication
+ipcMain.handle('get-langs', async (e, args) => {
+	// get languages and return them
+})
+
+ipcMain.on('new-lang', () => {
+	// add language
 })

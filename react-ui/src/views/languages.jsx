@@ -5,22 +5,50 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import "../styles/view-styles/style.css";
 
-
 class LangView extends React.Component{
 
     constructor(props){
         super(props);
-        this.headTable = ['languages', 'word count']
-        this.data = [{id:'1', lang: 'english', num: 100}, {id:'2', lang: 'french', num: 200}]
+        this.headTable = ['languages', 'word count'];
+        this.state = { languages: [] };
+
+        this.getLangs.bind(this);
+        this.updateLangs.bind(this);
     }
+
+    componentDidMount(){
+        this.getLangs(this.updateLangs);
+    }
+
+    getLangs = (callback) => {
+        let data = [];
+    
+        window.electronAPI.getLangData().then( (result) => {
+            console.log(result);
+    
+            if (result) {
+                data = result.map(lang => 
+                    <tr key={lang.LangID}>
+                        <td>{lang.language}</td>
+                        <td>{lang.wordCount}</td>
+                    </tr>    
+                );
+    
+                callback(data);
+            }
+        });
+    };
+
+    updateLangs = (langs) => {
+        this.setState({languages: langs});
+    };
 
     render(){
 
-        const data = this.data.map(lang => 
-            <tr key={lang.id}>
-                <td>{lang.lang}</td>
-                <td>{lang.num}</td>
-            </tr>    
+        const addButton = (
+            <button onClick={() => {window.electronAPI.addLang(); this.getLangs(this.updateLangs);} } id='add-lang'>
+                <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon> add language
+            </button>
         );
 
         return(
@@ -31,21 +59,13 @@ class LangView extends React.Component{
                     </Row>
 
                     <Row>
-                        <Table overStyle='table-override' head={this.headTable} data={data}/>
-                        <AddButton text='add language'/>
+                        <Table overStyle='table-override' head={this.headTable} data={this.state.languages}/>
+                        {addButton}
                     </Row>
                 </div>
             </div>
         );
     }
-}
-
-function AddButton(props) {
-    return(
-        <button id='add-lang'>
-            <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon> {props.text}
-        </button>
-    );
 }
 
 export default LangView;
