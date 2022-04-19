@@ -1,7 +1,0 @@
-CREATE TABLE IF NOT EXISTS Languages(
-    LangID INTEGER PRIMARY KEY AUTOINCREMENT,
-    language TEXT NOT NULL,
-    wordCount INTEGER
-)
-
-

@@ -1,5 +1,6 @@
 {
   "name": "language-app",
+  "productName": "Language App",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
@@ -10,10 +11,10 @@
   "author": "Ch Alex",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^17.2.0"
+    "electron": "^17.2.0",
+    "electron-packager": "^15.4.0"
   },
   "dependencies": {
-    "sqlite": "^4.0.25",
-    "sqlite3": "^5.0.2"
+    "typescript": "^4.6.3"
   }
 }
