@@ -1,7 +1,13 @@
 
 export abstract class Model{
     abstract add(): void;
-    abstract remove(): void;
+    abstract delete(): void;
+}
+
+export class ForeignKey{
+
+    public chunk:string;
+    public id:string;
 }
 
 export class Relationship{
