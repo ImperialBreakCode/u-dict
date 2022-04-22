@@ -1,14 +1,15 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.appDatabase = void 0;
 var fs = require("fs");
 var appDatabase = /** @class */ (function () {
     function appDatabase(dirPath) {
         this._dirname = dirPath;
-        if (!fs.statSync(dirPath).isDirectory()) {
+        if (!fs.existsSync(dirPath)) {
             fs.mkdirSync(dirPath);
             var initialData = [];
             var jsonInitData_1 = JSON.stringify(initialData);
-            var propertyNames = Object.getOwnPropertyNames(this);
+            var propertyNames = ['Languages', 'Words/words1', 'Phrases'];
             propertyNames.forEach(function (name) {
                 fs.writeFile("".concat(dirPath, "/").concat(name, ".json"), jsonInitData_1, function () {
                     console.log('created file ' + name);
@@ -43,3 +44,5 @@ var appDatabase = /** @class */ (function () {
     };
     return appDatabase;
 }());
+exports.appDatabase = appDatabase;
+//# sourceMappingURL=database.js.map

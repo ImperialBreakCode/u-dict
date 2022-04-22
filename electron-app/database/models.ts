@@ -1,6 +1,6 @@
 import { ForeignKey, Model, Relationship } from "./baseModel";
 
-class Language extends Model{
+export class Language extends Model{
 
     public readonly langId: string;
     public langName: string;
@@ -9,6 +9,13 @@ class Language extends Model{
     public relWords: Relationship;
     public relPhrases: Relationship;
 
+    // items from relationships
+    public get words() : string {
+        // get words
+        return null;
+    }
+    
+
     add(): void {
         throw new Error("Method not implemented.");
     }
@@ -17,7 +24,7 @@ class Language extends Model{
     }
 }
 
-class Phrase extends Model{
+export class Phrase extends Model{
     add(): void {
         throw new Error("Method not implemented.");
     }
@@ -26,7 +33,7 @@ class Phrase extends Model{
     }
 }
 
-class Word extends Model{
+export class Word extends Model{
     
     public readonly wordId: string;
     public article?: string;

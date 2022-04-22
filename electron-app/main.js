@@ -2,6 +2,9 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 
+const { appDatabase } = require('./database/js/database.js');
+
+const db = new appDatabase('./database/storage');
 
 // create main window
 const createWindow = () => {
@@ -25,7 +28,6 @@ const createWindow = () => {
 
 // startup
 app.whenReady().then(() => {
-	appDb.createTables('./database/createTables.sql');
 	createWindow()
 
 	app.on('activate', () => {
