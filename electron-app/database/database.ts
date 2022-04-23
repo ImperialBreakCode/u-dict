@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import { tableNames } from './tableNames';
 
 
 export class appDatabase{
@@ -36,7 +37,8 @@ export class appDatabase{
     }
 
     private getdata(fileName: string): any{
-        const jsonData = require(`${this._dirname}/${fileName}/${fileName}0.json`); 
+        const data = fs.readFileSync(`${this._dirname}/${fileName}/${fileName}0.json`, 'utf-8');
+        const jsonData = JSON.parse(data);
         return jsonData;
     }
 
@@ -44,7 +46,7 @@ export class appDatabase{
     public save(singleData:any, inTable: tableNames): void{
         let jsonData = this.getdata(inTable);
         jsonData.push(singleData);
-        fs.writeFileSync(`${this._dirname}/${inTable}/${inTable}0.json`, jsonData);
+        fs.writeFileSync(`${this._dirname}/${inTable}/${inTable}0.json`, JSON.stringify(jsonData));
     }
     
 }

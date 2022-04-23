@@ -39,7 +39,7 @@ var Relationship = /** @class */ (function () {
             return this._table;
         },
         set: function (v) {
-            this.table = v;
+            this._table = v;
         },
         enumerable: false,
         configurable: true

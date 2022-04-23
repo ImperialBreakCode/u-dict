@@ -1,3 +1,4 @@
+import { tableNames } from "./tableNames";
 
 export abstract class Model{
 
@@ -44,7 +45,7 @@ export class Relationship{
     }
 
     private set table(v : tableNames) {
-        this.table = v;
+        this._table = v;
     }
         
 }

@@ -24,13 +24,12 @@ class LangView extends React.Component{
         let data = [];
     
         window.electronAPI.getLangData().then( (result) => {
-            console.log(result);
     
             if (result) {
                 data = result.map(lang => 
-                    <tr key={lang.LangID}>
-                        <td>{lang.language}</td>
-                        <td>{lang.wordCount}</td>
+                    <tr key={lang.langId}>
+                        <td>{lang.langName}</td>
+                        <td>100</td>
                     </tr>    
                 );
     

@@ -1,4 +1,5 @@
 import { ForeignKey, Model, Relationship } from "./baseModel";
+import { tableNames } from "./tableNames";
 
 
 export class Language extends Model{
@@ -6,7 +7,7 @@ export class Language extends Model{
     constructor(langName: string){
         super(tableNames.Language);
 
-        this.langId = `$lng-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+        this.langId = `lng-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
         this.langName = langName;
 
         this.relWords = new Relationship('to-many', tableNames.Word);

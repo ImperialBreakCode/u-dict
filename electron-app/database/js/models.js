@@ -17,14 +17,15 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Word = exports.Phrase = exports.Language = void 0;
 var baseModel_1 = require("./baseModel");
+var tableNames_1 = require("./tableNames");
 var Language = /** @class */ (function (_super) {
     __extends(Language, _super);
     function Language(langName) {
-        var _this = _super.call(this, tableNames.Language) || this;
+        var _this = _super.call(this, tableNames_1.tableNames.Language) || this;
         _this.langId = "$lng-".concat(Date.now(), "-").concat(Math.floor(Math.random() * 10000));
         _this.langName = langName;
-        _this.relWords = new baseModel_1.Relationship('to-many', tableNames.Word);
-        _this.relPhrases = new baseModel_1.Relationship('to-many', tableNames.Phrase);
+        _this.relWords = new baseModel_1.Relationship('to-many', tableNames_1.tableNames.Word);
+        _this.relPhrases = new baseModel_1.Relationship('to-many', tableNames_1.tableNames.Phrase);
         return _this;
     }
     return Language;
@@ -33,12 +34,12 @@ exports.Language = Language;
 var Phrase = /** @class */ (function (_super) {
     __extends(Phrase, _super);
     function Phrase(phrase, meaning) {
-        var _this = _super.call(this, tableNames.Phrase) || this;
+        var _this = _super.call(this, tableNames_1.tableNames.Phrase) || this;
         _this.phraseId = "phr-".concat(Date.now(), "-").concat(Math.floor(Math.random() * 10000));
         _this.phrase = phrase;
         _this.meaning = meaning;
         _this.foreignKeys = {};
-        _this.foreignKeys[tableNames.Language] = [];
+        _this.foreignKeys[tableNames_1.tableNames.Language] = [];
         return _this;
     }
     return Phrase;
@@ -47,7 +48,7 @@ exports.Phrase = Phrase;
 var Word = /** @class */ (function (_super) {
     __extends(Word, _super);
     function Word(word, meanings, article, plural, info, gramGender, groups) {
-        var _this = _super.call(this, tableNames.Word) || this;
+        var _this = _super.call(this, tableNames_1.tableNames.Word) || this;
         _this.wordId = "wrd-".concat(Date.now(), "-").concat(Math.floor(Math.random() * 10000));
         _this.word = word;
         _this.meanings = meanings;
@@ -57,7 +58,7 @@ var Word = /** @class */ (function (_super) {
         _this.gramGender = gramGender;
         _this.groups = groups;
         _this.foreignKeys = {};
-        _this.foreignKeys[tableNames.Language] = [];
+        _this.foreignKeys[tableNames_1.tableNames.Language] = [];
         return _this;
     }
     return Word;
