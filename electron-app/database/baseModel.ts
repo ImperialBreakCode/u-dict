@@ -1,21 +1,27 @@
 
 export abstract class Model{
-    abstract add(): void;
-    abstract delete(): void;
+
+    constructor(tablename: tableNames){
+        this.tableName = tablename;
+    }
+
+    public readonly tableName: tableNames;
 }
 
 export class ForeignKey{
 
+    public tableName: tableNames;
     public chunk:string;
     public id:string;
+
 }
 
 export class Relationship{
 
     private _type: string;
-    private _table: string;
+    private _table: tableNames;
 
-    constructor(type: string, table: string){
+    constructor(type: string, table: tableNames){
         this.type = type;
         this.table = table;
     }
@@ -25,7 +31,7 @@ export class Relationship{
     }
 
     private set type(v : string) {
-        if (v === 'toMany' || v === 'toOne') {
+        if (v === 'to-many' || v === 'to-one') {
             this._type = v;
         }
         else{
@@ -33,11 +39,11 @@ export class Relationship{
         }
     }
     
-    public get table() : string {
+    public get table() : tableNames {
         return this._table;
     }
 
-    private set table(v : string) {
+    private set table(v : tableNames) {
         this.table = v;
     }
         

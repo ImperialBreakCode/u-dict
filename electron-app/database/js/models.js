@@ -19,52 +19,47 @@ exports.Word = exports.Phrase = exports.Language = void 0;
 var baseModel_1 = require("./baseModel");
 var Language = /** @class */ (function (_super) {
     __extends(Language, _super);
-    function Language() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function Language(langName) {
+        var _this = _super.call(this, tableNames.Language) || this;
+        _this.langId = "$lng-".concat(Date.now(), "-").concat(Math.floor(Math.random() * 10000));
+        _this.langName = langName;
+        _this.relWords = new baseModel_1.Relationship('to-many', tableNames.Word);
+        _this.relPhrases = new baseModel_1.Relationship('to-many', tableNames.Phrase);
+        return _this;
     }
-    Object.defineProperty(Language.prototype, "words", {
-        // items from relationships
-        get: function () {
-            // get words
-            return null;
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Language.prototype.add = function () {
-        throw new Error("Method not implemented.");
-    };
-    Language.prototype.delete = function () {
-        throw new Error("Method not implemented.");
-    };
     return Language;
 }(baseModel_1.Model));
 exports.Language = Language;
 var Phrase = /** @class */ (function (_super) {
     __extends(Phrase, _super);
-    function Phrase() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function Phrase(phrase, meaning) {
+        var _this = _super.call(this, tableNames.Phrase) || this;
+        _this.phraseId = "phr-".concat(Date.now(), "-").concat(Math.floor(Math.random() * 10000));
+        _this.phrase = phrase;
+        _this.meaning = meaning;
+        _this.foreignKeys = {};
+        _this.foreignKeys[tableNames.Language] = [];
+        return _this;
     }
-    Phrase.prototype.add = function () {
-        throw new Error("Method not implemented.");
-    };
-    Phrase.prototype.delete = function () {
-        throw new Error("Method not implemented.");
-    };
     return Phrase;
 }(baseModel_1.Model));
 exports.Phrase = Phrase;
 var Word = /** @class */ (function (_super) {
     __extends(Word, _super);
-    function Word() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function Word(word, meanings, article, plural, info, gramGender, groups) {
+        var _this = _super.call(this, tableNames.Word) || this;
+        _this.wordId = "wrd-".concat(Date.now(), "-").concat(Math.floor(Math.random() * 10000));
+        _this.word = word;
+        _this.meanings = meanings;
+        _this.article = article;
+        _this.plural = plural;
+        _this.info = info;
+        _this.gramGender = gramGender;
+        _this.groups = groups;
+        _this.foreignKeys = {};
+        _this.foreignKeys[tableNames.Language] = [];
+        return _this;
     }
-    Word.prototype.add = function () {
-        throw new Error("Method not implemented.");
-    };
-    Word.prototype.delete = function () {
-        throw new Error("Method not implemented.");
-    };
     return Word;
 }(baseModel_1.Model));
 exports.Word = Word;

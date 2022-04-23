@@ -2,7 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Relationship = exports.ForeignKey = exports.Model = void 0;
 var Model = /** @class */ (function () {
-    function Model() {
+    function Model(tablename) {
+        this.tableName = tablename;
     }
     return Model;
 }());
@@ -23,7 +24,7 @@ var Relationship = /** @class */ (function () {
             return this._type;
         },
         set: function (v) {
-            if (v === 'toMany' || v === 'toOne') {
+            if (v === 'to-many' || v === 'to-one') {
                 this._type = v;
             }
             else {

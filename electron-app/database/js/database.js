@@ -9,9 +9,10 @@ var appDatabase = /** @class */ (function () {
             fs.mkdirSync(dirPath);
             var initialData = [];
             var jsonInitData_1 = JSON.stringify(initialData);
-            var propertyNames = ['Languages', 'Words/words1', 'Phrases'];
+            var propertyNames = ['Languages', 'Words', 'Phrases'];
             propertyNames.forEach(function (name) {
-                fs.writeFile("".concat(dirPath, "/").concat(name, ".json"), jsonInitData_1, function () {
+                fs.mkdirSync("".concat(dirPath, "/").concat(name));
+                fs.writeFile("".concat(dirPath, "/").concat(name, "/").concat(name, "0.json"), jsonInitData_1, function () {
                     console.log('created file ' + name);
                 });
             });
@@ -19,28 +20,33 @@ var appDatabase = /** @class */ (function () {
     }
     Object.defineProperty(appDatabase.prototype, "Languages", {
         get: function () {
-            return this.getdata('Languages');
+            return this.getdata(tableNames.Language);
         },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(appDatabase.prototype, "Words", {
         get: function () {
-            return this.getdata('Words');
+            return this.getdata(tableNames.Word);
         },
         enumerable: false,
         configurable: true
     });
     Object.defineProperty(appDatabase.prototype, "Phrases", {
         get: function () {
-            return this.getdata('Phrases');
+            return this.getdata(tableNames.Phrase);
         },
         enumerable: false,
         configurable: true
     });
     appDatabase.prototype.getdata = function (fileName) {
-        var jsonData = require("".concat(this._dirname, "/").concat(fileName, ".json"));
+        var jsonData = require("".concat(this._dirname, "/").concat(fileName, "/").concat(fileName, "0.json"));
         return jsonData;
+    };
+    appDatabase.prototype.save = function (singleData, inTable) {
+        var jsonData = this.getdata(inTable);
+        jsonData.push(singleData);
+        fs.writeFileSync("".concat(this._dirname, "/").concat(inTable, "/").concat(inTable, "0.json"), jsonData);
     };
     return appDatabase;
 }());

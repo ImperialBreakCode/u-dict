@@ -15,7 +15,8 @@ export class appDatabase{
             let jsonInitData = JSON.stringify(initialData);
             const propertyNames: string[] = ['Languages', 'Words', 'Phrases'];
             propertyNames.forEach(name => {
-                fs.writeFile(`${dirPath}/${name}.json`, jsonInitData, () => {
+                fs.mkdirSync(`${dirPath}/${name}`);
+                fs.writeFile(`${dirPath}/${name}/${name}0.json`, jsonInitData, () => {
                     console.log('created file ' + name);
                 });
             });
@@ -23,20 +24,27 @@ export class appDatabase{
     }
 
     public get Languages() : any {
-        return this.getdata('Languages');
+        return this.getdata(tableNames.Language);
     }
 
     public get Words() : any {
-        return this.getdata('Words');
+        return this.getdata(tableNames.Word);
     }
 
     public get Phrases() : any {
-        return this.getdata('Phrases');
+        return this.getdata(tableNames.Phrase);
     }
 
     private getdata(fileName: string): any{
-        const jsonData= require(`${this._dirname}/${fileName}.json`); 
+        const jsonData = require(`${this._dirname}/${fileName}/${fileName}0.json`); 
         return jsonData;
+    }
+
+
+    public save(singleData:any, inTable: tableNames): void{
+        let jsonData = this.getdata(inTable);
+        jsonData.push(singleData);
+        fs.writeFileSync(`${this._dirname}/${inTable}/${inTable}0.json`, jsonData);
     }
     
 }
