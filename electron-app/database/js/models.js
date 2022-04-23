@@ -21,8 +21,7 @@ var tableNames_1 = require("./tableNames");
 var Language = /** @class */ (function (_super) {
     __extends(Language, _super);
     function Language(langName) {
-        var _this = _super.call(this, tableNames_1.tableNames.Language) || this;
-        _this.langId = "$lng-".concat(Date.now(), "-").concat(Math.floor(Math.random() * 10000));
+        var _this = _super.call(this, tableNames_1.tableNames.Language, 'lng') || this;
         _this.langName = langName;
         _this.relWords = new baseModel_1.Relationship('to-many', tableNames_1.tableNames.Word);
         _this.relPhrases = new baseModel_1.Relationship('to-many', tableNames_1.tableNames.Phrase);
@@ -34,8 +33,7 @@ exports.Language = Language;
 var Phrase = /** @class */ (function (_super) {
     __extends(Phrase, _super);
     function Phrase(phrase, meaning) {
-        var _this = _super.call(this, tableNames_1.tableNames.Phrase) || this;
-        _this.phraseId = "phr-".concat(Date.now(), "-").concat(Math.floor(Math.random() * 10000));
+        var _this = _super.call(this, tableNames_1.tableNames.Phrase, 'phr') || this;
         _this.phrase = phrase;
         _this.meaning = meaning;
         _this.foreignKeys = {};
@@ -48,8 +46,7 @@ exports.Phrase = Phrase;
 var Word = /** @class */ (function (_super) {
     __extends(Word, _super);
     function Word(word, meanings, article, plural, info, gramGender, groups) {
-        var _this = _super.call(this, tableNames_1.tableNames.Word) || this;
-        _this.wordId = "wrd-".concat(Date.now(), "-").concat(Math.floor(Math.random() * 10000));
+        var _this = _super.call(this, tableNames_1.tableNames.Word, 'wrd') || this;
         _this.word = word;
         _this.meanings = meanings;
         _this.article = article;

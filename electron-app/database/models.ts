@@ -5,16 +5,14 @@ import { tableNames } from "./tableNames";
 export class Language extends Model{
 
     constructor(langName: string){
-        super(tableNames.Language);
+        super(tableNames.Language, 'lng');
 
-        this.langId = `lng-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
         this.langName = langName;
 
         this.relWords = new Relationship('to-many', tableNames.Word);
         this.relPhrases = new Relationship('to-many', tableNames.Phrase);
     }
 
-    public readonly langId: string;
     public langName: string;
 
     // relationships
@@ -27,8 +25,8 @@ export class Language extends Model{
 export class Phrase extends Model{
 
     constructor(phrase: string, meaning: string){
-        super(tableNames.Phrase);
-        this.phraseId = `phr-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+        super(tableNames.Phrase, 'phr');
+
         this.phrase = phrase;
         this.meaning = meaning;
 
@@ -36,7 +34,6 @@ export class Phrase extends Model{
         this.foreignKeys[tableNames.Language] = [];
     }
 
-    public readonly phraseId: string
     public phrase: string;
     public meaning: string;
 
@@ -48,9 +45,8 @@ export class Phrase extends Model{
 export class Word extends Model{
 
     constructor(word: string, meanings: string[], article?: string, plural?: string, info?: string, gramGender?: string, groups?: string[]){
-        super(tableNames.Word);
+        super(tableNames.Word, 'wrd');
 
-        this.wordId = `wrd-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
         this.word = word;
         this.meanings = meanings;
         this.article = article;
@@ -63,7 +59,6 @@ export class Word extends Model{
         this.foreignKeys[tableNames.Language] = [];
     }
     
-    public readonly wordId: string;
     public word: string;
     public meanings: string[];
     public article?: string;

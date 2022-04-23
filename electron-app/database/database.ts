@@ -17,8 +17,12 @@ export class appDatabase{
             const propertyNames: string[] = ['Languages', 'Words', 'Phrases'];
             propertyNames.forEach(name => {
                 fs.mkdirSync(`${dirPath}/${name}`);
-                fs.writeFile(`${dirPath}/${name}/${name}0.json`, jsonInitData, () => {
-                    console.log('created file ' + name);
+                fs.writeFile(`${dirPath}/${name}/${name}0.json`, jsonInitData, (err) => {
+                    if (err) {
+                        console.log(err.message);
+                    } else{
+                        console.log('created file ' + name);
+                    }
                 });
             });
         }
@@ -37,16 +41,68 @@ export class appDatabase{
     }
 
     private getdata(fileName: string): any{
-        const data = fs.readFileSync(`${this._dirname}/${fileName}/${fileName}0.json`, 'utf-8');
-        const jsonData = JSON.parse(data);
+
+        let filesCount = fs.readdirSync(`${this._dirname}/${fileName}`).length;
+        let jsonData: any = [];
+
+        for (let i = 0; i < filesCount; i++) {
+
+            const fileData = fs.readFileSync(`${this._dirname}/${fileName}/${fileName}${i}.json`, 'utf-8');
+            const jsonFileData = JSON.parse(fileData);
+            jsonData = [...jsonData, ...jsonFileData];
+        }
+        
         return jsonData;
     }
 
 
-    public save(singleData:any, inTable: tableNames): void{
-        let jsonData = this.getdata(inTable);
-        jsonData.push(singleData);
-        fs.writeFileSync(`${this._dirname}/${inTable}/${inTable}0.json`, JSON.stringify(jsonData));
+    public save(singleData:any, inTable: tableNames): boolean{
+
+        let filesCount = fs.readdirSync(`${this._dirname}/${inTable}`).length;
+
+        for (let i = 0; i < filesCount; i++) {
+
+            const fileName = `${this._dirname}/${inTable}/${inTable}${i}.json`;
+            const fileData = fs.readFileSync(fileName, 'utf-8');
+            let jsonData = JSON.parse(fileData);
+
+            if (jsonData.length < 100) {
+                jsonData.push(singleData);
+                fs.writeFileSync(fileName, JSON.stringify(jsonData));
+
+                return true;
+            }
+        }
+
+        const fileName = `${this._dirname}/${inTable}/${inTable}${filesCount}.json`;
+        const saveData = JSON.stringify([singleData]);
+        fs.writeFile(fileName, saveData, (err) => {
+            if (err) {
+                console.log(err.message);
+                return false;
+            }
+        });
+
+        return true;
+        
     }
-    
+
+    public delete(itemId: string, inTable: tableNames): void{
+        let jsonData = this.getdata(inTable);
+        
+        for (let i = 0; i < jsonData.length; i++) {
+            
+            if (jsonData[i].id == itemId) {
+                jsonData.splice(i);
+                break;
+
+                // add for cascade
+            }
+            
+        }
+    }
+
+    public appendAndSave(): void{
+
+    }
 }

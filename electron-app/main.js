@@ -6,7 +6,7 @@ const { appDatabase } = require('./database/js/database.js');
 const { Language } = require('./database/js/models');
 const { tableNames } = require('./database/js/tableNames.js');
 
-const db = new appDatabase('./database/storage');
+const db = new appDatabase(`${__dirname}/database/storage`);
 
 // create main window
 const createWindow = () => {
@@ -20,10 +20,10 @@ const createWindow = () => {
 		}
 	})
 
-	mainWindow.loadURL('http://localhost:3000')
-	//mainWindow.loadFile('views/index.html')
+	//mainWindow.loadURL('http://localhost:3000')
+	mainWindow.loadFile('views/index.html')
 
-	mainWindow.webContents.openDevTools()
+	//mainWindow.webContents.openDevTools()
 	mainWindow.removeMenu()
 }
 

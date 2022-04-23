@@ -2,11 +2,13 @@ import { tableNames } from "./tableNames";
 
 export abstract class Model{
 
-    constructor(tablename: tableNames){
+    constructor(tablename: tableNames, idPrefix: string){
         this.tableName = tablename;
+        this.id = `${idPrefix}-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
     }
 
     public readonly tableName: tableNames;
+    public readonly id: string;
 }
 
 export class ForeignKey{
