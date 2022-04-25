@@ -59,7 +59,14 @@ var appDatabase = /** @class */ (function () {
         var jsonData = [];
         for (var i = 0; i < filesCount; i++) {
             var fileData = fs.readFileSync("".concat(this._dirname, "/").concat(fileName, "/").concat(fileName).concat(i, ".json"), 'utf-8');
-            var jsonFileData = JSON.parse(fileData);
+            var jsonFileData = [];
+            try {
+                jsonFileData = JSON.parse(fileData);
+            }
+            catch (error) {
+                // fix this!!
+                console.log(error);
+            }
             jsonData = __spreadArray(__spreadArray([], jsonData, true), jsonFileData, true);
         }
         return jsonData;

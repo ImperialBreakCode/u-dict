@@ -48,7 +48,14 @@ export class appDatabase{
         for (let i = 0; i < filesCount; i++) {
 
             const fileData = fs.readFileSync(`${this._dirname}/${fileName}/${fileName}${i}.json`, 'utf-8');
-            const jsonFileData = JSON.parse(fileData);
+            let jsonFileData: any = [];
+            try {
+                jsonFileData = JSON.parse(fileData);
+            } catch (error) {
+                // fix this!!
+                console.log(error);
+            }
+            
             jsonData = [...jsonData, ...jsonFileData];
         }
         
@@ -56,7 +63,7 @@ export class appDatabase{
     }
 
 
-    public save(singleData:any, inTable: tableNames): boolean{
+    public save(singleData:any, inTable: tableNames): boolean | number{
 
         let filesCount = fs.readdirSync(`${this._dirname}/${inTable}`).length;
 
@@ -70,7 +77,7 @@ export class appDatabase{
                 jsonData.push(singleData);
                 fs.writeFileSync(fileName, JSON.stringify(jsonData));
 
-                return true;
+                return i;
             }
         }
 
@@ -83,8 +90,7 @@ export class appDatabase{
             }
         });
 
-        return true;
-        
+        return filesCount;
     }
 
     public delete(itemId: string, inTable: tableNames): void{

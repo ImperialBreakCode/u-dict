@@ -20,10 +20,10 @@ const createWindow = () => {
 		}
 	})
 
-	//mainWindow.loadURL('http://localhost:3000')
-	mainWindow.loadFile('views/index.html')
+	mainWindow.loadURL('http://localhost:3000')
+	//mainWindow.loadFile('views/index.html')
 
-	//mainWindow.webContents.openDevTools()
+	mainWindow.webContents.openDevTools()
 	mainWindow.removeMenu()
 }
 
@@ -43,12 +43,14 @@ app.on('window-all-closed', () => {
 })
 
 // renderer communication
-ipcMain.handle('get-langs', async (e, args) => {
+ipcMain.handle('get-langs', (e, args) => {
 	let langs = db.Languages;
 	return langs;
 })
 
-ipcMain.on('new-lang', () => {
+ipcMain.handle('new-lang', () => {
 	let lang = new Language('english');
 	db.save(lang, tableNames.Language);
+
+	return lang;
 })

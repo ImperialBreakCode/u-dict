@@ -1,13 +1,14 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
 
-const getLangTableData = async () => {
-	const data = await ipcRenderer.invoke('get-langs', 10);
+const getLangTableData = () => {
+	const data = ipcRenderer.invoke('get-langs', 10);
 	return data;
 };
 
 const addLang = () => {
-	ipcRenderer.send('new-lang');
+	const newLang = ipcRenderer.invoke('new-lang');
+	return newLang;
 };
 
 contextBridge.exposeInMainWorld('electronAPI', {

@@ -16,6 +16,13 @@ $main-color: #4f09ac;
         margin-bottom: 30px;
     }
 
+    .table-wrapper{
+        height: 70vh;
+        overflow-y: scroll;
+        box-shadow: 0 0 20px 3px #1e1a2c63;
+        border-radius: 20px;
+    }
+
     .table-override{
         $border-radius: 20px;
 
@@ -23,11 +30,13 @@ $main-color: #4f09ac;
         font-size: 20px;
         text-transform: capitalize;
         border-radius: $border-radius;
-        box-shadow: 0 0 20px 3px #1e1a2c63;
+        margin: 0;
 
         thead{ 
+
             th{
                 padding: 15px;
+                position: sticky;
             }
 
             th:first-child{
@@ -42,7 +51,7 @@ $main-color: #4f09ac;
         tbody{
             border-top: 1px solid;
             max-height: 70vh;
-            overflow-y: scroll;
+            overflow: scroll;
 
             tr:last-child{
                 td:first-child{
@@ -78,9 +87,10 @@ $main-color: #4f09ac;
         text-transform: capitalize;
         width: 100%;
         background-color: $backcolor;
-        border: 1px solid #51466e;
+        border: 1px solid #7d6caa;
         border-radius: 10px;
         padding: 10px 0;
+        margin-top: 20px;
         transition: 0.2s;
 
         &:hover{
