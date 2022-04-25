@@ -13,8 +13,14 @@ export abstract class Model{
 
 export class ForeignKey{
 
+    constructor(toTable: tableNames, toChunk: number, toId: string){
+        this.tableName = toTable;
+        this.chunk = toChunk;
+        this.id = toId;
+    }
+
     public tableName: tableNames;
-    public chunk:string;
+    public chunk:number;
     public id:string;
 
 }

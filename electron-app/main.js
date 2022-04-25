@@ -3,7 +3,7 @@ const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path');
 
 const { appDatabase } = require('./database/js/database.js');
-const { Language } = require('./database/js/models');
+const { Language, Word } = require('./database/js/models');
 const { tableNames } = require('./database/js/tableNames.js');
 
 const db = new appDatabase(`${__dirname}/database/storage`);
@@ -50,7 +50,9 @@ ipcMain.handle('get-langs', (e, args) => {
 
 ipcMain.handle('new-lang', () => {
 	let lang = new Language('english');
-	db.save(lang, tableNames.Language);
+	let word = new Word('lol', ['pak lol']);
+
+	db.appendAndSave(lang, word);
 
 	return lang;
 })

@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import { ForeignKey, Model, Relationship } from './baseModel';
 import { tableNames } from './tableNames';
 
 
@@ -40,6 +41,21 @@ export class appDatabase{
         return this.getdata(tableNames.Phrase);
     }
 
+    private getJson(fileName: string): any{
+
+        const fileData = fs.readFileSync(fileName, 'utf-8');
+
+        let jsonFileData: any = [];
+        try {
+            jsonFileData = JSON.parse(fileData);
+        } catch (error) {
+            // fix this!!
+            console.log(error);
+        }
+
+        return jsonFileData;
+    }
+
     private getdata(fileName: string): any{
 
         let filesCount = fs.readdirSync(`${this._dirname}/${fileName}`).length;
@@ -47,14 +63,8 @@ export class appDatabase{
 
         for (let i = 0; i < filesCount; i++) {
 
-            const fileData = fs.readFileSync(`${this._dirname}/${fileName}/${fileName}${i}.json`, 'utf-8');
-            let jsonFileData: any = [];
-            try {
-                jsonFileData = JSON.parse(fileData);
-            } catch (error) {
-                // fix this!!
-                console.log(error);
-            }
+            const filePath = `${this._dirname}/${fileName}/${fileName}${i}.json`;
+            const jsonFileData = this.getJson(filePath);
             
             jsonData = [...jsonData, ...jsonFileData];
         }
@@ -70,8 +80,7 @@ export class appDatabase{
         for (let i = 0; i < filesCount; i++) {
 
             const fileName = `${this._dirname}/${inTable}/${inTable}${i}.json`;
-            const fileData = fs.readFileSync(fileName, 'utf-8');
-            let jsonData = JSON.parse(fileData);
+            let jsonData = this.getJson(fileName);
 
             if (jsonData.length < 100) {
                 jsonData.push(singleData);
@@ -108,7 +117,71 @@ export class appDatabase{
         }
     }
 
-    public appendAndSave(): void{
+    public appendAndSave(parent: any, child: any): void{
 
+        let chunk = this.save(parent, parent.tableName);
+
+        if (chunk !== false) {
+            let key = new ForeignKey(parent.tableName, chunk as number, parent.id);
+            child.foreignKeys[parent.tableName].push(key);
+
+            this.save(child, child.tableName);
+        }
+        else{
+            console.error('parrent not saved');
+        }
+
+    }
+
+    public appendAndSaveChild(parentId: string, parentTable: tableNames, child: any): void{
+        let filesCount = fs.readdirSync(`${this._dirname}/${parentTable}`).length;
+
+        for (let i = 0; i < filesCount; i++) {
+            const fileName = `${this._dirname}/${parentTable}/${parentTable}${i}.json`;
+            const jsonParentData = this.getJson(fileName);
+
+            for (let n = 0; n < jsonParentData.length; n++) {
+                
+                if (jsonParentData[n].id == parentId) {
+                    
+                    let key =  new ForeignKey(parentTable, i, parentId);
+                    child.foreignKeys[parentTable].push(key);
+
+                    this.save(child, child.tableName);
+
+                    break;
+                }
+            }
+        }
+    }
+
+    public getChildren(parent: any, relation: Relationship): any[]{
+        
+        if (relation.type == 'to-many') {
+
+            let children: any[] = [];
+            const filesCount = fs.readdirSync(`${this._dirname}/${relation.table}`).length;
+
+            for (let i = 0; i < filesCount; i++) {
+                const fileName = `${this._dirname}/${relation.table}/${relation.table}${i}.json`;
+                let dataFromFile = this.getJson(fileName);
+
+                for (let n = 0; n < dataFromFile.length; n++) {
+                    const arrKeys = dataFromFile[n].foreignKeys[parent.tableName];
+
+                    for (let j = 0; j < arrKeys.length; j++) {
+                        
+                        if (arrKeys[j].id == parent.id) {
+                            children.push(dataFromFile[n]);
+                        }
+                        
+                    }
+                }
+            }
+
+            return children;
+        }
+
+        return [];
     }
 }

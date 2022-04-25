@@ -62,7 +62,7 @@
 }
 
 .langview .table-wrapper {
-  height: 70vh;
+  max-height: 70vh;
   overflow-y: scroll;
   -webkit-box-shadow: 0 0 20px 3px #1e1a2c63;
           box-shadow: 0 0 20px 3px #1e1a2c63;

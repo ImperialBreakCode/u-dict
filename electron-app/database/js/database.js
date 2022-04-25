@@ -11,6 +11,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.appDatabase = void 0;
 var fs = require("fs");
+var baseModel_1 = require("./baseModel");
 var tableNames_1 = require("./tableNames");
 var appDatabase = /** @class */ (function () {
     function appDatabase(dirPath) {
@@ -54,19 +55,24 @@ var appDatabase = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    appDatabase.prototype.getJson = function (fileName) {
+        var fileData = fs.readFileSync(fileName, 'utf-8');
+        var jsonFileData = [];
+        try {
+            jsonFileData = JSON.parse(fileData);
+        }
+        catch (error) {
+            // fix this!!
+            console.log(error);
+        }
+        return jsonFileData;
+    };
     appDatabase.prototype.getdata = function (fileName) {
         var filesCount = fs.readdirSync("".concat(this._dirname, "/").concat(fileName)).length;
         var jsonData = [];
         for (var i = 0; i < filesCount; i++) {
-            var fileData = fs.readFileSync("".concat(this._dirname, "/").concat(fileName, "/").concat(fileName).concat(i, ".json"), 'utf-8');
-            var jsonFileData = [];
-            try {
-                jsonFileData = JSON.parse(fileData);
-            }
-            catch (error) {
-                // fix this!!
-                console.log(error);
-            }
+            var filePath = "".concat(this._dirname, "/").concat(fileName, "/").concat(fileName).concat(i, ".json");
+            var jsonFileData = this.getJson(filePath);
             jsonData = __spreadArray(__spreadArray([], jsonData, true), jsonFileData, true);
         }
         return jsonData;
@@ -75,12 +81,11 @@ var appDatabase = /** @class */ (function () {
         var filesCount = fs.readdirSync("".concat(this._dirname, "/").concat(inTable)).length;
         for (var i = 0; i < filesCount; i++) {
             var fileName_1 = "".concat(this._dirname, "/").concat(inTable, "/").concat(inTable).concat(i, ".json");
-            var fileData = fs.readFileSync(fileName_1, 'utf-8');
-            var jsonData = JSON.parse(fileData);
+            var jsonData = this.getJson(fileName_1);
             if (jsonData.length < 100) {
                 jsonData.push(singleData);
                 fs.writeFileSync(fileName_1, JSON.stringify(jsonData));
-                return true;
+                return i;
             }
         }
         var fileName = "".concat(this._dirname, "/").concat(inTable, "/").concat(inTable).concat(filesCount, ".json");
@@ -91,7 +96,7 @@ var appDatabase = /** @class */ (function () {
                 return false;
             }
         });
-        return true;
+        return filesCount;
     };
     appDatabase.prototype.delete = function (itemId, inTable) {
         var jsonData = this.getdata(inTable);
@@ -103,7 +108,51 @@ var appDatabase = /** @class */ (function () {
             }
         }
     };
-    appDatabase.prototype.appendAndSave = function () {
+    appDatabase.prototype.appendAndSave = function (parent, child) {
+        var chunk = this.save(parent, parent.tableName);
+        if (chunk !== false) {
+            var key = new baseModel_1.ForeignKey(parent.tableName, chunk, parent.id);
+            child.foreignKeys[parent.tableName].push(key);
+            this.save(child, child.tableName);
+        }
+        else {
+            console.error('parrent not saved');
+        }
+    };
+    appDatabase.prototype.appendAndSaveChild = function (parentId, parentTable, child) {
+        var filesCount = fs.readdirSync("".concat(this._dirname, "/").concat(parentTable)).length;
+        for (var i = 0; i < filesCount; i++) {
+            var fileName = "".concat(this._dirname, "/").concat(parentTable, "/").concat(parentTable).concat(i, ".json");
+            var jsonParentData = this.getJson(fileName);
+            for (var n = 0; n < jsonParentData.length; n++) {
+                if (jsonParentData[n].id == parentId) {
+                    var key = new baseModel_1.ForeignKey(parentTable, i, parentId);
+                    child.foreignKeys[parentTable].push(key);
+                    this.save(child, child.tableName);
+                    break;
+                }
+            }
+        }
+    };
+    appDatabase.prototype.getChildren = function (parent, relation) {
+        if (relation.type == 'to-many') {
+            var children = [];
+            var filesCount = fs.readdirSync("".concat(this._dirname, "/").concat(relation.table)).length;
+            for (var i = 0; i < filesCount; i++) {
+                var fileName = "".concat(this._dirname, "/").concat(relation.table, "/").concat(relation.table).concat(i, ".json");
+                var dataFromFile = this.getJson(fileName);
+                for (var n = 0; n < dataFromFile.length; n++) {
+                    var arrKeys = dataFromFile[n].foreignKeys[parent.tableName];
+                    for (var j = 0; j < arrKeys.length; j++) {
+                        if (arrKeys[j].id == parent.id) {
+                            children.push(dataFromFile[n]);
+                        }
+                    }
+                }
+            }
+            return children;
+        }
+        return [];
     };
     return appDatabase;
 }());

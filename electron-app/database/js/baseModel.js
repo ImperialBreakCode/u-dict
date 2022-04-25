@@ -10,7 +10,10 @@ var Model = /** @class */ (function () {
 }());
 exports.Model = Model;
 var ForeignKey = /** @class */ (function () {
-    function ForeignKey() {
+    function ForeignKey(toTable, toChunk, toId) {
+        this.tableName = toTable;
+        this.chunk = toChunk;
+        this.id = toId;
     }
     return ForeignKey;
 }());
