@@ -61,17 +61,26 @@
   margin-bottom: 30px;
 }
 
+.langview .table-wrapper {
+  max-height: 70vh;
+  overflow-y: scroll;
+  -webkit-box-shadow: 0 0 20px 3px #1e1a2c63;
+          box-shadow: 0 0 20px 3px #1e1a2c63;
+  border-radius: 20px;
+}
+
 .langview .table-override {
   width: 100%;
   font-size: 20px;
   text-transform: capitalize;
   border-radius: 20px;
-  -webkit-box-shadow: 0 0 20px 3px #1e1a2c63;
-          box-shadow: 0 0 20px 3px #1e1a2c63;
+  margin: 0;
 }
 
 .langview .table-override thead th {
   padding: 15px;
+  position: -webkit-sticky;
+  position: sticky;
 }
 
 .langview .table-override thead th:first-child {
@@ -85,7 +94,7 @@
 .langview .table-override tbody {
   border-top: 1px solid;
   max-height: 70vh;
-  overflow-y: scroll;
+  overflow: scroll;
 }
 
 .langview .table-override tbody tr:last-child {
@@ -119,9 +128,10 @@
   text-transform: capitalize;
   width: 100%;
   background-color: #544474;
-  border: 1px solid #51466e;
+  border: 1px solid #7d6caa;
   border-radius: 10px;
   padding: 10px 0;
+  margin-top: 20px;
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }

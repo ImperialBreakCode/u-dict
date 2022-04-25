@@ -14,6 +14,7 @@ class LangView extends React.Component{
 
         this.getLangs.bind(this);
         this.updateLangs.bind(this);
+        this.addButtonClick.bind(this);
     }
 
     componentDidMount(){
@@ -21,31 +22,46 @@ class LangView extends React.Component{
     }
 
     getLangs = (callback) => {
-        let data = [];
     
         window.electronAPI.getLangData().then( (result) => {
-    
             if (result) {
-                data = result.map(lang => 
-                    <tr key={lang.langId}>
+
+                let data = result.map(lang => 
+                    <tr key={lang.id}>
                         <td>{lang.langName}</td>
                         <td>100</td>
                     </tr>    
                 );
-    
+
                 callback(data);
             }
         });
     };
 
-    updateLangs = (langs) => {
+    updateLangs = (langs) => {        
         this.setState({languages: langs});
     };
+
+    async addButtonClick(){
+        let newlang = await window.electronAPI.addLang(); 
+
+        let newlangElement = (
+            <tr key={newlang.id}>
+                <td>{newlang.langName}</td>
+                <td>100</td>
+            </tr>  
+        );
+
+        let langs = this.state.languages;
+        langs.push(newlangElement);
+
+        this.updateLangs(langs);
+    }
 
     render(){
 
         const addButton = (
-            <button onClick={() => {window.electronAPI.addLang(); this.getLangs(this.updateLangs);} } id='add-lang'>
+            <button onClick={() => this.addButtonClick() } id='add-lang'>
                 <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon> add language
             </button>
         );
@@ -58,7 +74,9 @@ class LangView extends React.Component{
                     </Row>
 
                     <Row>
-                        <Table overStyle='table-override' head={this.headTable} data={this.state.languages}/>
+                        <div className='position-relatie table-wrapper'>
+                            <Table overStyle='table-override' head={this.headTable} data={this.state.languages}/>
+                        </div>
                         {addButton}
                     </Row>
                 </div>

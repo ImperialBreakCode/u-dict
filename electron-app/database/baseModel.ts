@@ -2,17 +2,25 @@ import { tableNames } from "./tableNames";
 
 export abstract class Model{
 
-    constructor(tablename: tableNames){
+    constructor(tablename: tableNames, idPrefix: string){
         this.tableName = tablename;
+        this.id = `${idPrefix}-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
     }
 
     public readonly tableName: tableNames;
+    public readonly id: string;
 }
 
 export class ForeignKey{
 
+    constructor(toTable: tableNames, toChunk: number, toId: string){
+        this.tableName = toTable;
+        this.chunk = toChunk;
+        this.id = toId;
+    }
+
     public tableName: tableNames;
-    public chunk:string;
+    public chunk:number;
     public id:string;
 
 }
