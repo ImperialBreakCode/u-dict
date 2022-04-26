@@ -1,5 +1,4 @@
 import React from 'react';
-import PrimaryButton, { SecondaryButton } from './buttons';
 
 export const Modal = (props) => {
 
@@ -15,8 +14,7 @@ export const Modal = (props) => {
                         {props.children}
                     </div>
                     <div className="modal-footer">
-                        <SecondaryButton dissmiss='modal'>Close</SecondaryButton>
-                        <PrimaryButton>Add Language</PrimaryButton>
+                        {props.footer}
                     </div>
                 </div>
             </div>

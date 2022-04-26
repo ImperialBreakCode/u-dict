@@ -8,6 +8,7 @@ import "../styles/view-styles/style.css";
 import { Table } from '../components/table';
 import Row from '../components/row';
 import { Modal } from '../components/modal';
+import PrimaryButton, { SecondaryButton } from '../components/buttons';
 
 
 class LangView extends React.Component{
@@ -66,19 +67,26 @@ class LangView extends React.Component{
     render(){
 
         const addButton = (
-            <button data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => this.addButtonClick() } id='add-lang'>
+            <button data-bs-toggle="modal" data-bs-target="#exampleModal" id='add-lang'>
                 <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon> add language
             </button>
+        );
+
+        const modalFooter = (
+            <>
+                <SecondaryButton dissmiss='modal'>Close</SecondaryButton>
+                <PrimaryButton dissmiss='modal' onClick={(e) => this.addButtonClick(e)}>Add Language</PrimaryButton>
+            </>
         );
 
         return(
             <div className="langview">
 
-                <Modal title='new language'>
+                <Modal title='new language' footer={modalFooter}>
                     <form>
                         <div className="mb-3">
-                            <label htmlFor="recipient-name" className="col-form-label">Recipient:</label>
-                            <input type="text" className="form-control" id="recipient-name"/>
+                            <label htmlFor="lang-name" className="col-form-label">Language Name:</label>
+                            <input type="text" className="form-control" id="lang-name"/>
                         </div>
                     </form>
                 </Modal>

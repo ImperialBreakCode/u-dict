@@ -32,6 +32,21 @@ $main-color: #4f09ac;
             border: 1px solid #595975;
             box-shadow: 0 0 20px #0000006b;
 
+            input[type=text]{
+                background-color: #323241;
+                border-color: #626281;
+                color: white;
+                transition: 0.2s;
+                
+                &:hover{
+                    background-color: #404053;
+                }
+
+                &:focus{
+                    box-shadow: 0 0 0 0.25rem #581ea373;
+                }
+            }
+
             .modal-header, .modal-footer{
                 border: none;
                 text-transform: capitalize;

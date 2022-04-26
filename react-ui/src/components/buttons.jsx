@@ -1,17 +1,12 @@
 import React from 'react';
 
-class PrimaryButton extends React.Component{
+const PrimaryButton = (props) => {
 
-    constructor(props){
-        super(props);
-        this.style = `purple-button ${props.style ?? ''}`;
-    }
+    const style = `purple-button ${props.style ?? ''}`;
 
-    render(){
-        return(
-            <button className={this.style}>{this.props.children}</button>
-        );
-    }
+    return(
+        <button data-bs-dismiss={props.dissmiss} onClick={(e) => props.onClick(e)} className={style}>{props.children}</button>
+    );
 }
 
 export const SecondaryButton = (props) => {
@@ -19,7 +14,7 @@ export const SecondaryButton = (props) => {
     const style = `purple-button sec-button ${props.style ?? ''}`;
 
     return(
-        <button data-bs-dismiss={props.dissmiss} className={style}>{props.children}</button>
+        <button onClick={(e) => props.onClick(e)} data-bs-dismiss={props.dissmiss} className={style}>{props.children}</button>
     );
 }
 

@@ -82,7 +82,7 @@ export class appDatabase{
             const fileName = `${this._dirname}/${inTable}/${inTable}${i}.json`;
             let jsonData = this.getJson(fileName);
 
-            if (jsonData.length < 100) {
+            if (jsonData.length < 1000) {
                 jsonData.push(singleData);
                 fs.writeFileSync(fileName, JSON.stringify(jsonData));
 

@@ -82,6 +82,23 @@
           box-shadow: 0 0 20px #0000006b;
 }
 
+.langview .modal .modal-content input[type=text] {
+  background-color: #323241;
+  border-color: #626281;
+  color: white;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.langview .modal .modal-content input[type=text]:hover {
+  background-color: #404053;
+}
+
+.langview .modal .modal-content input[type=text]:focus {
+  -webkit-box-shadow: 0 0 0 0.25rem #581ea373;
+          box-shadow: 0 0 0 0.25rem #581ea373;
+}
+
 .langview .modal .modal-content .modal-header, .langview .modal .modal-content .modal-footer {
   border: none;
   text-transform: capitalize;
