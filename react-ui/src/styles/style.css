@@ -74,6 +74,15 @@ main {
   background: #7d1aff;
 }
 
+.sec-button {
+  background-color: #222441;
+  border: 1px solid #4e4e99;
+}
+
+.sec-button:hover {
+  background: #3b3963;
+}
+
 .cont-view {
   height: 100%;
   -webkit-box-orient: vertical;

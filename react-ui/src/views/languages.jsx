@@ -74,7 +74,14 @@ class LangView extends React.Component{
         return(
             <div className="langview">
 
-                <Modal/>
+                <Modal title='new language'>
+                    <form>
+                        <div className="mb-3">
+                            <label htmlFor="recipient-name" className="col-form-label">Recipient:</label>
+                            <input type="text" className="form-control" id="recipient-name"/>
+                        </div>
+                    </form>
+                </Modal>
 
                 <div className="container d-flex align-items-center justify-content-center cont-view">
                     <Row>

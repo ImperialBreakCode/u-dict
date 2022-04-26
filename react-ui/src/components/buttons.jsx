@@ -14,4 +14,13 @@ class PrimaryButton extends React.Component{
     }
 }
 
+export const SecondaryButton = (props) => {
+
+    const style = `purple-button sec-button ${props.style ?? ''}`;
+
+    return(
+        <button data-bs-dismiss={props.dissmiss} className={style}>{props.children}</button>
+    );
+}
+
 export default PrimaryButton;
