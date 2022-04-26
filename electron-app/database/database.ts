@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import { ForeignKey, Model, Relationship } from './baseModel';
+import { ForeignKey, Relationship } from './baseModel';
 import { tableNames } from './tableNames';
 
 
@@ -162,13 +162,16 @@ export class appDatabase{
             let children: any[] = [];
             const filesCount = fs.readdirSync(`${this._dirname}/${relation.table}`).length;
 
+            // loop over files
             for (let i = 0; i < filesCount; i++) {
                 const fileName = `${this._dirname}/${relation.table}/${relation.table}${i}.json`;
                 let dataFromFile = this.getJson(fileName);
 
+                // loop over the items in a file
                 for (let n = 0; n < dataFromFile.length; n++) {
                     const arrKeys = dataFromFile[n].foreignKeys[parent.tableName];
 
+                    // loop over foreignKeys in a item
                     for (let j = 0; j < arrKeys.length; j++) {
                         
                         if (arrKeys[j].id == parent.id) {
@@ -183,5 +186,20 @@ export class appDatabase{
         }
 
         return [];
+    }
+
+    public getParent(key: ForeignKey): any{
+
+        const { chunk, id, tableName} = key;
+
+        const fileName = `${this._dirname}/${tableName}/${tableName}${chunk}.json`;
+        const jsonData = this.getJson(fileName);
+
+        for (let i = 0; i < jsonData.length; i++) {
+            if (jsonData[i].id == id) {
+                return jsonData[i];
+            }
+        }
+        
     }
 }

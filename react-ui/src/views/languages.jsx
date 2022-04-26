@@ -1,9 +1,14 @@
 import React from 'react';
-import { Table } from '../components/table';
-import Row from '../components/row';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import 'bootstrap/js/dist/modal';
 import "../styles/view-styles/style.css";
+
+import { Table } from '../components/table';
+import Row from '../components/row';
+import { Modal } from '../components/modal';
+
 
 class LangView extends React.Component{
 
@@ -61,13 +66,16 @@ class LangView extends React.Component{
     render(){
 
         const addButton = (
-            <button onClick={() => this.addButtonClick() } id='add-lang'>
+            <button data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => this.addButtonClick() } id='add-lang'>
                 <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon> add language
             </button>
         );
 
         return(
             <div className="langview">
+
+                <Modal/>
+
                 <div className="container d-flex align-items-center justify-content-center cont-view">
                     <Row>
                         <h1>Your Languages</h1>

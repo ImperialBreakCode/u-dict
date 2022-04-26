@@ -12,7 +12,8 @@ const db = new appDatabase(`${__dirname}/database/storage`);
 const createWindow = () => {
 
 	const mainWindow = new BrowserWindow({
-		width: 800,
+		width: 1250,
+		minWidth: 900,
 		height: 600,
 		webPreferences: {
 			preload: path.join(__dirname, 'preload.js'),
