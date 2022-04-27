@@ -46,14 +46,20 @@ app.on('window-all-closed', () => {
 // renderer communication
 ipcMain.handle('get-langs', (e, args) => {
 	let langs = db.Languages;
+	langs.forEach(lang => {
+		const lenWords = db.getChildren(lang, lang.relWords).length;
+		const lenPhrases = db.getChildren(lang, lang.relPhrases).length;
+
+		lang.lenWords = lenWords;
+		lang.lenPhrases = lenPhrases;
+	});
+
 	return langs;
 })
 
-ipcMain.handle('new-lang', () => {
-	let lang = new Language('english');
-	let word = new Word('lol', ['pak lol']);
-
-	db.appendAndSave(lang, word);
+ipcMain.handle('new-lang', (e, langName) => {
+	let lang = new Language(langName);
+	db.save(lang, tableNames.Language);
 
 	return lang;
 })

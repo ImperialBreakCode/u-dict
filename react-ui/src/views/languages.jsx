@@ -1,4 +1,5 @@
 import React from 'react';
+import $ from 'jquery';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -15,7 +16,7 @@ class LangView extends React.Component{
 
     constructor(props){
         super(props);
-        this.headTable = ['languages', 'word count'];
+        this.headTable = ['languages', 'word and phrase count'];
         this.state = { languages: [] };
 
         this.getLangs.bind(this);
@@ -35,7 +36,7 @@ class LangView extends React.Component{
                 let data = result.map(lang => 
                     <tr key={lang.id}>
                         <td>{lang.langName}</td>
-                        <td>100</td>
+                        <td>{lang.lenWords + lang.lenPhrases}</td>
                     </tr>    
                 );
 
@@ -49,44 +50,61 @@ class LangView extends React.Component{
     };
 
     async addButtonClick(){
-        let newlang = await window.electronAPI.addLang(); 
 
-        let newlangElement = (
-            <tr key={newlang.id}>
-                <td>{newlang.langName}</td>
-                <td>100</td>
-            </tr>  
-        );
+        let newlang = [];
 
-        let langs = this.state.languages;
-        langs.push(newlangElement);
+        const langNameInput = document.querySelector('#lang-name-input');
+        const name = langNameInput.value.trim();
+        if (name) {
+            $('#close-btn').click();
+            $('#lang-name-input').css('box-shadow', '');
 
-        this.updateLangs(langs);
+            newlang = await window.electronAPI.addLang(name); 
+
+            let newlangElement = (
+                <tr key={newlang.id}>
+                    <td>{newlang.langName}</td>
+                    <td>0</td>
+                </tr>  
+            );
+    
+            let langs = this.state.languages;
+            langs.push(newlangElement);
+    
+            this.updateLangs(langs);
+        }
+        else{
+            $('#lang-name-input').css('box-shadow', '0 0 0 5px #ff0000a0');
+        }
+        
+        langNameInput.value = '';  
     }
 
     render(){
 
+        const modalId = 'add-lang-modal';
+
         const addButton = (
-            <button data-bs-toggle="modal" data-bs-target="#exampleModal" id='add-lang'>
+            <button data-bs-toggle="modal" data-bs-target={'#' + modalId} id='add-lang'>
                 <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon> add language
             </button>
         );
 
         const modalFooter = (
             <>
-                <SecondaryButton dissmiss='modal'>Close</SecondaryButton>
-                <PrimaryButton dissmiss='modal' onClick={(e) => this.addButtonClick(e)}>Add Language</PrimaryButton>
+                <SecondaryButton elemId='close-btn' dissmiss='modal'>Close</SecondaryButton>
+                <PrimaryButton onClick={(e) => this.addButtonClick(e)}>Add Language</PrimaryButton>
             </>
         );
 
         return(
             <div className="langview">
 
-                <Modal title='new language' footer={modalFooter}>
+                <Modal elemId={modalId} title='new language' footer={modalFooter}>
                     <form>
                         <div className="mb-3">
                             <label htmlFor="lang-name" className="col-form-label">Language Name:</label>
-                            <input type="text" className="form-control" id="lang-name"/>
+                            <input type="text" className="form-control" id="lang-name-input"/>
                         </div>
                     </form>
                 </Modal>
