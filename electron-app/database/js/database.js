@@ -138,11 +138,14 @@ var appDatabase = /** @class */ (function () {
         if (relation.type == 'to-many') {
             var children = [];
             var filesCount = fs.readdirSync("".concat(this._dirname, "/").concat(relation.table)).length;
+            // loop over files
             for (var i = 0; i < filesCount; i++) {
                 var fileName = "".concat(this._dirname, "/").concat(relation.table, "/").concat(relation.table).concat(i, ".json");
                 var dataFromFile = this.getJson(fileName);
+                // loop over the items in a file
                 for (var n = 0; n < dataFromFile.length; n++) {
                     var arrKeys = dataFromFile[n].foreignKeys[parent.tableName];
+                    // loop over foreignKeys in a item
                     for (var j = 0; j < arrKeys.length; j++) {
                         if (arrKeys[j].id == parent.id) {
                             children.push(dataFromFile[n]);
@@ -153,6 +156,16 @@ var appDatabase = /** @class */ (function () {
             return children;
         }
         return [];
+    };
+    appDatabase.prototype.getParent = function (key) {
+        var chunk = key.chunk, id = key.id, tableName = key.tableName;
+        var fileName = "".concat(this._dirname, "/").concat(tableName, "/").concat(tableName).concat(chunk, ".json");
+        var jsonData = this.getJson(fileName);
+        for (var i = 0; i < jsonData.length; i++) {
+            if (jsonData[i].id == id) {
+                return jsonData[i];
+            }
+        }
     };
     return appDatabase;
 }());

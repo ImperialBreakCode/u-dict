@@ -29,7 +29,7 @@ export class Phrase extends Model{
 
         this.phrase = phrase;
         this.meaning = meaning;
-
+        
         this.foreignKeys = {};
         this.foreignKeys[tableNames.Language] = [];
     }

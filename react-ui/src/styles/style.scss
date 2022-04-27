@@ -75,6 +75,15 @@ main{
 
 }
 
+.sec-button{
+    background-color: #222441;
+    border: 1px solid #4e4e99;
+
+    &:hover{
+        background: #3b3963;
+    }
+}
+
 .cont-view{
     height: 100%;
     flex-direction: column;
