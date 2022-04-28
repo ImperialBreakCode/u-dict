@@ -8,11 +8,13 @@ import WordsView from './views/words';
 import ExercView from './views/exercise';
 import { ViewNames } from './constants';
 
-function ViewController() {
+function ViewController(props) {
 
 	const [view, setView] = useState(<HomeView />);
 
 	function changeView(toView) {
+
+		const langView = (<LangView onLangSelect={props.LangSelectLangView}/>);
 
 		switch (toView) {
 			case ViewNames.home:
@@ -20,7 +22,7 @@ function ViewController() {
 				break;
 
 			case ViewNames.lang:
-				setView(<LangView />);
+				setView(langView);
 				break;
 
 			case ViewNames.words:

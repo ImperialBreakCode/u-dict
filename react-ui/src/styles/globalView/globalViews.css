@@ -1,0 +1,44 @@
+.lang-words-view {
+  background: -webkit-gradient(linear, left top, right top, from(#04040c), to(#14012e));
+  background: linear-gradient(90deg, #04040c, #14012e);
+}
+
+.lang-words-view h1 {
+  text-align: center;
+  margin: 5% 0;
+  font-size: 50px;
+}
+
+.lang-words-view .row {
+  width: inherit;
+}
+
+.data-control-panel {
+  background: #312363;
+  padding: 20px 5%;
+  border-radius: 20px;
+}
+
+.data-control-panel .dc-section {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.data-control-panel .dc-section select {
+  font-weight: 500;
+  border-radius: 10px;
+}
+
+.data-control-panel .dc-section select option {
+  color: black;
+  font-weight: 500;
+}
+/*# sourceMappingURL=globalViews.css.map */
