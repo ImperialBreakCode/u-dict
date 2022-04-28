@@ -11,7 +11,13 @@ const addLang = (langName) => {
 	return newLang;
 };
 
+const getLangById = (id) => {
+	const lang = ipcRenderer.invoke('get-lang-by-id', id);
+	return lang;
+};
+
 contextBridge.exposeInMainWorld('electronAPI', {
 	getLangData: getLangTableData,
-	addLang: addLang
+	addLang: addLang,
+	getLangById: getLangById
 });

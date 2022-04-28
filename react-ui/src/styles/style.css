@@ -131,7 +131,7 @@ main {
   position: relative;
   font-size: 18px;
   text-transform: capitalize;
-  border: none;
+  border: 1px solid transparent;
   background-color: transparent;
   color: white;
   width: 90%;
@@ -159,6 +159,7 @@ main {
 
 .navigation .button-box-nav .nav-btn:hover {
   background-color: #2b2240;
+  border: 1px solid #53407e;
 }
 
 .navigation .button-box-nav .active-nav {
@@ -168,5 +169,10 @@ main {
           box-shadow: 0 3px 20px 1px #b400ffad;
   -webkit-transition: 0.2s;
   transition: 0.2s;
+  border: 1px solid #c73ec7cc;
+}
+
+.navigation .button-box-nav .active-nav:hover {
+  border: 1px solid #ab00ab;
 }
 /*# sourceMappingURL=style.css.map */

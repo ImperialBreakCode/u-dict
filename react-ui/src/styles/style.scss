@@ -117,7 +117,7 @@ main{
             position: relative;
             font-size: 18px;
             text-transform: capitalize;
-            border: none;
+            border: 1px solid transparent;
             background-color: transparent;
             color: $font-white;
             width: 90%;
@@ -140,10 +140,9 @@ main{
                 }
             }
 
-            
-
             &:hover{
                 background-color: #2b2240;
+                border: 1px solid #53407e;
             }
         }
 
@@ -151,6 +150,11 @@ main{
             background: linear-gradient(90deg, #ab00ab,#7700ff);
             box-shadow: 0 3px 20px 1px #b400ffad;
             transition: 0.2s;
+            border: 1px solid #c73ec7cc;
+
+            &:hover{
+                border: 1px solid #ab00ab;
+            }
         }
     }
 }

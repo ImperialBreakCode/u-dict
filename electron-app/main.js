@@ -3,7 +3,7 @@ const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path');
 
 const { appDatabase } = require('./database/js/database.js');
-const { Language, Word } = require('./database/js/models');
+const { Language } = require('./database/js/models');
 const { tableNames } = require('./database/js/tableNames.js');
 
 const db = new appDatabase(`${__dirname}/database/storage`);
@@ -43,8 +43,9 @@ app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') app.quit()
 })
 
+
 // renderer communication
-ipcMain.handle('get-langs', (e, args) => {
+ipcMain.handle('get-langs', () => {
 	let langs = db.Languages;
 	langs.forEach(lang => {
 		const lenWords = db.getChildren(lang, lang.relWords).length;
@@ -61,5 +62,10 @@ ipcMain.handle('new-lang', (e, langName) => {
 	let lang = new Language(langName);
 	db.save(lang, tableNames.Language);
 
+	return lang;
+})
+
+ipcMain.handle('get-lang-by-id', (e, id) => {
+	let lang = db.Languages.filter(elem => elem.id == id);
 	return lang;
 })

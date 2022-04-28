@@ -34,7 +34,7 @@ class LangView extends React.Component{
             if (result) {
 
                 let data = result.map(lang => 
-                    <tr key={lang.id}>
+                    <tr onClick={(e) => this.props.onLangSelect(e)} key={lang.id} lang-id={lang.id}>
                         <td>{lang.langName}</td>
                         <td>{lang.lenWords + lang.lenPhrases}</td>
                     </tr>    
@@ -62,7 +62,7 @@ class LangView extends React.Component{
             newlang = await window.electronAPI.addLang(name); 
 
             let newlangElement = (
-                <tr key={newlang.id}>
+                <tr onClick={(e) => this.props.onLangSelect(e)} key={newlang.id} lang-id={newlang.id}>
                     <td>{newlang.langName}</td>
                     <td>0</td>
                 </tr>  

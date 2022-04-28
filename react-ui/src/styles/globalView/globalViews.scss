@@ -1,0 +1,35 @@
+.lang-words-view{
+    background: linear-gradient(90deg, #04040c, #14012e);
+
+    h1{
+        text-align: center;
+        margin: 5% 0;
+        font-size: 40px;
+    }
+
+    .row{
+        width: inherit;
+    }
+}
+
+.data-control-panel{
+    background: #312363;
+    padding: 20px 5%;
+    border-radius: 20px;
+
+    .dc-section{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+        select{
+            font-weight: 500;
+            border-radius: 10px;
+
+            option{
+                color: black;
+                font-weight: 500;
+            }
+        }
+    }
+}

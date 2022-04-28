@@ -1,4 +1,3 @@
-import { faLaughBeam } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 
 export const Modal = (props) => {

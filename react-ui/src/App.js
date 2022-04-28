@@ -1,48 +1,27 @@
-import { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
-import './styles/style.css';
-import Navigation from "./components/navigation";
-import HomeView from './views/home';
-import LangView from './views/languages';
-import WordsView from './views/words';
-import ExercView from './views/exercise';
-import { ViewNames } from './constants';
+import React, { useState } from 'react';
+import WordsLangGlobalView from './globalViews/wordLangTableView';
+import ViewController from './ViewController';
 
 function App() {
 
-  const [view, setView] = useState(<HomeView/>);
+	const initialViewController = (<ViewController LangSelectLangView={LangSelectLangView}/>);
+	const [ view, setView ] = useState(initialViewController);
 
-  function changeView(toView) {
+	function LangSelectLangView(e) {
+		const tr = e.target.closest('tr');
+		setView(<WordsLangGlobalView langId={tr.getAttribute('lang-id')}/>);
+		console.log(tr.getAttribute('lang-id'));
+	}
 
-    switch (toView) {
-      case ViewNames.home:
-        setView(<HomeView/>);
-        break;
+	function ChangeGlobalView(globalView) {
+		
+	}
 
-      case ViewNames.lang:
-        setView(<LangView/>);
-        break;
-
-      case ViewNames.words:
-        setView(<WordsView/>);
-        break;
-
-      case ViewNames.exercises:
-        setView(<ExercView/>);
-        break;
-    }
-  }
-
-
-  return (
-    <>
-      <Navigation changeView={changeView}/>
-      <main>
-        {view}
-      </main>
-      
-    </>
-  );
+	return (
+		<>
+			{view}
+		</>
+	);
 
 }
 
