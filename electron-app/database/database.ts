@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import { ForeignKey, Relationship } from './baseModel';
+import { ForeignKey, Model, Relationship } from './baseModel';
 import { tableNames } from './tableNames';
 
 
@@ -72,6 +72,9 @@ export class appDatabase{
         return jsonData;
     }
 
+    private getFileName(chunk: any, nameTable: tableNames): string{
+        return `${this._dirname}/${nameTable}/${nameTable}${chunk}.json`;
+    }
 
     public save(singleData:any, inTable: tableNames): boolean | number{
 
@@ -79,7 +82,7 @@ export class appDatabase{
 
         for (let i = 0; i < filesCount; i++) {
 
-            const fileName = `${this._dirname}/${inTable}/${inTable}${i}.json`;
+            const fileName = this.getFileName(i, inTable);
             let jsonData = this.getJson(fileName);
 
             if (jsonData.length < 1000) {
@@ -90,7 +93,7 @@ export class appDatabase{
             }
         }
 
-        const fileName = `${this._dirname}/${inTable}/${inTable}${filesCount}.json`;
+        const fileName = this.getFileName(filesCount, inTable);
         const saveData = JSON.stringify([singleData]);
         fs.writeFile(fileName, saveData, (err) => {
             if (err) {
@@ -102,16 +105,43 @@ export class appDatabase{
         return filesCount;
     }
 
-    public delete(itemId: string, inTable: tableNames): void{
+    private deleteChildren(parent: Model, rels: Relationship[]): void{
+
+        const {id, tableName} = parent;
+
+        rels.forEach(rel => {
+            let filesCount = fs.readdirSync(`${this._dirname}/${rel.table}`).length;
+
+            for (let i = 0; i < filesCount; i++) {
+                const fileName = this.getFileName(i, rel.table);
+                const json = this.getJson(fileName);
+
+                for (let e = 0; e < json.length; e++) {
+                    const keys: ForeignKey[] = json[e].foreignKeys[tableName];
+
+                    keys.forEach(key => {
+                        if (key.id == id) {
+                            json.splice(e);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    public delete(itemId: string, inTable: tableNames, cascade: boolean, rels?: Relationship[]): void{
         let jsonData = this.getdata(inTable);
         
         for (let i = 0; i < jsonData.length; i++) {
             
             if (jsonData[i].id == itemId) {
+
+                if (cascade) {
+                    this.deleteChildren(jsonData[i], rels);
+                }
+
                 jsonData.splice(i);
                 break;
-
-                // add for cascade
             }
             
         }
@@ -137,7 +167,7 @@ export class appDatabase{
         let filesCount = fs.readdirSync(`${this._dirname}/${parentTable}`).length;
 
         for (let i = 0; i < filesCount; i++) {
-            const fileName = `${this._dirname}/${parentTable}/${parentTable}${i}.json`;
+            const fileName = this.getFileName(i, parentTable);
             const jsonParentData = this.getJson(fileName);
 
             for (let n = 0; n < jsonParentData.length; n++) {
@@ -164,7 +194,7 @@ export class appDatabase{
 
             // loop over files
             for (let i = 0; i < filesCount; i++) {
-                const fileName = `${this._dirname}/${relation.table}/${relation.table}${i}.json`;
+                const fileName = this.getFileName(i, relation.table);
                 let dataFromFile = this.getJson(fileName);
 
                 // loop over the items in a file
@@ -192,7 +222,7 @@ export class appDatabase{
 
         const { chunk, id, tableName} = key;
 
-        const fileName = `${this._dirname}/${tableName}/${tableName}${chunk}.json`;
+        const fileName = this.getFileName(chunk, tableName);
         const jsonData = this.getJson(fileName);
 
         for (let i = 0; i < jsonData.length; i++) {
