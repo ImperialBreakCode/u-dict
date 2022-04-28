@@ -43,8 +43,9 @@ app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') app.quit()
 })
 
+
 // renderer communication
-ipcMain.handle('get-langs', (e, args) => {
+ipcMain.handle('get-langs', () => {
 	let langs = db.Languages;
 	langs.forEach(lang => {
 		const lenWords = db.getChildren(lang, lang.relWords).length;
@@ -61,5 +62,10 @@ ipcMain.handle('new-lang', (e, langName) => {
 	let lang = new Language(langName);
 	db.save(lang, tableNames.Language);
 
+	return lang;
+})
+
+ipcMain.handle('get-lang-by-id', (e, id) => {
+	let lang = db.Languages.filter(elem => elem.id == id);
 	return lang;
 })

@@ -9,7 +9,7 @@ function App() {
 
 	function LangSelectLangView(e) {
 		const tr = e.target.closest('tr');
-		setView(<WordsLangGlobalView langId={tr.getAttribute('lang-id')}/>)
+		setView(<WordsLangGlobalView langId={tr.getAttribute('lang-id')}/>);
 		console.log(tr.getAttribute('lang-id'));
 	}
 

@@ -44,7 +44,7 @@ export class Phrase extends Model{
 
 export class Word extends Model{
 
-    constructor(word: string, meanings: string[], article?: string, plural?: string, info?: string, gramGender?: string, groups?: string[]){
+    constructor(word: string, meanings: string[], article?: string, plural?: string, info?: string, gramGender?: gramGender, groups?: string[]){
         super(tableNames.Word, 'wrd');
 
         this.word = word;
@@ -64,7 +64,7 @@ export class Word extends Model{
     public article?: string;
     public plural?: string;
     public info?: string;
-    public gramGender?: string;
+    public gramGender?: gramGender;
     public groups?: string[];
     public dictTable?: any;
 

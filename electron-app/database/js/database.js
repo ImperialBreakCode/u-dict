@@ -20,7 +20,7 @@ var appDatabase = /** @class */ (function () {
             fs.mkdirSync(dirPath);
             var initialData = [];
             var jsonInitData_1 = JSON.stringify(initialData);
-            var propertyNames = ['Languages', 'Words', 'Phrases'];
+            var propertyNames = [tableNames_1.tableNames.Language, tableNames_1.tableNames.Word, tableNames_1.tableNames.Phrase];
             propertyNames.forEach(function (name) {
                 fs.mkdirSync("".concat(dirPath, "/").concat(name));
                 fs.writeFile("".concat(dirPath, "/").concat(name, "/").concat(name, "0.json"), jsonInitData_1, function (err) {
