@@ -81,7 +81,9 @@ export class appDatabase{
         return `${this._dirname}/${nameTable}/${nameTable}${chunk}.json`;
     }
 
-    public save(singleData:any, inTable: tableNames): boolean | number{
+    public save(singleData:any): boolean | number{
+
+        const inTable = singleData.tableName;
 
         let filesCount = fs.readdirSync(`${this._dirname}/${inTable}`).length;
 
@@ -154,13 +156,13 @@ export class appDatabase{
 
     public appendAndSave(parent: any, child: any): void{
 
-        let chunk = this.save(parent, parent.tableName);
+        let chunk = this.save(parent);
 
         if (chunk !== false) {
             let key = new ForeignKey(parent.tableName, chunk as number, parent.id);
             child.foreignKeys[parent.tableName].push(key);
 
-            this.save(child, child.tableName);
+            this.save(child);
         }
         else{
             console.error('parrent not saved');
@@ -182,7 +184,7 @@ export class appDatabase{
                     let key =  new ForeignKey(parentTable, i, parentId);
                     child.foreignKeys[parentTable].push(key);
 
-                    this.save(child, child.tableName);
+                    this.save(child);
 
                     break;
                 }

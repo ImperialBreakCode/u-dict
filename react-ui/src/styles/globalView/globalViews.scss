@@ -13,22 +13,51 @@
 }
 
 .data-control-panel{
-    background: #312363;
+    background: #221844;
+    border: 1px solid #6450a5;
     padding: 20px 5%;
     border-radius: 20px;
+    margin-bottom: 30px;
 
     .dc-section{
         display: flex;
         flex-direction: row;
-        justify-content: center;
+        justify-content: space-evenly;
+        align-items: center;
+
+        label{
+            margin-bottom: 10px;
+        }
+
+        span{
+            width: 25%;
+            margin-bottom: 20px;
+        }
 
         select{
             font-weight: 500;
             border-radius: 10px;
+            border: 1px solid #6450a5;
+            background: #221844;
+            color: #c0c0c0;
 
             option{
-                color: black;
+                color: #c0c0c0;
                 font-weight: 500;
+            }
+        }
+
+        .form-select{
+            background-image: url('data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27><path fill=%27none%27 stroke=%27%23c0c0c0%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27M2 5l6 6 6-6%27/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 16px 12px;
+        }
+
+        .hover-danger{
+            &:hover{
+                background: #3d1919;
+                border-color: #9e0c0c;
             }
         }
     }

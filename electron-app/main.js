@@ -60,7 +60,7 @@ ipcMain.handle('get-langs', () => {
 
 ipcMain.handle('new-lang', (e, langName) => {
 	let lang = new Language(langName);
-	db.save(lang, tableNames.Language);
+	db.save(lang);
 
 	return lang;
 })

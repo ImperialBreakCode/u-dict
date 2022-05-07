@@ -87,7 +87,8 @@ var appDatabase = /** @class */ (function () {
     appDatabase.prototype.getFileName = function (chunk, nameTable) {
         return "".concat(this._dirname, "/").concat(nameTable, "/").concat(nameTable).concat(chunk, ".json");
     };
-    appDatabase.prototype.save = function (singleData, inTable) {
+    appDatabase.prototype.save = function (singleData) {
+        var inTable = singleData.tableName;
         var filesCount = fs.readdirSync("".concat(this._dirname, "/").concat(inTable)).length;
         for (var i = 0; i < filesCount; i++) {
             var fileName_1 = this.getFileName(i, inTable);
@@ -146,11 +147,11 @@ var appDatabase = /** @class */ (function () {
         }
     };
     appDatabase.prototype.appendAndSave = function (parent, child) {
-        var chunk = this.save(parent, parent.tableName);
+        var chunk = this.save(parent);
         if (chunk !== false) {
             var key = new baseModel_1.ForeignKey(parent.tableName, chunk, parent.id);
             child.foreignKeys[parent.tableName].push(key);
-            this.save(child, child.tableName);
+            this.save(child);
         }
         else {
             console.error('parrent not saved');
@@ -165,7 +166,7 @@ var appDatabase = /** @class */ (function () {
                 if (jsonParentData[n].id == parentId) {
                     var key = new baseModel_1.ForeignKey(parentTable, i, parentId);
                     child.foreignKeys[parentTable].push(key);
-                    this.save(child, child.tableName);
+                    this.save(child);
                     break;
                 }
             }

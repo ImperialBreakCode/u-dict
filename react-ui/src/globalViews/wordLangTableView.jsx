@@ -1,6 +1,8 @@
 import React from 'react';
 import { DataControl, DCSection } from '../components/dataControlPanel';
 import Row from '../components/row';
+import PrimaryButton, { SecondaryButton } from '../components/buttons';
+import {Table} from '../components/table';
 
 import '../styles/globalView/globalViews.css';
 
@@ -20,6 +22,8 @@ class WordsLangGlobalView extends React.Component{
                 groupValue: 'all' 
             }
         };
+
+        this.tableHead = ['Word', 'Article', 'Meaning', 'Gramatical Gender', 'Group', 'More'];
 
         this.genderChangeSelect.bind(this);
     }
@@ -60,6 +64,14 @@ class WordsLangGlobalView extends React.Component{
                 <div className="container">
                     <Row>
                         <h1>{this.state.lang.langName}</h1>
+
+                        <DataControl>
+                            <DCSection>
+                                <PrimaryButton style='w-50'>Add Word</PrimaryButton>
+                                <SecondaryButton style=' w-50 hover-danger'>Delete Language</SecondaryButton>
+                            </DCSection>
+                        </DataControl>
+
                         <DataControl>
                             <DCSection>
                                 <span>
@@ -91,6 +103,10 @@ class WordsLangGlobalView extends React.Component{
                                 </span>
                             </DCSection>
                         </DataControl>
+                    </Row>
+
+                    <Row>
+                        <Table head={this.tableHead}/>
                     </Row>
                 </div>
                 </section>
