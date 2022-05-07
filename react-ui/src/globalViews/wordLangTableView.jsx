@@ -23,7 +23,7 @@ class WordsLangGlobalView extends React.Component{
             }
         };
 
-        this.tableHead = ['Word', 'Article', 'Meaning', 'Gramatical Gender', 'Group', 'More'];
+        this.tableHead = ['Article', 'Word', 'Meaning', 'Gramatical Gender', 'More'];
 
         this.genderChangeSelect.bind(this);
     }
@@ -41,6 +41,24 @@ class WordsLangGlobalView extends React.Component{
             });
 
             this.setState({groups: groups});
+        });
+
+        window.electronAPI.getWordsAndPhrases(this.props.langId).then(data => {
+            
+            let words = data[0].map(word => {
+
+                return(
+                    <tr key={word.id}>
+                        <td>{word.article}</td>
+                        <td>{word.word}</td>
+                        <td>{word.meanings.map(mn => <>{mn}<br/></> )}</td>
+                        <td>{word.gramGender}</td>
+                    </tr>
+                );
+                
+            });
+
+            this.setState({words: words});
         });
 
     }
@@ -67,8 +85,10 @@ class WordsLangGlobalView extends React.Component{
 
                         <DataControl>
                             <DCSection>
-                                <PrimaryButton style='w-50'>Add Word</PrimaryButton>
-                                <SecondaryButton style=' w-50 hover-danger'>Delete Language</SecondaryButton>
+                                <PrimaryButton style='w-25'>Add new word</PrimaryButton>
+                                <SecondaryButton style='w-25'>Create new group</SecondaryButton>
+                                <SecondaryButton style='w-25'>Manage groups</SecondaryButton>
+                                <SecondaryButton style='w-25 hover-danger'>Delete language</SecondaryButton>
                             </DCSection>
                         </DataControl>
 
@@ -106,7 +126,7 @@ class WordsLangGlobalView extends React.Component{
                     </Row>
 
                     <Row>
-                        <Table head={this.tableHead}/>
+                        <Table head={this.tableHead} data={this.state.words}/>
                     </Row>
                 </div>
                 </section>

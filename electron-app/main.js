@@ -73,3 +73,11 @@ ipcMain.handle('get-lang-by-id', (e, id) => {
 ipcMain.handle('get-grops', (e) => {
 	return db.Groups;
 })
+
+ipcMain.handle('get-words-phrases', (e, id) => {
+	const lang = db.Languages.filter(elem => elem.id == id);
+	const words = db.getChildren(lang, lang.relWords);
+	const phrases = db.getChildren(lang, lang.relPhrases);
+
+	return [words, phrases];
+})
