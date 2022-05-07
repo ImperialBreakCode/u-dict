@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import { ForeignKey, Model, Relationship } from './baseModel';
-import { Language, Phrase, Word } from './models';
+import { Group, Language, Phrase, Word } from './models';
 import { tableNames } from './tableNames';
 
 
@@ -16,7 +16,7 @@ export class appDatabase{
 
             let initialData: any[] = [];
             let jsonInitData = JSON.stringify(initialData);
-            const propertyNames: string[] = [tableNames.Language, tableNames.Word, tableNames.Phrase];
+            const propertyNames: string[] = [tableNames.Language, tableNames.Word, tableNames.Phrase, tableNames.Group];
             propertyNames.forEach(name => {
                 fs.mkdirSync(`${dirPath}/${name}`);
                 fs.writeFile(`${dirPath}/${name}/${name}0.json`, jsonInitData, (err) => {
@@ -40,6 +40,10 @@ export class appDatabase{
 
     public get Phrases() : Phrase[] {
         return this.getdata(tableNames.Phrase);
+    }
+
+    public get Groups(): Group[] {
+        return this.getdata(tableNames.Group);
     }
 
     private getJson(fileName: string): any{

@@ -20,7 +20,7 @@ var appDatabase = /** @class */ (function () {
             fs.mkdirSync(dirPath);
             var initialData = [];
             var jsonInitData_1 = JSON.stringify(initialData);
-            var propertyNames = [tableNames_1.tableNames.Language, tableNames_1.tableNames.Word, tableNames_1.tableNames.Phrase];
+            var propertyNames = [tableNames_1.tableNames.Language, tableNames_1.tableNames.Word, tableNames_1.tableNames.Phrase, tableNames_1.tableNames.Group];
             propertyNames.forEach(function (name) {
                 fs.mkdirSync("".concat(dirPath, "/").concat(name));
                 fs.writeFile("".concat(dirPath, "/").concat(name, "/").concat(name, "0.json"), jsonInitData_1, function (err) {
@@ -51,6 +51,13 @@ var appDatabase = /** @class */ (function () {
     Object.defineProperty(appDatabase.prototype, "Phrases", {
         get: function () {
             return this.getdata(tableNames_1.tableNames.Phrase);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(appDatabase.prototype, "Groups", {
+        get: function () {
+            return this.getdata(tableNames_1.tableNames.Group);
         },
         enumerable: false,
         configurable: true

@@ -16,8 +16,14 @@ const getLangById = (id) => {
 	return lang;
 };
 
+const getGroups = () => {
+	const groups = ipcRenderer.invoke('get-grops');
+	return groups;
+}
+
 contextBridge.exposeInMainWorld('electronAPI', {
 	getLangData: getLangTableData,
 	addLang: addLang,
-	getLangById: getLangById
+	getLangById: getLangById,
+	getGroups: getGroups
 });
