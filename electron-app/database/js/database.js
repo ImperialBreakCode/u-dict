@@ -20,7 +20,7 @@ var appDatabase = /** @class */ (function () {
             fs.mkdirSync(dirPath);
             var initialData = [];
             var jsonInitData_1 = JSON.stringify(initialData);
-            var propertyNames = [tableNames_1.tableNames.Language, tableNames_1.tableNames.Word, tableNames_1.tableNames.Phrase];
+            var propertyNames = [tableNames_1.tableNames.Language, tableNames_1.tableNames.Word, tableNames_1.tableNames.Phrase, tableNames_1.tableNames.Group];
             propertyNames.forEach(function (name) {
                 fs.mkdirSync("".concat(dirPath, "/").concat(name));
                 fs.writeFile("".concat(dirPath, "/").concat(name, "/").concat(name, "0.json"), jsonInitData_1, function (err) {
@@ -55,6 +55,13 @@ var appDatabase = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(appDatabase.prototype, "Groups", {
+        get: function () {
+            return this.getdata(tableNames_1.tableNames.Group);
+        },
+        enumerable: false,
+        configurable: true
+    });
     appDatabase.prototype.getJson = function (fileName) {
         var fileData = fs.readFileSync(fileName, 'utf-8');
         var jsonFileData = [];
@@ -80,7 +87,8 @@ var appDatabase = /** @class */ (function () {
     appDatabase.prototype.getFileName = function (chunk, nameTable) {
         return "".concat(this._dirname, "/").concat(nameTable, "/").concat(nameTable).concat(chunk, ".json");
     };
-    appDatabase.prototype.save = function (singleData, inTable) {
+    appDatabase.prototype.save = function (singleData) {
+        var inTable = singleData.tableName;
         var filesCount = fs.readdirSync("".concat(this._dirname, "/").concat(inTable)).length;
         for (var i = 0; i < filesCount; i++) {
             var fileName_1 = this.getFileName(i, inTable);
@@ -139,11 +147,11 @@ var appDatabase = /** @class */ (function () {
         }
     };
     appDatabase.prototype.appendAndSave = function (parent, child) {
-        var chunk = this.save(parent, parent.tableName);
+        var chunk = this.save(parent);
         if (chunk !== false) {
             var key = new baseModel_1.ForeignKey(parent.tableName, chunk, parent.id);
             child.foreignKeys[parent.tableName].push(key);
-            this.save(child, child.tableName);
+            this.save(child);
         }
         else {
             console.error('parrent not saved');
@@ -158,19 +166,19 @@ var appDatabase = /** @class */ (function () {
                 if (jsonParentData[n].id == parentId) {
                     var key = new baseModel_1.ForeignKey(parentTable, i, parentId);
                     child.foreignKeys[parentTable].push(key);
-                    this.save(child, child.tableName);
+                    this.save(child);
                     break;
                 }
             }
         }
     };
     appDatabase.prototype.getChildren = function (parent, relation) {
-        if (relation.type == 'to-many') {
+        if (relation._type == 'to-many') {
             var children = [];
-            var filesCount = fs.readdirSync("".concat(this._dirname, "/").concat(relation.table)).length;
+            var filesCount = fs.readdirSync("".concat(this._dirname, "/").concat(relation._table)).length;
             // loop over files
             for (var i = 0; i < filesCount; i++) {
-                var fileName = this.getFileName(i, relation.table);
+                var fileName = this.getFileName(i, relation._table);
                 var dataFromFile = this.getJson(fileName);
                 // loop over the items in a file
                 for (var n = 0; n < dataFromFile.length; n++) {

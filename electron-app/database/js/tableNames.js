@@ -6,5 +6,6 @@ var tableNames;
     tableNames["Language"] = "Languages";
     tableNames["Word"] = "Words";
     tableNames["Phrase"] = "Phrases";
+    tableNames["Group"] = "Groups";
 })(tableNames = exports.tableNames || (exports.tableNames = {}));
 //# sourceMappingURL=tableNames.js.map

@@ -3,7 +3,7 @@ const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path');
 
 const { appDatabase } = require('./database/js/database.js');
-const { Language } = require('./database/js/models');
+const { Language, Group, Word } = require('./database/js/models');
 const { tableNames } = require('./database/js/tableNames.js');
 
 const db = new appDatabase(`${__dirname}/database/storage`);
@@ -60,7 +60,7 @@ ipcMain.handle('get-langs', () => {
 
 ipcMain.handle('new-lang', (e, langName) => {
 	let lang = new Language(langName);
-	db.save(lang, tableNames.Language);
+	db.save(lang);
 
 	return lang;
 })
@@ -68,4 +68,17 @@ ipcMain.handle('new-lang', (e, langName) => {
 ipcMain.handle('get-lang-by-id', (e, id) => {
 	let lang = db.Languages.filter(elem => elem.id == id);
 	return lang;
+})
+
+ipcMain.handle('get-grops', (e) => {
+	return db.Groups;
+})
+
+ipcMain.handle('get-words-phrases', (e, id) => {
+
+	const lang = db.Languages.filter(elem => elem.id == id)[0];
+	const words = db.getChildren(lang, lang.relWords);
+	const phrases = db.getChildren(lang, lang.relPhrases);
+
+	return [words, phrases];
 })

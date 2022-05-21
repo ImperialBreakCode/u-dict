@@ -10,7 +10,7 @@ export function DataControl(props) {
 
 export function DCSection(props) {
     return(
-        <div  className='dc-section'>
+        <div className='dc-section'>
             {props.children}
         </div>
     );

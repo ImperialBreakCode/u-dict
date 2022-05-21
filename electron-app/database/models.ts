@@ -24,11 +24,12 @@ export class Language extends Model{
 
 export class Phrase extends Model{
 
-    constructor(phrase: string, meaning: string){
+    constructor(phrase: string, meaning: string, group?:string){
         super(tableNames.Phrase, 'phr');
 
         this.phrase = phrase;
         this.meaning = meaning;
+        this.group = group;
         
         this.foreignKeys = {};
         this.foreignKeys[tableNames.Language] = [];
@@ -36,6 +37,7 @@ export class Phrase extends Model{
 
     public phrase: string;
     public meaning: string;
+    public group?: string;
 
     public readonly foreignKeys: {[key:string]: ForeignKey[]};
     
@@ -70,4 +72,13 @@ export class Word extends Model{
 
     public readonly foreignKeys: {[key: string]: ForeignKey[]};
 
+}
+
+export class Group extends Model{
+    constructor(name: string){
+        super(tableNames.Group, 'grp');
+        this.groupName = name;
+    }
+
+    public groupName: string;
 }

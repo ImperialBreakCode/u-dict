@@ -1,4 +1,5 @@
-const { contextBridge, ipcRenderer } = require('electron')
+const { contextBridge, ipcRenderer } = require('electron');
+const { isExpressionWithTypeArguments } = require('typescript');
 
 
 const getLangTableData = () => {
@@ -16,8 +17,20 @@ const getLangById = (id) => {
 	return lang;
 };
 
+const getGroups = () => {
+	const groups = ipcRenderer.invoke('get-grops');
+	return groups;
+}
+
+const getWordsAndPhrases = (id) => {
+	const data = ipcRenderer.invoke('get-words-phrases', id);
+	return data;
+}
+
 contextBridge.exposeInMainWorld('electronAPI', {
 	getLangData: getLangTableData,
 	addLang: addLang,
-	getLangById: getLangById
+	getLangById: getLangById,
+	getGroups: getGroups,
+	getWordsAndPhrases: getWordsAndPhrases
 });

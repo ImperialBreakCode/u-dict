@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import { ForeignKey, Model, Relationship } from './baseModel';
-import { Language, Phrase, Word } from './models';
+import { Group, Language, Phrase, Word } from './models';
 import { tableNames } from './tableNames';
 
 
@@ -16,7 +16,7 @@ export class appDatabase{
 
             let initialData: any[] = [];
             let jsonInitData = JSON.stringify(initialData);
-            const propertyNames: string[] = [tableNames.Language, tableNames.Word, tableNames.Phrase];
+            const propertyNames: string[] = [tableNames.Language, tableNames.Word, tableNames.Phrase, tableNames.Group];
             propertyNames.forEach(name => {
                 fs.mkdirSync(`${dirPath}/${name}`);
                 fs.writeFile(`${dirPath}/${name}/${name}0.json`, jsonInitData, (err) => {
@@ -40,6 +40,10 @@ export class appDatabase{
 
     public get Phrases() : Phrase[] {
         return this.getdata(tableNames.Phrase);
+    }
+
+    public get Groups(): Group[] {
+        return this.getdata(tableNames.Group);
     }
 
     private getJson(fileName: string): any{
@@ -77,7 +81,9 @@ export class appDatabase{
         return `${this._dirname}/${nameTable}/${nameTable}${chunk}.json`;
     }
 
-    public save(singleData:any, inTable: tableNames): boolean | number{
+    public save(singleData:any): boolean | number{
+
+        const inTable = singleData.tableName;
 
         let filesCount = fs.readdirSync(`${this._dirname}/${inTable}`).length;
 
@@ -150,13 +156,13 @@ export class appDatabase{
 
     public appendAndSave(parent: any, child: any): void{
 
-        let chunk = this.save(parent, parent.tableName);
+        let chunk = this.save(parent);
 
         if (chunk !== false) {
             let key = new ForeignKey(parent.tableName, chunk as number, parent.id);
             child.foreignKeys[parent.tableName].push(key);
 
-            this.save(child, child.tableName);
+            this.save(child);
         }
         else{
             console.error('parrent not saved');
@@ -178,7 +184,7 @@ export class appDatabase{
                     let key =  new ForeignKey(parentTable, i, parentId);
                     child.foreignKeys[parentTable].push(key);
 
-                    this.save(child, child.tableName);
+                    this.save(child);
 
                     break;
                 }
