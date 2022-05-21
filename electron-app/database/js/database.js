@@ -173,12 +173,12 @@ var appDatabase = /** @class */ (function () {
         }
     };
     appDatabase.prototype.getChildren = function (parent, relation) {
-        if (relation.type == 'to-many') {
+        if (relation._type == 'to-many') {
             var children = [];
-            var filesCount = fs.readdirSync("".concat(this._dirname, "/").concat(relation.table)).length;
+            var filesCount = fs.readdirSync("".concat(this._dirname, "/").concat(relation._table)).length;
             // loop over files
             for (var i = 0; i < filesCount; i++) {
-                var fileName = this.getFileName(i, relation.table);
+                var fileName = this.getFileName(i, relation._table);
                 var dataFromFile = this.getJson(fileName);
                 // loop over the items in a file
                 for (var n = 0; n < dataFromFile.length; n++) {

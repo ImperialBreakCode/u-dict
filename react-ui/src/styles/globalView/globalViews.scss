@@ -1,61 +1,119 @@
-.lang-words-view{
+.lang-words-view {
     background: linear-gradient(90deg, #04040c, #14012e);
 
-    h1{
+    h1 {
         text-align: center;
         margin: 5% 0;
         font-size: 40px;
     }
 
-    .row{
+    .row {
         width: inherit;
     }
 }
 
-.data-control-panel{
+.global-table {
+    $border-radius: 20px;
+
+    width: 100%;
+    font-size: 20px;
+    text-transform: capitalize;
+    border-radius: $border-radius;
+    margin: 0;
+
+    thead {
+
+        th {
+            padding: 15px;
+            position: sticky;
+        }
+
+        th:first-child {
+            border-top-left-radius: $border-radius;
+        }
+
+        th:last-child {
+            border-top-right-radius: $border-radius;
+        }
+    }
+
+    tbody {
+        border-top: 1px solid;
+        max-height: 70vh;
+        overflow: scroll;
+
+        tr:last-child {
+            td:first-child {
+                border-bottom-left-radius: $border-radius;
+            }
+
+            td:last-child {
+                border-bottom-right-radius: $border-radius;
+            }
+
+            border-bottom: transparent;
+        }
+
+        tr:hover {
+            td {
+                background-color: white;
+            }
+        }
+
+        td {
+            background-color: #14012e;
+            padding: 15px;
+            box-shadow: none;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+    }
+}
+
+.data-control-panel {
     background: #221844;
     border: 1px solid #6450a5;
     padding: 20px 5%;
     border-radius: 20px;
     margin-bottom: 30px;
 
-    .dc-section{
+    .dc-section {
         display: flex;
         flex-direction: row;
         justify-content: space-evenly;
         align-items: center;
 
-        label{
+        label {
             margin-bottom: 10px;
         }
 
-        span{
+        span {
             width: 25%;
             margin-bottom: 20px;
         }
 
-        select{
+        select {
             font-weight: 500;
             border-radius: 10px;
             border: 1px solid #6450a5;
             background: #221844;
             color: #c0c0c0;
 
-            option{
+            option {
                 color: #c0c0c0;
                 font-weight: 500;
             }
         }
 
-        .form-select{
+        .form-select {
             background-image: url('data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27><path fill=%27none%27 stroke=%27%23c0c0c0%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27M2 5l6 6 6-6%27/></svg>');
             background-repeat: no-repeat;
             background-position: right 0.75rem center;
             background-size: 16px 12px;
         }
 
-        .hover-danger{
-            &:hover{
+        .hover-danger {
+            &:hover {
                 background: #3d1919;
                 border-color: #9e0c0c;
             }

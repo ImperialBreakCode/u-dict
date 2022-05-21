@@ -14,7 +14,7 @@ class WordsLangGlobalView extends React.Component{
 
         this.state = {
             lang: '',
-            words: '',
+            words: <tr></tr>,
             groups: '',
             values: {
                 genderValue: 'all',
@@ -44,21 +44,23 @@ class WordsLangGlobalView extends React.Component{
         });
 
         window.electronAPI.getWordsAndPhrases(this.props.langId).then(data => {
-            
-            let words = data[0].map(word => {
 
-                return(
-                    <tr key={word.id}>
-                        <td>{word.article}</td>
-                        <td>{word.word}</td>
-                        <td>{word.meanings.map(mn => <>{mn}<br/></> )}</td>
-                        <td>{word.gramGender}</td>
-                    </tr>
-                );
-                
-            });
+            if (data) {
+                let words = data[0].map(word => {
+                    return(
+                        <tr key={word.id}>
+                            <td>{word.article}</td>
+                            <td>{word.word}</td>
+                            <td>{word.meanings.map( (mn, i) => <div key={word.id + i}>{mn}<br/></div> )}</td>
+                            <td>{word.gramGender}</td>
+                            <td></td>
+                        </tr>
+                    );
+                    
+                });
 
-            this.setState({words: words});
+                this.setState({words: words});
+            }
         });
 
     }
@@ -126,7 +128,7 @@ class WordsLangGlobalView extends React.Component{
                     </Row>
 
                     <Row>
-                        <Table head={this.tableHead} data={this.state.words}/>
+                        <Table overStyle='global-table' head={this.tableHead} data={this.state.words}/>
                     </Row>
                 </div>
                 </section>

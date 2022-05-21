@@ -3,7 +3,7 @@ const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path');
 
 const { appDatabase } = require('./database/js/database.js');
-const { Language, Group } = require('./database/js/models');
+const { Language, Group, Word } = require('./database/js/models');
 const { tableNames } = require('./database/js/tableNames.js');
 
 const db = new appDatabase(`${__dirname}/database/storage`);
@@ -75,7 +75,8 @@ ipcMain.handle('get-grops', (e) => {
 })
 
 ipcMain.handle('get-words-phrases', (e, id) => {
-	const lang = db.Languages.filter(elem => elem.id == id);
+
+	const lang = db.Languages.filter(elem => elem.id == id)[0];
 	const words = db.getChildren(lang, lang.relWords);
 	const phrases = db.getChildren(lang, lang.relPhrases);
 
