@@ -51,7 +51,11 @@ class WordsLangGlobalView extends React.Component{
                         <tr key={word.id}>
                             <td>{word.article}</td>
                             <td>{word.word}</td>
-                            <td>{word.meanings.map( (mn, i) => <div key={word.id + i}>{mn}<br/></div> )}</td>
+                            <td className={word.meanings.length > 1 ? 'meaning-expand': ''}>{word.meanings.map( (mn, i) => 
+                                <div className={i == 0 ? '': 'd-none' } key={word.id + i}>
+                                    {mn} { i==0 && word.meanings.length > 1 ? <p>...</p>: ''}
+                                </div>
+                            )}</td>
                             <td>{word.gramGender}</td>
                             <td></td>
                         </tr>

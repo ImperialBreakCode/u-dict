@@ -1,5 +1,10 @@
 .lang-words-view {
     background: linear-gradient(90deg, #04040c, #14012e);
+    height: 100vh;
+
+    section{
+        background: inherit;
+    }
 
     h1 {
         text-align: center;
@@ -26,6 +31,8 @@
         th {
             padding: 15px;
             position: sticky;
+            background-color: #1b1838;
+            text-align: center;
         }
 
         th:first-child {
@@ -38,11 +45,37 @@
     }
 
     tbody {
-        border-top: 1px solid;
+        border-top: 1px solid!important;
         max-height: 70vh;
         overflow: scroll;
+        text-align: center;
+        text-transform: none;
+
+        .meaning-expand{
+
+            &:hover{
+                div{
+                    display: block!important;
+                }
+
+                p{
+                    display: none;
+                }
+            }
+            
+        }
+
+        tr{
+            td{
+                border-left: 1px solid #24262c;
+            }
+            td:first-child{
+                border-left: none;
+            }
+        }
 
         tr:last-child {
+
             td:first-child {
                 border-bottom-left-radius: $border-radius;
             }
@@ -56,16 +89,16 @@
 
         tr:hover {
             td {
-                background-color: white;
+                background-color: #221f38;
             }
         }
 
         td {
-            background-color: #14012e;
+            background-color: #141022;
             padding: 15px;
             box-shadow: none;
             transition: 0.2s;
-            cursor: pointer;
+            cursor: cursor;
         }
     }
 }

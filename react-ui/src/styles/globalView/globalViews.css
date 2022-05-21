@@ -1,6 +1,11 @@
 .lang-words-view {
   background: -webkit-gradient(linear, left top, right top, from(#04040c), to(#14012e));
   background: linear-gradient(90deg, #04040c, #14012e);
+  height: 100vh;
+}
+
+.lang-words-view section {
+  background: inherit;
 }
 
 .lang-words-view h1 {
@@ -25,6 +30,8 @@
   padding: 15px;
   position: -webkit-sticky;
   position: sticky;
+  background-color: #1b1838;
+  text-align: center;
 }
 
 .global-table thead th:first-child {
@@ -36,9 +43,27 @@
 }
 
 .global-table tbody {
-  border-top: 1px solid;
+  border-top: 1px solid !important;
   max-height: 70vh;
   overflow: scroll;
+  text-align: center;
+  text-transform: none;
+}
+
+.global-table tbody .meaning-expand:hover div {
+  display: block !important;
+}
+
+.global-table tbody .meaning-expand:hover p {
+  display: none;
+}
+
+.global-table tbody tr td {
+  border-left: 1px solid #24262c;
+}
+
+.global-table tbody tr td:first-child {
+  border-left: none;
 }
 
 .global-table tbody tr:last-child {
@@ -54,17 +79,17 @@
 }
 
 .global-table tbody tr:hover td {
-  background-color: white;
+  background-color: #221f38;
 }
 
 .global-table tbody td {
-  background-color: #14012e;
+  background-color: #141022;
   padding: 15px;
   -webkit-box-shadow: none;
           box-shadow: none;
   -webkit-transition: 0.2s;
   transition: 0.2s;
-  cursor: pointer;
+  cursor: cursor;
 }
 
 .data-control-panel {
