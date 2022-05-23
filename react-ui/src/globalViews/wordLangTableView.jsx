@@ -1,10 +1,13 @@
 import React from 'react';
+import $ from 'jquery';
 import { DataControl, DCSection } from '../components/dataControlPanel';
 import Row from '../components/row';
 import PrimaryButton, { SecondaryButton } from '../components/buttons';
 import {Table} from '../components/table';
 
 import '../styles/globalView/globalViews.css';
+import { Modal } from '../components/modal';
+import { GlobalViewNames, ViewNames } from '../constants';
 
 class WordsLangGlobalView extends React.Component{
 
@@ -26,6 +29,7 @@ class WordsLangGlobalView extends React.Component{
         this.tableHead = ['Article', 'Word', 'Meaning', 'Gramatical Gender', 'More'];
 
         this.genderChangeSelect.bind(this);
+        this.onNewWord.bind(this);
     }
 
     componentDidMount(){
@@ -56,7 +60,7 @@ class WordsLangGlobalView extends React.Component{
                                     {mn} { i==0 && word.meanings.length > 1 ? <p>...</p>: ''}
                                 </div>
                             )}</td>
-                            <td>{word.gramGender}</td>
+                            <td>{word.gramGender ?? 'none'}</td>
                             <td></td>
                         </tr>
                     );
@@ -81,17 +85,57 @@ class WordsLangGlobalView extends React.Component{
         this.setState({values: {groupValue: e.target.value}});
     }
 
+    onNewWord(e){
+        $('#new-word-modal').addClass('show');
+        $('#new-word-modal').addClass('show');
+    }
+
     render(){
+
+        const newWordFooter = (
+            <>
+                <PrimaryButton dissmiss='modal'>Add Word</PrimaryButton>
+                <SecondaryButton dissmiss='modal'>Close</SecondaryButton>
+            </>
+        );
+
         return(
             <main className='lang-words-view'>
+
+                <Modal elemId='new-word-modal' title='Add New Word' footer={newWordFooter}>
+                    <form>
+                        <div className="mb-3">
+                            <label htmlFor="word-input" className="col-form-label">Word:</label>
+                            <input type="text" className="form-control" id="word-input"/>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="meaning-input" className="col-form-label">Meaning:</label>
+                            <input type="text" className="form-control" id="meaning-input"/>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="article-input" className="col-form-label">Article (a, an, un ...):</label>
+                            <input type="text" className="form-control" id="article-input"/>
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="group-input" className="col-form-label">Groups:</label>
+                            <input type="text" className="form-control" id="group-input"/>
+                        </div>
+                    </form>
+                </Modal>
+
                 <section>
                 <div className="container">
                     <Row>
-                        <h1>{this.state.lang.langName}</h1>
+                        <h1 className='position-relative'>
+                            <SecondaryButton onClick={() => {this.props.changeGlobalView(GlobalViewNames.viewController, ViewNames.lang)}} style='go-back-btn'>
+                                Go Back
+                            </SecondaryButton>
+                            {this.state.lang.langName}
+                        </h1>
 
                         <DataControl>
                             <DCSection>
-                                <PrimaryButton style='w-25'>Add new word</PrimaryButton>
+                                <button className='purple-button w-25' data-bs-toggle="modal" data-bs-target="#new-word-modal">Add new word</button>
                                 <SecondaryButton style='w-25'>Create new group</SecondaryButton>
                                 <SecondaryButton style='w-25'>Manage groups</SecondaryButton>
                                 <SecondaryButton style='w-25 hover-danger'>Delete language</SecondaryButton>

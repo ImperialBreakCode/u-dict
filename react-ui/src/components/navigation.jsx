@@ -59,16 +59,16 @@ class Navigation extends React.Component{
                 <AppTitle/>
 
                 <NavControl>
-                    <NavButton onClick={(e) => this.handleClickNavButton(e)} active={true} toView={ViewNames.home} text='home'>
+                    <NavButton onClick={(e) => this.handleClickNavButton(e)} active={this.props.currentView == ViewNames.home} toView={ViewNames.home} text='home'>
                         <FontAwesomeIcon icon={faHouse} />
                     </NavButton>
-                    <NavButton onClick={(e) => this.handleClickNavButton(e)} active={false} toView={ViewNames.lang} text='languages'>
+                    <NavButton onClick={(e) => this.handleClickNavButton(e)} active={this.props.currentView == ViewNames.lang} toView={ViewNames.lang} text='languages'>
                         <FontAwesomeIcon icon={faLanguage}/>
                     </NavButton>
-                    <NavButton onClick={(e) => this.handleClickNavButton(e)} active={false} toView={ViewNames.words} text='words'>
+                    <NavButton onClick={(e) => this.handleClickNavButton(e)} active={this.props.currentView == ViewNames.words} toView={ViewNames.words} text='words'>
                         <FontAwesomeIcon icon={faA}/>
                     </NavButton>
-                    <NavButton onClick={(e) => this.handleClickNavButton(e)} active={false} toView={ViewNames.exercises} text='exercises'>
+                    <NavButton onClick={(e) => this.handleClickNavButton(e)} active={this.props.currentView == ViewNames.exercises} toView={ViewNames.exercises} text='exercises'>
                         <FontAwesomeIcon icon={faCheck}/>
                     </NavButton>
                 </NavControl>
