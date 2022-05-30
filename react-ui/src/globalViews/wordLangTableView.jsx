@@ -28,6 +28,7 @@ class WordsLangGlobalView extends React.Component{
         this.tableHead = ['Article', 'Word', 'Meaning', 'Gramatical Gender', 'More'];
 
         this.genderChangeSelect.bind(this);
+        this.createWordsHtml.bind(this);
         //this.onNewWord.bind(this);
         this.addNewWord.bind(this);
     }
@@ -40,27 +41,31 @@ class WordsLangGlobalView extends React.Component{
         window.electronAPI.getWordsAndPhrases(this.props.langId).then(data => {
 
             if (data) {
-                let words = data[0].map(word => {
-                    return(
-                        <tr key={word.id}>
-                            <td>{word.article}</td>
-                            <td>{word.word}</td>
-                            <td className={word.meanings.length > 1 ? 'meaning-expand': ''}>{word.meanings.map( (mn, i) => 
-                                <div className={i == 0 ? '': 'd-none' } key={word.id + i}>
-                                    {mn} { i==0 && word.meanings.length > 1 ? <p>...</p>: ''}
-                                </div>
-                            )}</td>
-                            <td>{word.gramGender ?? 'none'}</td>
-                            <td></td>
-                        </tr>
-                    );
-                    
-                });
-
+                let words = this.createWordsHtml(data[0]);
                 this.setState({words: words});
             }
         });
+    }
 
+    createWordsHtml(arr){
+        let words = arr.map(word => {
+            return(
+                <tr key={word.id}>
+                    <td>{word.article}</td>
+                    <td>{word.word}</td>
+                    <td className={word.meanings.length > 1 ? 'meaning-expand': ''}>{word.meanings.map( (mn, i) => 
+                        <div className={i == 0 ? '': 'd-none' } key={word.id + i}>
+                            {mn} { i==0 && word.meanings.length > 1 ? <p>...</p>: ''}
+                        </div>
+                    )}</td>
+                    <td>{word.gramGender ?? 'none'}</td>
+                    <td></td>
+                </tr>
+            );
+            
+        });
+
+        return words;
     }
 
     orderChangeSelect(e){
@@ -75,18 +80,45 @@ class WordsLangGlobalView extends React.Component{
         //$('#new-word-modal').addClass('show');
     //}
 
-    addNewWord(e){
-        const word = {
-            word: document.querySelector('#word-input').value
+    async addNewWord(){
+        const wordName = document.querySelector('#word-input').value.trim();
+        console.log(wordName);
+
+        if (wordName == '') {
+            $('#word-input').css('box-shadow', '0 0 0 5px #ff0000a0');
+            return;
         }
+
+        $('#word-input').css('box-shadow', '');
+
+        const word = {
+            langId: this.props.langId,
+            word: wordName,
+            meaning: document.querySelector('#meaning-input').value.trim(),
+            article: document.querySelector('#article-input').value.trim(),
+            gender: document.querySelector('#form-gram-gender').value
+        }
+
+        document.querySelector('#word-input').value = '';
+        document.querySelector('#meaning-input').value = '';
+        document.querySelector('#article-input').value = '';
+        document.querySelector('#form-gram-gender').value = 'none';
+
+        let newWord = await window.electronAPI.addNewWord(word);
+        newWord = this.createWordsHtml([newWord]);
+
+        const newState = [...this.state.words, ...newWord];
+        this.setState({words: newState});
+
+        $('#close-btn').click();
     }
 
     render(){
 
         const newWordFooter = (
             <>
-                <PrimaryButton onClick={(e) => this.addNewWord(e)} dissmiss='modal'>Add Word</PrimaryButton>
-                <SecondaryButton dissmiss='modal'>Close</SecondaryButton>
+                <PrimaryButton onClick={(e) => this.addNewWord(e)}>Add Word</PrimaryButton>
+                <SecondaryButton elemId='close-btn' dissmiss='modal'>Close</SecondaryButton>
             </>
         );
 

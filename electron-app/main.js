@@ -80,5 +80,13 @@ ipcMain.handle('get-words-phrases', (e, id) => {
 })
 
 ipcMain.handle('add-new-word', (e, wrd) => {
-	return '';
+
+	if (wrd.gender == 'none') {
+		wrd.gender = null;
+	}
+
+	const word = new Word(wrd.word, [wrd.meaning], wrd.article, null, null, wrd.gender);
+	db.appendAndSaveChild(wrd.langId, tableNames.Language, word);
+	
+	return word;
 })

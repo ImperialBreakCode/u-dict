@@ -23,7 +23,7 @@ const getWordsAndPhrases = (id) => {
 };
 
 const addNewWord = (word) => {
-	const newWrd = ipcRenderer.invoke('add-new-word');
+	const newWrd = ipcRenderer.invoke('add-new-word', word);
 	return newWrd;
 }
 
