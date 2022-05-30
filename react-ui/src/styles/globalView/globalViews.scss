@@ -122,6 +122,26 @@
     background-color: #1d1d1d23;
     backdrop-filter: blur(5px);
 
+    .modal-opt{
+        font-weight: 500;
+        border-radius: 10px;
+        border: 1px solid #595975;
+        background: #131318;
+        color: #c0c0c0;
+
+        option {
+            color: #c0c0c0;
+            font-weight: 500;
+        }
+    }
+
+    .form-select {
+        background-image: url('data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27><path fill=%27none%27 stroke=%27%23c0c0c0%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27M2 5l6 6 6-6%27/></svg>');
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 16px 12px;
+    }
+
     .btn-close{
         filter: invert(1);
     }

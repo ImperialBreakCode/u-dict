@@ -17,20 +17,20 @@ const getLangById = (id) => {
 	return lang;
 };
 
-const getGroups = () => {
-	const groups = ipcRenderer.invoke('get-grops');
-	return groups;
-}
-
 const getWordsAndPhrases = (id) => {
 	const data = ipcRenderer.invoke('get-words-phrases', id);
 	return data;
+};
+
+const addNewWord = (word) => {
+	const newWrd = ipcRenderer.invoke('add-new-word');
+	return newWrd;
 }
 
 contextBridge.exposeInMainWorld('electronAPI', {
 	getLangData: getLangTableData,
 	addLang: addLang,
 	getLangById: getLangById,
-	getGroups: getGroups,
-	getWordsAndPhrases: getWordsAndPhrases
+	getWordsAndPhrases: getWordsAndPhrases,
+	addNewWord: addNewWord
 });

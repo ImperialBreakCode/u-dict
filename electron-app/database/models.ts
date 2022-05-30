@@ -46,7 +46,7 @@ export class Phrase extends Model{
 
 export class Word extends Model{
 
-    constructor(word: string, meanings: string[], article?: string, plural?: string, info?: string, gramGender?: gramGender, groups?: string[]){
+    constructor(word: string, meanings: string[], article?: string, plural?: string, info?: string, gramGender?: gramGender){
         super(tableNames.Word, 'wrd');
 
         this.word = word;
@@ -55,7 +55,6 @@ export class Word extends Model{
         this.plural = plural;
         this.info = info;
         this.gramGender = gramGender;
-        this.groups = groups;
 
         this.foreignKeys = {};
         this.foreignKeys[tableNames.Language] = [];
@@ -67,18 +66,8 @@ export class Word extends Model{
     public plural?: string;
     public info?: string;
     public gramGender?: gramGender;
-    public groups?: string[];
     public dictTable?: any;
 
     public readonly foreignKeys: {[key: string]: ForeignKey[]};
 
-}
-
-export class Group extends Model{
-    constructor(name: string){
-        super(tableNames.Group, 'grp');
-        this.groupName = name;
-    }
-
-    public groupName: string;
 }

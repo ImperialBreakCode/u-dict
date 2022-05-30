@@ -21,30 +21,20 @@ class WordsLangGlobalView extends React.Component{
             groups: '',
             values: {
                 genderValue: 'all',
-                orderValue: 'none',
-                groupValue: 'all' 
+                orderValue: 'none'
             }
         };
 
         this.tableHead = ['Article', 'Word', 'Meaning', 'Gramatical Gender', 'More'];
 
         this.genderChangeSelect.bind(this);
-        this.onNewWord.bind(this);
+        //this.onNewWord.bind(this);
+        this.addNewWord.bind(this);
     }
 
     componentDidMount(){
         window.electronAPI.getLangById(this.props.langId).then(lang => {
             this.setState({lang: lang[0]});
-        });
-
-        window.electronAPI.getGroups().then(groups => {
-            groups = groups.map(item => {
-                return (
-                    <option key={item.id} value={item.groupName}>{item.groupName}</option>
-                );
-            });
-
-            this.setState({groups: groups});
         });
 
         window.electronAPI.getWordsAndPhrases(this.props.langId).then(data => {
@@ -81,20 +71,21 @@ class WordsLangGlobalView extends React.Component{
         this.setState({values: {genderValue: e.target.value}});
     }
 
-    groupChangeSelect(e){
-        this.setState({values: {groupValue: e.target.value}});
-    }
+    //onNewWord(){
+        //$('#new-word-modal').addClass('show');
+    //}
 
-    onNewWord(e){
-        $('#new-word-modal').addClass('show');
-        $('#new-word-modal').addClass('show');
+    addNewWord(e){
+        const word = {
+            word: document.querySelector('#word-input').value
+        }
     }
 
     render(){
 
         const newWordFooter = (
             <>
-                <PrimaryButton dissmiss='modal'>Add Word</PrimaryButton>
+                <PrimaryButton onClick={(e) => this.addNewWord(e)} dissmiss='modal'>Add Word</PrimaryButton>
                 <SecondaryButton dissmiss='modal'>Close</SecondaryButton>
             </>
         );
@@ -117,8 +108,16 @@ class WordsLangGlobalView extends React.Component{
                             <input type="text" className="form-control" id="article-input"/>
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="group-input" className="col-form-label">Groups:</label>
-                            <input type="text" className="form-control" id="group-input"/>
+                            <label>Gramatical Gender:</label>
+                            <select id='form-gram-gender' onChange={(e) => this.genderChangeSelect(e)} className="form-select modal-opt" aria-label="Gender select">
+                                <option defaultValue value="none">None</option>
+                                <option value="masculine">masculine</option>
+                                <option value="feminine">feminine</option>
+                                <option value="neuter">neuter</option>
+                                <option value="animate">animate</option>
+                                <option value="inanimate">inanimate</option>
+                                <option value="common">common</option>
+                            </select>
                         </div>
                     </form>
                 </Modal>
@@ -135,10 +134,8 @@ class WordsLangGlobalView extends React.Component{
 
                         <DataControl>
                             <DCSection>
-                                <button className='purple-button w-25' data-bs-toggle="modal" data-bs-target="#new-word-modal">Add new word</button>
-                                <SecondaryButton style='w-25'>Create new group</SecondaryButton>
-                                <SecondaryButton style='w-25'>Manage groups</SecondaryButton>
-                                <SecondaryButton style='w-25 hover-danger'>Delete language</SecondaryButton>
+                                <button className='purple-button w-50' data-bs-toggle="modal" data-bs-target="#new-word-modal">Add new word</button>
+                                <SecondaryButton style='w-50 hover-danger'>Delete language</SecondaryButton>
                             </DCSection>
                         </DataControl>
 
@@ -162,13 +159,6 @@ class WordsLangGlobalView extends React.Component{
                                         <option value="animate">animate</option>
                                         <option value="inanimate">inanimate</option>
                                         <option value="common">common</option>
-                                    </select>
-                                </span>
-                                <span>
-                                    <label>Groups:</label>
-                                    <select value={this.state.values.groupValue} onChange={(e) => this.groupChangeSelect(e)} className="form-select" aria-label="Group select">
-                                        <option value='all'>All Words</option>
-                                        {this.state.groups}
                                     </select>
                                 </span>
                             </DCSection>

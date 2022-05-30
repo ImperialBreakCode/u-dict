@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import { ForeignKey, Model, Relationship } from './baseModel';
-import { Group, Language, Phrase, Word } from './models';
+import { Language, Phrase, Word } from './models';
 import { tableNames } from './tableNames';
 
 
@@ -40,10 +40,6 @@ export class appDatabase{
 
     public get Phrases() : Phrase[] {
         return this.getdata(tableNames.Phrase);
-    }
-
-    public get Groups(): Group[] {
-        return this.getdata(tableNames.Group);
     }
 
     private getJson(fileName: string): any{

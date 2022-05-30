@@ -55,13 +55,6 @@ var appDatabase = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(appDatabase.prototype, "Groups", {
-        get: function () {
-            return this.getdata(tableNames_1.tableNames.Group);
-        },
-        enumerable: false,
-        configurable: true
-    });
     appDatabase.prototype.getJson = function (fileName) {
         var fileData = fs.readFileSync(fileName, 'utf-8');
         var jsonFileData = [];
@@ -173,12 +166,12 @@ var appDatabase = /** @class */ (function () {
         }
     };
     appDatabase.prototype.getChildren = function (parent, relation) {
-        if (relation._type == 'to-many') {
+        if (relation.type == 'to-many') {
             var children = [];
-            var filesCount = fs.readdirSync("".concat(this._dirname, "/").concat(relation._table)).length;
+            var filesCount = fs.readdirSync("".concat(this._dirname, "/").concat(relation.table)).length;
             // loop over files
             for (var i = 0; i < filesCount; i++) {
-                var fileName = this.getFileName(i, relation._table);
+                var fileName = this.getFileName(i, relation.table);
                 var dataFromFile = this.getJson(fileName);
                 // loop over the items in a file
                 for (var n = 0; n < dataFromFile.length; n++) {
