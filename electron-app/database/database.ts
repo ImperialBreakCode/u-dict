@@ -128,26 +128,37 @@ export class appDatabase{
                         }
                     });
                 }
+
+                fs.writeFileSync(fileName, JSON.stringify(json));
             }
         });
     }
 
     public delete(itemId: string, inTable: tableNames, cascade: boolean, rels?: Relationship[]): void{
-        let jsonData = this.getdata(inTable);
+
+        let filesCount = fs.readdirSync(`${this._dirname}/${inTable}`).length;
         
-        for (let i = 0; i < jsonData.length; i++) {
-            
-            if (jsonData[i].id == itemId) {
+        for (let i = 0; i < filesCount; i++) {
+            const fileName = this.getFileName(i, inTable);
+            let jsonData = this.getJson(fileName);
 
-                if (cascade) {
-                    this.deleteChildren(jsonData[i], rels);
+            for (let i = 0; i < jsonData.length; i++) {
+            
+                if (jsonData[i].id == itemId) {
+    
+                    if (cascade) {
+                        this.deleteChildren(jsonData[i], rels);
+                    }
+    
+                    jsonData.splice(i);
+
+                    fs.writeFileSync(fileName, JSON.stringify(jsonData));
+                    
+                    return;
                 }
-
-                jsonData.splice(i);
-                break;
-            }
-            
-        }
+                
+            }   
+        }        
     }
 
     public appendAndSave(parent: any, child: any): void{

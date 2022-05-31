@@ -83,6 +83,15 @@ main {
   background: #3b3963;
 }
 
+.danger-btn {
+  background-color: #4a0c0c;
+  border: 1px solid #ad0404;
+}
+
+.danger-btn:hover {
+  background-color: #851313;
+}
+
 .cont-view {
   height: 100%;
   -webkit-box-orient: vertical;

@@ -29,8 +29,8 @@ class WordsLangGlobalView extends React.Component{
 
         this.genderChangeSelect.bind(this);
         this.createWordsHtml.bind(this);
-        //this.onNewWord.bind(this);
         this.addNewWord.bind(this);
+        this.deleteLanguage.bind(this);
     }
 
     componentDidMount(){
@@ -76,25 +76,30 @@ class WordsLangGlobalView extends React.Component{
         this.setState({values: {genderValue: e.target.value}});
     }
 
-    //onNewWord(){
-        //$('#new-word-modal').addClass('show');
-    //}
-
     async addNewWord(){
         const wordName = document.querySelector('#word-input').value.trim();
-        console.log(wordName);
+        const wordMeaning = document.querySelector('#meaning-input').value.trim();
 
-        if (wordName == '') {
-            $('#word-input').css('box-shadow', '0 0 0 5px #ff0000a0');
+        $('#meaning-input').css('box-shadow', '');
+        $('#word-input').css('box-shadow', '');
+
+        if (wordName == '' || wordMeaning == '') {
+
+            if (wordName == '') {
+                $('#word-input').css('box-shadow', '0 0 0 5px #ff0000a0');
+            }
+
+            if(wordMeaning == ''){
+                $('#meaning-input').css('box-shadow', '0 0 0 5px #ff0000a0');
+            }
+
             return;
         }
-
-        $('#word-input').css('box-shadow', '');
 
         const word = {
             langId: this.props.langId,
             word: wordName,
-            meaning: document.querySelector('#meaning-input').value.trim(),
+            meaning: wordMeaning,
             article: document.querySelector('#article-input').value.trim(),
             gender: document.querySelector('#form-gram-gender').value
         }
@@ -113,12 +118,36 @@ class WordsLangGlobalView extends React.Component{
         $('#close-btn').click();
     }
 
+    deleteLanguage(){
+
+        const langName = document.querySelector('#lang-del-confirm').value.trim();
+
+        console.log(langName);
+        console.log(this.state.lang.langName);
+        
+        if (langName == this.state.lang.langName) {
+            window.electronAPI.deleteLang(this.state.lang.id);
+            $('#close-del-lang-modal').click();
+            $('#go-back-btn').click();
+        }
+        else{
+            $('#lang-del-confirm').css('box-shadow', '0 0 0 5px #ff0000a0');
+        }
+    }
+
     render(){
 
         const newWordFooter = (
             <>
                 <PrimaryButton onClick={(e) => this.addNewWord(e)}>Add Word</PrimaryButton>
                 <SecondaryButton elemId='close-btn' dissmiss='modal'>Close</SecondaryButton>
+            </>
+        );
+
+        const deletLangFooter = (
+            <>
+                <SecondaryButton onClick={() => this.deleteLanguage()} style='danger-btn'>Delete Language</SecondaryButton>
+                <SecondaryButton elemId='close-del-lang-modal' dissmiss='modal'>Cancel</SecondaryButton>
             </>
         );
 
@@ -136,7 +165,7 @@ class WordsLangGlobalView extends React.Component{
                             <input type="text" className="form-control" id="meaning-input"/>
                         </div>
                         <div className="mb-3">
-                            <label htmlFor="article-input" className="col-form-label">Article (a, an, un ...):</label>
+                            <label htmlFor="article-input" className="col-form-label">Article (a, an, un ...): <br></br><i>If there is no article leave the field blank</i></label>
                             <input type="text" className="form-control" id="article-input"/>
                         </div>
                         <div className="mb-3">
@@ -154,11 +183,18 @@ class WordsLangGlobalView extends React.Component{
                     </form>
                 </Modal>
 
+                <Modal elemId='delete-lang-modal' title={'delete ' + this.state.lang.langName} footer={deletLangFooter}>
+                    <p>Once you delete this language there is no going back.</p>
+                    <p>All words and data are going to be deleted forever.</p>
+                    <label>If you are sure type the name of the language to confirm:</label>
+                    <input type="text" className="form-control" id="lang-del-confirm"/>
+                </Modal>
+
                 <section>
                 <div className="container">
                     <Row>
                         <h1 className='position-relative'>
-                            <SecondaryButton onClick={() => {this.props.changeGlobalView(GlobalViewNames.viewController, ViewNames.lang)}} style='go-back-btn'>
+                            <SecondaryButton elemId='go-back-btn' onClick={() => {this.props.changeGlobalView(GlobalViewNames.viewController, ViewNames.lang)}} style='go-back-btn'>
                                 Go Back
                             </SecondaryButton>
                             {this.state.lang.langName}
@@ -167,7 +203,7 @@ class WordsLangGlobalView extends React.Component{
                         <DataControl>
                             <DCSection>
                                 <button className='purple-button w-50' data-bs-toggle="modal" data-bs-target="#new-word-modal">Add new word</button>
-                                <SecondaryButton style='w-50 hover-danger'>Delete language</SecondaryButton>
+                                <button className='purple-button sec-button hover-danger w-50' data-bs-toggle="modal" data-bs-target="#delete-lang-modal">Delete language</button>
                             </DCSection>
                         </DataControl>
 

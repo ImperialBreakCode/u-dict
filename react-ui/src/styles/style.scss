@@ -84,6 +84,15 @@ main{
     }
 }
 
+.danger-btn{
+    background-color: #4a0c0c;
+    border: 1px solid #ad0404;
+
+    &:hover{
+        background-color: #851313;
+    }
+}
+
 .cont-view{
     height: 100%;
     flex-direction: column;

@@ -121,6 +121,7 @@ var appDatabase = /** @class */ (function () {
                 for (var e = 0; e < json.length; e++) {
                     _loop_2(e);
                 }
+                fs.writeFileSync(fileName, JSON.stringify(json));
             };
             for (var i = 0; i < filesCount; i++) {
                 _loop_1(i);
@@ -128,14 +129,19 @@ var appDatabase = /** @class */ (function () {
         });
     };
     appDatabase.prototype.delete = function (itemId, inTable, cascade, rels) {
-        var jsonData = this.getdata(inTable);
-        for (var i = 0; i < jsonData.length; i++) {
-            if (jsonData[i].id == itemId) {
-                if (cascade) {
-                    this.deleteChildren(jsonData[i], rels);
+        var filesCount = fs.readdirSync("".concat(this._dirname, "/").concat(inTable)).length;
+        for (var i = 0; i < filesCount; i++) {
+            var fileName = this.getFileName(i, inTable);
+            var jsonData = this.getJson(fileName);
+            for (var i_1 = 0; i_1 < jsonData.length; i_1++) {
+                if (jsonData[i_1].id == itemId) {
+                    if (cascade) {
+                        this.deleteChildren(jsonData[i_1], rels);
+                    }
+                    jsonData.splice(i_1);
+                    fs.writeFileSync(fileName, JSON.stringify(jsonData));
+                    return;
                 }
-                jsonData.splice(i);
-                break;
             }
         }
     };
