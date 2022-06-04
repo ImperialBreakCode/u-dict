@@ -73,7 +73,24 @@ class WordsLangGlobalView extends React.Component{
     }
 
     genderChangeSelect(e){
-        this.setState({values: {genderValue: e.target.value}});
+        const val = e.target.value;
+        this.setState({values: {genderValue: val}});
+
+        if (val == 'all') {
+            $('tbody').children('tr').removeClass('d-none');
+        } else {
+            const children = $('tbody').children('tr');
+
+            for (let i = 0; i < children.length; i++) {
+                const child = children.get(i);
+                const gend = child.childNodes[3].childNodes[0];
+                if (gend == val) {
+                    child.classList.remove('d-none');
+                }else{
+                    child.classList.add('d-none');
+                }
+            }
+        }
     }
 
     async addNewWord(){
