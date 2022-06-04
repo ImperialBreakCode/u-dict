@@ -3,7 +3,7 @@ const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path');
 
 const { appDatabase } = require('./database/js/database.js');
-const { Language, Group, Word } = require('./database/js/models');
+const { Language, Word } = require('./database/js/models');
 const { tableNames } = require('./database/js/tableNames.js');
 
 const db = new appDatabase(`${__dirname}/database/storage`);
@@ -70,10 +70,6 @@ ipcMain.handle('get-lang-by-id', (e, id) => {
 	return lang;
 })
 
-ipcMain.handle('get-grops', (e) => {
-	return db.Groups;
-})
-
 ipcMain.handle('get-words-phrases', (e, id) => {
 
 	const lang = db.Languages.filter(elem => elem.id == id)[0];
@@ -81,4 +77,21 @@ ipcMain.handle('get-words-phrases', (e, id) => {
 	const phrases = db.getChildren(lang, lang.relPhrases);
 
 	return [words, phrases];
+})
+
+ipcMain.handle('add-new-word', (e, wrd) => {
+
+	if (wrd.gender == 'none') {
+		wrd.gender = null;
+	}
+
+	const word = new Word(wrd.word, [wrd.meaning], wrd.article, null, null, wrd.gender);
+	db.appendAndSaveChild(wrd.langId, tableNames.Language, word);
+	
+	return word;
+})
+
+ipcMain.on('delete-lang', (e, id) =>{
+	const lang = db.Languages.filter(elem => elem.id == id)[0];
+	db.delete(id, tableNames.Language, true, [lang.relWords, lang.relPhrases]);
 })

@@ -55,13 +55,6 @@ var appDatabase = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(appDatabase.prototype, "Groups", {
-        get: function () {
-            return this.getdata(tableNames_1.tableNames.Group);
-        },
-        enumerable: false,
-        configurable: true
-    });
     appDatabase.prototype.getJson = function (fileName) {
         var fileData = fs.readFileSync(fileName, 'utf-8');
         var jsonFileData = [];
@@ -128,6 +121,7 @@ var appDatabase = /** @class */ (function () {
                 for (var e = 0; e < json.length; e++) {
                     _loop_2(e);
                 }
+                fs.writeFileSync(fileName, JSON.stringify(json));
             };
             for (var i = 0; i < filesCount; i++) {
                 _loop_1(i);
@@ -135,14 +129,19 @@ var appDatabase = /** @class */ (function () {
         });
     };
     appDatabase.prototype.delete = function (itemId, inTable, cascade, rels) {
-        var jsonData = this.getdata(inTable);
-        for (var i = 0; i < jsonData.length; i++) {
-            if (jsonData[i].id == itemId) {
-                if (cascade) {
-                    this.deleteChildren(jsonData[i], rels);
+        var filesCount = fs.readdirSync("".concat(this._dirname, "/").concat(inTable)).length;
+        for (var i = 0; i < filesCount; i++) {
+            var fileName = this.getFileName(i, inTable);
+            var jsonData = this.getJson(fileName);
+            for (var i_1 = 0; i_1 < jsonData.length; i_1++) {
+                if (jsonData[i_1].id == itemId) {
+                    if (cascade) {
+                        this.deleteChildren(jsonData[i_1], rels);
+                    }
+                    jsonData.splice(i_1);
+                    fs.writeFileSync(fileName, JSON.stringify(jsonData));
+                    return;
                 }
-                jsonData.splice(i);
-                break;
             }
         }
     };
@@ -173,12 +172,12 @@ var appDatabase = /** @class */ (function () {
         }
     };
     appDatabase.prototype.getChildren = function (parent, relation) {
-        if (relation._type == 'to-many') {
+        if (relation.type == 'to-many') {
             var children = [];
-            var filesCount = fs.readdirSync("".concat(this._dirname, "/").concat(relation._table)).length;
+            var filesCount = fs.readdirSync("".concat(this._dirname, "/").concat(relation.table)).length;
             // loop over files
             for (var i = 0; i < filesCount; i++) {
-                var fileName = this.getFileName(i, relation._table);
+                var fileName = this.getFileName(i, relation.table);
                 var dataFromFile = this.getJson(fileName);
                 // loop over the items in a file
                 for (var n = 0; n < dataFromFile.length; n++) {

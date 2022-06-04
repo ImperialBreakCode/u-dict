@@ -103,6 +103,77 @@
     }
 }
 
+.go-back-btn{
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    transform: translate( 0, -50%);
+    font-size: 28px;
+    background-color: transparent!important;
+
+    &:hover{
+        background-color: #36365a!important;
+    }
+
+}
+
+.modal{
+    position: absolute;
+    background-color: #1d1d1d23;
+    backdrop-filter: blur(5px);
+
+    .modal-opt{
+        font-weight: 500;
+        border-radius: 10px;
+        border: 1px solid #595975;
+        background: #131318;
+        color: #c0c0c0;
+
+        option {
+            color: #c0c0c0;
+            font-weight: 500;
+        }
+    }
+
+    .form-select {
+        background-image: url('data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27><path fill=%27none%27 stroke=%27%23c0c0c0%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27M2 5l6 6 6-6%27/></svg>');
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 16px 12px;
+    }
+
+    .btn-close{
+        filter: invert(1);
+    }
+
+    .modal-content{
+        background-color: #131318;
+        border-radius: 20px;
+        border: 1px solid #595975;
+        box-shadow: 0 0 20px #0000006b;
+
+        input[type=text]{
+            background-color: #323241;
+            border-color: #626281;
+            color: white;
+            transition: 0.2s;
+            
+            &:hover{
+                background-color: #404053;
+            }
+
+            &:focus{
+                box-shadow: 0 0 0 0.25rem #581ea373;
+            }
+        }
+
+        .modal-header, .modal-footer{
+            border: none;
+            text-transform: capitalize;
+        }
+    }
+}
+
 .data-control-panel {
     background: #221844;
     border: 1px solid #6450a5;

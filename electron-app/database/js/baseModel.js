@@ -23,31 +23,6 @@ var Relationship = /** @class */ (function () {
         this.type = type;
         this.table = table;
     }
-    Object.defineProperty(Relationship.prototype, "type", {
-        get: function () {
-            return this._type;
-        },
-        set: function (v) {
-            if (v === 'to-many' || v === 'to-one') {
-                this._type = v;
-            }
-            else {
-                throw new Error("type can only be toMany or toOne");
-            }
-        },
-        enumerable: false,
-        configurable: true
-    });
-    Object.defineProperty(Relationship.prototype, "table", {
-        get: function () {
-            return this._table;
-        },
-        set: function (v) {
-            this._table = v;
-        },
-        enumerable: false,
-        configurable: true
-    });
     return Relationship;
 }());
 exports.Relationship = Relationship;

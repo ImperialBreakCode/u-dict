@@ -10,11 +10,20 @@ import { ViewNames } from './constants';
 
 function ViewController(props) {
 
-	const [view, setView] = useState(<HomeView />);
+	let initialView = <HomeView/>;
+	let viewName = ViewNames.home;
+
+	if (props.subView && props.subView == ViewNames.lang) {
+		initialView = <LangView onLangSelect={props.LangSelectLangView}/>
+		viewName = props.subView;
+	}
+
+	const [view, setView] = useState(initialView);
 
 	function changeView(toView) {
 
 		const langView = (<LangView onLangSelect={props.LangSelectLangView}/>);
+		viewName = toView;
 
 		switch (toView) {
 			case ViewNames.home:
@@ -35,10 +44,9 @@ function ViewController(props) {
 		}
 	}
 
-
 	return (
 		<>
-			<Navigation changeView={changeView} />
+			<Navigation currentView={viewName} changeView={changeView} />
 			<main>
 				{view}
 			</main>
