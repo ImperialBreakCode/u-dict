@@ -216,6 +216,12 @@
             background-size: 16px 12px;
         }
 
+        .text-input{
+            background-color: #372968;
+            color: white;
+            border-color: #694fc9;
+        }
+
         .hover-danger {
             &:hover {
                 background: #3d1919;
@@ -223,4 +229,8 @@
             }
         }
     }
+}
+
+.d-none-search{
+    display: none;
 }
