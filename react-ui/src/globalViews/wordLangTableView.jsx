@@ -21,7 +21,6 @@ class WordsLangGlobalView extends React.Component{
             groups: '',
             values: {
                 genderValue: 'all',
-                orderValue: 'none'
             }
         };
 
@@ -31,6 +30,7 @@ class WordsLangGlobalView extends React.Component{
         this.createWordsHtml.bind(this);
         this.addNewWord.bind(this);
         this.deleteLanguage.bind(this);
+        this.searchWords.bind(this);
     }
 
     componentDidMount(){
@@ -41,7 +41,8 @@ class WordsLangGlobalView extends React.Component{
         window.electronAPI.getWordsAndPhrases(this.props.langId).then(data => {
 
             if (data) {
-                let words = this.createWordsHtml(data[0]);
+                data = data[0].sort((a, b) => a.word.localeCompare(b.word));
+                let words = this.createWordsHtml(data);
                 this.setState({words: words});
             }
         });
@@ -69,7 +70,11 @@ class WordsLangGlobalView extends React.Component{
     }
 
     orderChangeSelect(e){
-        this.setState({values: {orderValue: e.target.value}});
+
+        let arr = this.state.words;
+        arr = arr.reverse();
+
+        this.setState({words: arr});
     }
 
     genderChangeSelect(e){
@@ -152,6 +157,42 @@ class WordsLangGlobalView extends React.Component{
         }
     }
 
+    searchWords(e){
+
+        let val = e.target.value.trim().toLowerCase();
+        
+        if (val == '') {
+            $('tr').removeClass('d-none-search');
+        }
+        else{
+            
+            const trList = $('tbody').children('tr');
+            for (let i = 0; i < trList.length; i++) {
+                const tr = trList[i];
+                let text = tr.childNodes[1].childNodes[0].wholeText.toLowerCase();
+
+                trList[i].classList.add('d-none-search');
+
+                if (text.includes(val)) {
+                    trList[i].classList.remove('d-none-search');
+                }
+
+                const listMeanings = tr.childNodes[2].childNodes;
+
+                for (let е = 0; е < listMeanings.length; е++) {
+                    text = listMeanings[е].childNodes[0].wholeText.toLowerCase();
+                    
+                    if (text.includes(val)) {
+                        console.log(text);
+                        console.log(val);
+                        trList[i].classList.remove('d-none-search');
+                    }
+                }
+            }
+
+        }
+    }
+
     render(){
 
         const newWordFooter = (
@@ -227,9 +268,12 @@ class WordsLangGlobalView extends React.Component{
                         <DataControl>
                             <DCSection>
                                 <span>
-                                    <label>Order:</label>
+                                    <label>Search words or meanings:</label>
+                                    <input onChange={(e) => this.searchWords(e)} className='form-control text-input' type='text'></input>
+                                </span>
+                                <span>
+                                    <label>Word Order:</label>
                                     <select value={this.state.values.orderValue} onChange={(e) => this.orderChangeSelect(e)} className="form-select" aria-label="order select">
-                                        <option value='none'>None</option>
                                         <option value="1">A-Z</option>
                                         <option value="2">Z-A</option>
                                     </select>
