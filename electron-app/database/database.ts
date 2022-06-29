@@ -124,7 +124,7 @@ export class appDatabase{
 
                     keys.forEach(key => {
                         if (key.id == id) {
-                            json.splice(e);
+                            json.splice(e, 1);
                         }
                     });
                 }
@@ -150,7 +150,7 @@ export class appDatabase{
                         this.deleteChildren(jsonData[i], rels);
                     }
     
-                    jsonData.splice(i);
+                    jsonData.splice(i, 1);
 
                     fs.writeFileSync(fileName, JSON.stringify(jsonData));
                     

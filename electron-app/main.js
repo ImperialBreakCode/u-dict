@@ -95,3 +95,7 @@ ipcMain.on('delete-lang', (e, id) =>{
 	const lang = db.Languages.filter(elem => elem.id == id)[0];
 	db.delete(id, tableNames.Language, true, [lang.relWords, lang.relPhrases]);
 })
+
+ipcMain.on('delete-word', (e, id) => {
+	db.delete(id, tableNames.Word);
+})

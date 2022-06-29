@@ -31,6 +31,8 @@ class WordsLangGlobalView extends React.Component{
         this.addNewWord.bind(this);
         this.deleteLanguage.bind(this);
         this.searchWords.bind(this);
+        this.deleteWord.bind(this);
+        this.prepareDelWrd.bind(this);
     }
 
     componentDidMount(){
@@ -60,7 +62,12 @@ class WordsLangGlobalView extends React.Component{
                         </div>
                     )}</td>
                     <td>{word.gramGender ?? 'none'}</td>
-                    <td></td>
+                    <td>
+                        <PrimaryButton style='table-buttons' elemId={word.id + '=more'}>More</PrimaryButton>
+                        <button wrd={word.word} mean={word.meanings[0]} gram={word.gramGender ?? 'none'} onClick={(e) => this.prepareDelWrd(e)} id={word.id + '=del'} className='purple-button sec-button hover-danger table-buttons' data-bs-toggle="modal" data-bs-target="#delete-word-modal">
+                            Delete
+                        </button>
+                    </td>
                 </tr>
             );
             
@@ -140,6 +147,24 @@ class WordsLangGlobalView extends React.Component{
         $('#close-btn').click();
     }
 
+    prepareDelWrd(e){
+        const elem = $(e.target);
+
+        const word = elem.attr('wrd');
+        const mean = elem.attr('mean');
+        const gender = elem.attr('gram');
+        
+        $('#wrd-mod').html('Word: ' + word);
+        $('#wrd-mean-mod').html('Meaning: ' + mean);
+        $('#wrd-gend-mod').html('Gramatical Gender: ' + gender);
+        $('#del-wrd').attr('wrdId', e.target.id.split('=')[0]);
+    }
+
+    deleteWord(e){
+        const id = $(e.target).attr('wrdId');
+        window.electronAPI.deleteWord(id);
+    }
+
     deleteLanguage(){
 
         const langName = document.querySelector('#lang-del-confirm').value.trim();
@@ -183,8 +208,6 @@ class WordsLangGlobalView extends React.Component{
                     text = listMeanings[е].childNodes[0].wholeText.toLowerCase();
                     
                     if (text.includes(val)) {
-                        console.log(text);
-                        console.log(val);
                         trList[i].classList.remove('d-none-search');
                     }
                 }
@@ -204,8 +227,15 @@ class WordsLangGlobalView extends React.Component{
 
         const deletLangFooter = (
             <>
-                <SecondaryButton onClick={() => this.deleteLanguage()} style='danger-btn'>Delete Language</SecondaryButton>
+                <SecondaryButton dissmiss='modal' onClick={() => this.deleteLanguage()} style='danger-btn'>Delete Language</SecondaryButton>
                 <SecondaryButton elemId='close-del-lang-modal' dissmiss='modal'>Cancel</SecondaryButton>
+            </>
+        );
+
+        const deleteWordFooter = (
+            <>
+                <SecondaryButton elemId='del-wrd' onClick={(e)=> this.deleteWord(e)} dissmiss='modal' style='danger-btn'>Delete</SecondaryButton>
+                <SecondaryButton dissmiss='modal'>Cancel</SecondaryButton>
             </>
         );
 
@@ -246,6 +276,13 @@ class WordsLangGlobalView extends React.Component{
                     <p>All words and data are going to be deleted forever.</p>
                     <label>If you are sure type the name of the language to confirm:</label>
                     <input type="text" className="form-control" id="lang-del-confirm"/>
+                </Modal>
+
+                <Modal elemId='delete-word-modal' title='delete a word' footer={deleteWordFooter}>
+                    <p>Do you want to delete this word?</p>
+                    <p id='wrd-mod'></p>
+                    <p id='wrd-mean-mod'></p>
+                    <p id='wrd-gend-mod'></p>
                 </Modal>
 
                 <section>
