@@ -89,7 +89,7 @@
 
         tr:hover {
             td {
-                background-color: #221f38;
+                background-color: #1c192e;
             }
         }
 
@@ -221,16 +221,20 @@
             color: white;
             border-color: #694fc9;
         }
-
-        .hover-danger {
-            &:hover {
-                background: #3d1919;
-                border-color: #9e0c0c;
-            }
-        }
     }
 }
 
 .d-none-search{
     display: none;
+}
+
+.hover-danger {
+    &:hover {
+        background: #3d1919!important;
+        border-color: #9e0c0c;
+    }
+}
+
+.table-buttons{
+    font-size: 17px;
 }

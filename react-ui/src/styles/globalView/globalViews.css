@@ -79,7 +79,7 @@
 }
 
 .global-table tbody tr:hover td {
-  background-color: #221f38;
+  background-color: #1c192e;
 }
 
 .global-table tbody td {
@@ -227,12 +227,16 @@
   border-color: #694fc9;
 }
 
-.data-control-panel .dc-section .hover-danger:hover {
-  background: #3d1919;
+.d-none-search {
+  display: none;
+}
+
+.hover-danger:hover {
+  background: #3d1919 !important;
   border-color: #9e0c0c;
 }
 
-.d-none-search {
-  display: none;
+.table-buttons {
+  font-size: 17px;
 }
 /*# sourceMappingURL=globalViews.css.map */

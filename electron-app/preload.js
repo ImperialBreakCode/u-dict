@@ -30,11 +30,16 @@ const deleteLang = (id) => {
 	ipcRenderer.send('delete-lang', id);
 }
 
+const deleteWord = (id) => {
+	ipcRenderer.send('delete-word', id);
+}
+
 contextBridge.exposeInMainWorld('electronAPI', {
 	getLangData: getLangTableData,
 	addLang: addLang,
 	getLangById: getLangById,
 	getWordsAndPhrases: getWordsAndPhrases,
 	addNewWord: addNewWord,
-	deleteLang: deleteLang
+	deleteLang: deleteLang,
+	deleteWord: deleteWord
 });

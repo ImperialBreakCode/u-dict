@@ -114,7 +114,7 @@ var appDatabase = /** @class */ (function () {
                     var keys = json[e].foreignKeys[tableName];
                     keys.forEach(function (key) {
                         if (key.id == id) {
-                            json.splice(e);
+                            json.splice(e, 1);
                         }
                     });
                 };
@@ -138,7 +138,7 @@ var appDatabase = /** @class */ (function () {
                     if (cascade) {
                         this.deleteChildren(jsonData[i_1], rels);
                     }
-                    jsonData.splice(i_1);
+                    jsonData.splice(i_1, 1);
                     fs.writeFileSync(fileName, JSON.stringify(jsonData));
                     return;
                 }
