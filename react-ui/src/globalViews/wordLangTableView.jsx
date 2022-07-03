@@ -53,7 +53,7 @@ class WordsLangGlobalView extends React.Component{
     createWordsHtml(arr){
         let words = arr.map(word => {
             return(
-                <tr key={word.id}>
+                <tr wrdId={word.id} key={word.id}>
                     <td>{word.article}</td>
                     <td>{word.word}</td>
                     <td className={word.meanings.length > 1 ? 'meaning-expand': ''}>{word.meanings.map( (mn, i) => 
@@ -163,6 +163,9 @@ class WordsLangGlobalView extends React.Component{
     deleteWord(e){
         const id = $(e.target).attr('wrdId');
         window.electronAPI.deleteWord(id);
+
+        //$(`tr[wrdId="${id}"]`).remove();
+        this.componentDidMount();
     }
 
     deleteLanguage(){
