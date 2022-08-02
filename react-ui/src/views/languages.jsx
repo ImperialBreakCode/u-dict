@@ -16,7 +16,7 @@ class LangView extends React.Component{
 
     constructor(props){
         super(props);
-        this.headTable = ['languages', 'word and phrase count'];
+        this.headTable = ['languages', 'word and phrase count', ''];
         this.state = { languages: [] };
 
         this.getLangs.bind(this);
@@ -34,9 +34,13 @@ class LangView extends React.Component{
             if (result) {
 
                 let data = result.map(lang => 
-                    <tr onClick={(e) => this.props.onLangSelect(e)} key={lang.id} lang-id={lang.id}>
+                    <tr key={lang.id} lang-id={lang.id}>
                         <td>{lang.langName}</td>
                         <td>{lang.lenWords + lang.lenPhrases}</td>
+                        <td>
+                            <SecondaryButton onClick={(e) => this.props.onLangSelect(e, 'wrd')} style='langv-table-button'>Words</SecondaryButton>
+                            <SecondaryButton onClick={(e) => this.props.onLangSelect(e, 'phr')} style='langv-table-button'>Phrases</SecondaryButton>
+                        </td>
                     </tr>    
                 );
 
@@ -62,9 +66,13 @@ class LangView extends React.Component{
             newlang = await window.electronAPI.addLang(name); 
 
             let newlangElement = (
-                <tr onClick={(e) => this.props.onLangSelect(e)} key={newlang.id} lang-id={newlang.id}>
+                <tr key={newlang.id} lang-id={newlang.id}>
                     <td>{newlang.langName}</td>
                     <td>0</td>
+                    <td>
+                        <SecondaryButton onClick={(e) => this.props.onLangSelect(e, 'wrd')} style='langv-table-button'>Words</SecondaryButton>
+                        <SecondaryButton onClick={(e) => this.props.onLangSelect(e, 'phr')} style='langv-table-button'>Phrases</SecondaryButton>
+                    </td>
                 </tr>  
             );
     
