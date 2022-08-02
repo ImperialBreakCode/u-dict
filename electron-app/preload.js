@@ -34,6 +34,11 @@ const deleteWord = (id) => {
 	ipcRenderer.send('delete-word', id);
 }
 
+const getItem = (id) => {
+	const item = ipcRenderer.invoke('get-item', id);
+	return item;
+}
+
 contextBridge.exposeInMainWorld('electronAPI', {
 	getLangData: getLangTableData,
 	addLang: addLang,
@@ -41,5 +46,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
 	getWordsAndPhrases: getWordsAndPhrases,
 	addNewWord: addNewWord,
 	deleteLang: deleteLang,
-	deleteWord: deleteWord
+	deleteWord: deleteWord,
+	getItem: getItem
 });

@@ -140,6 +140,11 @@
   overflow: scroll;
 }
 
+.langview .table-override tbody .langv-table-button {
+  opacity: 0;
+  margin: 0 5px;
+}
+
 .langview .table-override tbody tr:last-child {
   border-bottom: transparent;
 }
@@ -156,6 +161,11 @@
   background-color: #735c9e;
 }
 
+.langview .table-override tbody tr:hover .langv-table-button {
+  opacity: 1;
+  margin: 20px 5px;
+}
+
 .langview .table-override tbody td {
   background-color: #544474;
   padding: 15px;
@@ -163,7 +173,6 @@
           box-shadow: none;
   -webkit-transition: 0.2s;
   transition: 0.2s;
-  cursor: pointer;
 }
 
 .langview #add-lang {

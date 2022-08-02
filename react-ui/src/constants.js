@@ -9,4 +9,5 @@ export const GlobalViewNames = {
     viewController: 'controller',
     langWord: 'lang-word',
     words: 'words',
+    infoWord: 'info-word'
 }

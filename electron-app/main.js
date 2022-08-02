@@ -91,6 +91,17 @@ ipcMain.handle('add-new-word', (e, wrd) => {
 	return word;
 })
 
+ipcMain.handle('get-item', (e, id)=>{
+	if (id.startsWith('wrd')) {
+		const word = db.Words.filter(elem => elem.id == id)[0];
+		return word;
+	}
+	else if(id.startsWith('phr')){
+		const phrase = db.Phrases.filter(elem => elem.id == id)[0];
+		return phrase;
+	}
+})
+
 ipcMain.on('delete-lang', (e, id) =>{
 	const lang = db.Languages.filter(elem => elem.id == id)[0];
 	db.delete(id, tableNames.Language, true, [lang.relWords, lang.relPhrases]);

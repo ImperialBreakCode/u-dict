@@ -33,6 +33,7 @@ class WordsLangGlobalView extends React.Component{
         this.searchWords.bind(this);
         this.deleteWord.bind(this);
         this.prepareDelWrd.bind(this);
+        this.moreInfo.bind(this);
     }
 
     componentDidMount(){
@@ -53,7 +54,7 @@ class WordsLangGlobalView extends React.Component{
     createWordsHtml(arr){
         let words = arr.map(word => {
             return(
-                <tr wrdId={word.id} key={word.id}>
+                <tr wrd-id={word.id} key={word.id}>
                     <td>{word.article}</td>
                     <td>{word.word}</td>
                     <td className={word.meanings.length > 1 ? 'meaning-expand': ''}>{word.meanings.map( (mn, i) => 
@@ -63,7 +64,7 @@ class WordsLangGlobalView extends React.Component{
                     )}</td>
                     <td>{word.gramGender ?? 'none'}</td>
                     <td>
-                        <PrimaryButton style='table-buttons' elemId={word.id + '=more'}>More</PrimaryButton>
+                        <PrimaryButton onClick={(e) => this.moreInfo(e)} style='table-buttons' elemId={word.id + '=more'}>More</PrimaryButton>
                         <button wrd={word.word} mean={word.meanings[0]} gram={word.gramGender ?? 'none'} onClick={(e) => this.prepareDelWrd(e)} id={word.id + '=del'} className='purple-button sec-button hover-danger table-buttons' data-bs-toggle="modal" data-bs-target="#delete-word-modal">
                             Delete
                         </button>
@@ -157,14 +158,14 @@ class WordsLangGlobalView extends React.Component{
         $('#wrd-mod').html('Word: ' + word);
         $('#wrd-mean-mod').html('Meaning: ' + mean);
         $('#wrd-gend-mod').html('Gramatical Gender: ' + gender);
-        $('#del-wrd').attr('wrdId', e.target.id.split('=')[0]);
+        $('#del-wrd').attr('wrd-id', e.target.id.split('=')[0]);
     }
 
     deleteWord(e){
-        const id = $(e.target).attr('wrdId');
+        const id = $(e.target).attr('wrd-id');
         window.electronAPI.deleteWord(id);
 
-        //$(`tr[wrdId="${id}"]`).remove();
+        //$(`tr[wrd-id="${id}"]`).remove();
         this.componentDidMount();
     }
 
@@ -217,6 +218,11 @@ class WordsLangGlobalView extends React.Component{
             }
 
         }
+    }
+
+    moreInfo(e){
+        const id = e.target.id.split('=')[0];
+        this.props.selectElement(id);
     }
 
     render(){

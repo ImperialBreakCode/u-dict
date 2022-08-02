@@ -91,7 +91,13 @@ $main-color: #4f09ac;
             max-height: 70vh;
             overflow: scroll;
 
+            .langv-table-button{
+                opacity: 0;
+                margin: 0 5px;
+            }
+
             tr:last-child{
+
                 td:first-child{
                     border-bottom-left-radius: $border-radius;
                 }
@@ -107,6 +113,11 @@ $main-color: #4f09ac;
                 td{
                     background-color: $backcolorHover;
                 }
+
+                .langv-table-button{
+                    opacity: 1;
+                    margin: 20px 5px;
+                }
             }
     
             td{
@@ -114,7 +125,6 @@ $main-color: #4f09ac;
                 padding: 15px;
                 box-shadow: none;
                 transition: 0.2s;
-                cursor: pointer;
             }
         }
 
