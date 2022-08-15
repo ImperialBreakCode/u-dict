@@ -17,6 +17,47 @@
     }
 }
 
+.word-info-view{
+    background: #140529;
+    padding: 20px;
+
+    .word-name{
+        position: relative;
+        padding: 20px;
+        margin: 10px;
+        border-radius: 20px;
+        background: #4f0a8f;
+        text-align: center;
+    }
+
+    .go-back-btn{
+        border: none;
+        padding: 10px;
+        margin: 0 10px;
+        border-radius: 20px;
+        transition: 0.2s;
+        background: #9523ff!important;
+        //border: 2px solid #140529;
+
+        &:hover{
+            background-color: #a544ff!important;
+        }
+    }
+
+    .info-box{
+        border-radius: 20px;
+        background: #4f0a8f;
+        padding: 20px;
+        border: 1px solid #d182ff8c;
+        min-width: 20%;
+        margin: 30px 0;
+
+        h3{
+            margin: 0;
+        }
+    }
+}
+
 .global-table {
     $border-radius: 20px;
 

@@ -10,7 +10,7 @@ function App() {
 	const [ view, setView ] = useState(initialViewController);
 
 	function wordSelect(id) {
-		setView(<WordInfo wordId={id}/>);
+		setView(<WordInfo wordId={id} changeGlobalView={ChangeGlobalView}/>);
 	}
 
 	function LangSelectLangView(e, type) {
@@ -26,7 +26,10 @@ function App() {
 			case GlobalViewNames.viewController:
 				setView(<ViewController subView={subView} LangSelectLangView={LangSelectLangView}/>);
 				break;
-		
+			case GlobalViewNames.langWord:
+				const lanId = subView["Languages"][0].id;
+				setView(<WordsLangGlobalView selectElement={wordSelect} changeGlobalView={ChangeGlobalView} langId={lanId}/>)
+				break;
 			default:
 				break;
 		}
