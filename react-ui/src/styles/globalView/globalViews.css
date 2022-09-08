@@ -28,7 +28,6 @@
   padding: 20px;
   margin: 10px;
   border-radius: 20px;
-  background: #4f0a8f;
   text-align: center;
 }
 
@@ -39,7 +38,8 @@
   border-radius: 20px;
   -webkit-transition: 0.2s;
   transition: 0.2s;
-  background: #9523ff !important;
+  background: #6c0fc4 !important;
+  border: 2px solid #a544ff;
 }
 
 .word-info-view .go-back-btn:hover {
@@ -48,9 +48,9 @@
 
 .word-info-view .info-box {
   border-radius: 20px;
-  background: #4f0a8f;
+  background: #160427;
   padding: 20px;
-  border: 1px solid #d182ff8c;
+  border: 1px solid #6b6b6b8c;
   min-width: 20%;
   margin: 30px 0;
 }
@@ -187,7 +187,7 @@
           box-shadow: 0 0 20px #0000006b;
 }
 
-.modal .modal-content input[type=text] {
+.modal .modal-content input[type=text], .modal .modal-content textarea {
   background-color: #323241;
   border-color: #626281;
   color: white;
@@ -195,11 +195,11 @@
   transition: 0.2s;
 }
 
-.modal .modal-content input[type=text]:hover {
+.modal .modal-content input[type=text]:hover, .modal .modal-content textarea:hover {
   background-color: #404053;
 }
 
-.modal .modal-content input[type=text]:focus {
+.modal .modal-content input[type=text]:focus, .modal .modal-content textarea:focus {
   -webkit-box-shadow: 0 0 0 0.25rem #581ea373;
           box-shadow: 0 0 0 0.25rem #581ea373;
 }

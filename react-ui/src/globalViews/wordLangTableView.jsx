@@ -267,7 +267,7 @@ class WordsLangGlobalView extends React.Component{
                         </div>
                         <div className="mb-3">
                             <label>Gramatical Gender:</label>
-                            <select id='form-gram-gender' onChange={(e) => this.genderChangeSelect(e)} className="form-select modal-opt" aria-label="Gender select">
+                            <select id='form-gram-gender' className="form-select modal-opt" aria-label="Gender select">
                                 <option defaultValue value="none">None</option>
                                 <option value="masculine">masculine</option>
                                 <option value="feminine">feminine</option>

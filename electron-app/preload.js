@@ -39,6 +39,10 @@ const getItem = (id) => {
 	return item;
 }
 
+const updateWord = (wrd, id) => {
+	ipcRenderer.send('updateWrd', wrd, id)
+}
+
 contextBridge.exposeInMainWorld('electronAPI', {
 	getLangData: getLangTableData,
 	addLang: addLang,
@@ -47,5 +51,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
 	addNewWord: addNewWord,
 	deleteLang: deleteLang,
 	deleteWord: deleteWord,
-	getItem: getItem
+	getItem: getItem,
+	updateWord: updateWord
 });

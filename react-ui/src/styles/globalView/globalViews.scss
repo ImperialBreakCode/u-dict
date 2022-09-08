@@ -26,7 +26,6 @@
         padding: 20px;
         margin: 10px;
         border-radius: 20px;
-        background: #4f0a8f;
         text-align: center;
     }
 
@@ -36,8 +35,8 @@
         margin: 0 10px;
         border-radius: 20px;
         transition: 0.2s;
-        background: #9523ff!important;
-        //border: 2px solid #140529;
+        background: #6c0fc4!important;
+        border: 2px solid #a544ff;
 
         &:hover{
             background-color: #a544ff!important;
@@ -46,9 +45,9 @@
 
     .info-box{
         border-radius: 20px;
-        background: #4f0a8f;
+        background: #160427;
         padding: 20px;
-        border: 1px solid #d182ff8c;
+        border: 1px solid #6b6b6b8c;
         min-width: 20%;
         margin: 30px 0;
 
@@ -193,7 +192,7 @@
         border: 1px solid #595975;
         box-shadow: 0 0 20px #0000006b;
 
-        input[type=text]{
+        input[type=text], textarea{
             background-color: #323241;
             border-color: #626281;
             color: white;
