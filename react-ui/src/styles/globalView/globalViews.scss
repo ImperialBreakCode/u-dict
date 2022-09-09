@@ -55,6 +55,40 @@
             margin: 0;
         }
     }
+
+    .meaning-box{
+        display: flex;
+        align-items: center;
+        background-color: #3d1f6881;
+        padding: 5px 10px;
+        margin: 6px 0;
+        border: 1px solid #513972;
+        border-radius: 5px;
+
+        &:hover{
+            background-color: #592c97ad;
+        }
+    }
+
+    .primary-meaning{
+        background-color: #2d863280;
+        border: 1px solid #42c4489d;
+
+        &:hover{
+            background-color: #42c4489d;
+        }
+    }
+
+    #meaning-wrapper{
+        max-height: 300px;
+        overflow-y: scroll;
+    }
+
+    .add-mean{
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+    }
 }
 
 .global-table {

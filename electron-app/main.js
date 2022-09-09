@@ -123,3 +123,11 @@ ipcMain.on('updateWrd', (e, wrd, id) => {
 	db.delete(id, tableNames.Word, false);
 	db.save(word);
 })
+
+ipcMain.on('update-meanings-wrd', (e, mn, id) => {
+	let word = db.Words.filter(elem => elem.id == id)[0];
+	word.meanings = [...mn];
+
+	db.delete(id, tableNames.Word, false);
+	db.save(word);
+})
