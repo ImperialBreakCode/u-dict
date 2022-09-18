@@ -97,7 +97,8 @@ class WordsLangGlobalView extends React.Component{
             for (let i = 0; i < children.length; i++) {
                 const child = children.get(i);
                 const gend = child.childNodes[3].childNodes[0];
-                if (gend == val) {
+
+                if (gend.textContent == val) {
                     child.classList.remove('d-none');
                 }else{
                     child.classList.add('d-none');
@@ -222,7 +223,7 @@ class WordsLangGlobalView extends React.Component{
 
     moreInfo(e){
         const id = e.target.id.split('=')[0];
-        this.props.selectElement(id);
+        this.props.selectElement(id, GlobalViewNames.langWord);
     }
 
     render(){
@@ -267,7 +268,7 @@ class WordsLangGlobalView extends React.Component{
                         </div>
                         <div className="mb-3">
                             <label>Gramatical Gender:</label>
-                            <select id='form-gram-gender' onChange={(e) => this.genderChangeSelect(e)} className="form-select modal-opt" aria-label="Gender select">
+                            <select id='form-gram-gender' className="form-select modal-opt" aria-label="Gender select">
                                 <option defaultValue value="none">None</option>
                                 <option value="masculine">masculine</option>
                                 <option value="feminine">feminine</option>

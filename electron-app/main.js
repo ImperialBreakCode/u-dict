@@ -58,6 +58,17 @@ ipcMain.handle('get-langs', () => {
 	return langs;
 })
 
+ipcMain.handle('get-words', () => {
+	let words = db.Words;
+	words.forEach(word => {
+		const lang = db.getParent(word.foreignKeys[tableNames.Language][0]);
+
+		word.language = lang.langName;
+	});
+
+	return words;
+})
+
 ipcMain.handle('new-lang', (e, langName) => {
 	let lang = new Language(langName);
 	db.save(lang);
@@ -109,4 +120,25 @@ ipcMain.on('delete-lang', (e, id) =>{
 
 ipcMain.on('delete-word', (e, id) => {
 	db.delete(id, tableNames.Word);
+})
+
+ipcMain.on('updateWrd', (e, wrd, id) => {
+	let word = db.Words.filter(elem => elem.id == id)[0];
+
+	word.article = wrd.article;
+	word.plural = wrd.plural;
+	word.info = wrd.info;
+	word.word = wrd.word;
+	word.gramGender = wrd.gramGender;
+
+	db.delete(id, tableNames.Word, false);
+	db.save(word);
+})
+
+ipcMain.on('update-meanings-wrd', (e, mn, id) => {
+	let word = db.Words.filter(elem => elem.id == id)[0];
+	word.meanings = [...mn];
+
+	db.delete(id, tableNames.Word, false);
+	db.save(word);
 })

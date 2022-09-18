@@ -6,6 +6,11 @@ const getLangTableData = () => {
 	return data;
 };
 
+const getWordsData = () => {
+	const data = ipcRenderer.invoke('get-words', 10);
+	return data;
+}
+
 const addLang = (langName) => {
 	const newLang = ipcRenderer.invoke('new-lang', langName);
 	return newLang;
@@ -39,13 +44,24 @@ const getItem = (id) => {
 	return item;
 }
 
+const updateWord = (wrd, id) => {
+	ipcRenderer.send('updateWrd', wrd, id)
+}
+
+const updateMeaningWrd = (mn, id) => {
+	ipcRenderer.send('update-meanings-wrd', mn, id)
+}
+
 contextBridge.exposeInMainWorld('electronAPI', {
 	getLangData: getLangTableData,
+	getWordsData: getWordsData,
 	addLang: addLang,
 	getLangById: getLangById,
 	getWordsAndPhrases: getWordsAndPhrases,
 	addNewWord: addNewWord,
 	deleteLang: deleteLang,
 	deleteWord: deleteWord,
-	getItem: getItem
+	getItem: getItem,
+	updateWord: updateWord,
+	updateMeaningWrd: updateMeaningWrd
 });
