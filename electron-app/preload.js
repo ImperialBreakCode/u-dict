@@ -31,6 +31,11 @@ const addNewWord = (word) => {
 	return newWrd;
 }
 
+const addNewPhrase = (phrase) => {
+	const newPhr = ipcRenderer.invoke('add-new-phrase', phrase);
+	return newPhr;
+}
+
 const deleteLang = (id) => {
 	ipcRenderer.send('delete-lang', id);
 }
@@ -39,17 +44,29 @@ const deleteWord = (id) => {
 	ipcRenderer.send('delete-word', id);
 }
 
+const deletePhrase = (id) => {
+	ipcRenderer.send('delete-phrase', id);
+}
+
 const getItem = (id) => {
 	const item = ipcRenderer.invoke('get-item', id);
 	return item;
 }
 
 const updateWord = (wrd, id) => {
-	ipcRenderer.send('updateWrd', wrd, id)
+	ipcRenderer.send('updateWrd', wrd, id);
+}
+
+const updatePhrase = (phr, id) => {
+	ipcRenderer.send('updatePhr', phr, id);
 }
 
 const updateMeaningWrd = (mn, id) => {
 	ipcRenderer.send('update-meanings-wrd', mn, id)
+}
+
+const updateMeaningPhr = (mn, id) => {
+	ipcRenderer.send('update-meanings-phr', mn, id)
 }
 
 contextBridge.exposeInMainWorld('electronAPI', {
@@ -59,9 +76,13 @@ contextBridge.exposeInMainWorld('electronAPI', {
 	getLangById: getLangById,
 	getWordsAndPhrases: getWordsAndPhrases,
 	addNewWord: addNewWord,
+	addNewPhrase: addNewPhrase,
 	deleteLang: deleteLang,
 	deleteWord: deleteWord,
+	deletePhrase: deletePhrase,
 	getItem: getItem,
 	updateWord: updateWord,
-	updateMeaningWrd: updateMeaningWrd
+	updatePhrase: updatePhrase,
+	updateMeaningWrd: updateMeaningWrd,
+	updateMeaningPhr: updateMeaningPhr
 });

@@ -1,4 +1,4 @@
-.lang-words-view {
+.lang-words-view, .lang-phrases-view {
     background: linear-gradient(90deg, #04040c, #14012e);
     height: 100vh;
 
@@ -17,12 +17,12 @@
     }
 }
 
-.word-info-view{
+.word-info-view, .phrase-info-view{
     background: #140529;
     padding: 20px;
     height: fit-content;
 
-    .word-name{
+    .word-name, .phrase-name{
         position: relative;
         padding: 20px;
         margin: 10px;

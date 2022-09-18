@@ -1,24 +1,24 @@
-.lang-words-view {
+.lang-words-view, .lang-phrases-view {
   background: -webkit-gradient(linear, left top, right top, from(#04040c), to(#14012e));
   background: linear-gradient(90deg, #04040c, #14012e);
   height: 100vh;
 }
 
-.lang-words-view section {
+.lang-words-view section, .lang-phrases-view section {
   background: inherit;
 }
 
-.lang-words-view h1 {
+.lang-words-view h1, .lang-phrases-view h1 {
   text-align: center;
   margin: 5% 0;
   font-size: 40px;
 }
 
-.lang-words-view .row {
+.lang-words-view .row, .lang-phrases-view .row {
   width: inherit;
 }
 
-.word-info-view {
+.word-info-view, .phrase-info-view {
   background: #140529;
   padding: 20px;
   height: -webkit-fit-content;
@@ -26,7 +26,7 @@
   height: fit-content;
 }
 
-.word-info-view .word-name {
+.word-info-view .word-name, .word-info-view .phrase-name, .phrase-info-view .word-name, .phrase-info-view .phrase-name {
   position: relative;
   padding: 20px;
   margin: 10px;
@@ -34,7 +34,7 @@
   text-align: center;
 }
 
-.word-info-view .go-back-btn {
+.word-info-view .go-back-btn, .phrase-info-view .go-back-btn {
   border: none;
   padding: 10px;
   margin: 0 10px;
@@ -45,11 +45,11 @@
   border: 2px solid #a544ff;
 }
 
-.word-info-view .go-back-btn:hover {
+.word-info-view .go-back-btn:hover, .phrase-info-view .go-back-btn:hover {
   background-color: #a544ff !important;
 }
 
-.word-info-view .info-box {
+.word-info-view .info-box, .phrase-info-view .info-box {
   border-radius: 20px;
   background: #160427;
   padding: 20px;
@@ -58,11 +58,11 @@
   margin: 30px 0;
 }
 
-.word-info-view .info-box h3 {
+.word-info-view .info-box h3, .phrase-info-view .info-box h3 {
   margin: 0;
 }
 
-.word-info-view .meaning-box {
+.word-info-view .meaning-box, .phrase-info-view .meaning-box {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -76,25 +76,25 @@
   border-radius: 5px;
 }
 
-.word-info-view .meaning-box:hover {
+.word-info-view .meaning-box:hover, .phrase-info-view .meaning-box:hover {
   background-color: #592c97ad;
 }
 
-.word-info-view .primary-meaning {
+.word-info-view .primary-meaning, .phrase-info-view .primary-meaning {
   background-color: #2d863280;
   border: 1px solid #42c4489d;
 }
 
-.word-info-view .primary-meaning:hover {
+.word-info-view .primary-meaning:hover, .phrase-info-view .primary-meaning:hover {
   background-color: #42c4489d;
 }
 
-.word-info-view #meaning-wrapper {
+.word-info-view #meaning-wrapper, .phrase-info-view #meaning-wrapper {
   max-height: 300px;
   overflow-y: scroll;
 }
 
-.word-info-view .add-mean {
+.word-info-view .add-mean, .phrase-info-view .add-mean {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
