@@ -97,7 +97,8 @@ class WordsLangGlobalView extends React.Component{
             for (let i = 0; i < children.length; i++) {
                 const child = children.get(i);
                 const gend = child.childNodes[3].childNodes[0];
-                if (gend == val) {
+
+                if (gend.textContent == val) {
                     child.classList.remove('d-none');
                 }else{
                     child.classList.add('d-none');
@@ -222,7 +223,7 @@ class WordsLangGlobalView extends React.Component{
 
     moreInfo(e){
         const id = e.target.id.split('=')[0];
-        this.props.selectElement(id);
+        this.props.selectElement(id, GlobalViewNames.langWord);
     }
 
     render(){

@@ -13,8 +13,17 @@ function ViewController(props) {
 	let initialView = <HomeView/>;
 	let viewName = ViewNames.home;
 
-	if (props.subView && props.subView == ViewNames.lang) {
-		initialView = <LangView onLangSelect={props.LangSelectLangView}/>
+	if (props.subView) {
+		switch (props.subView) {
+			case ViewNames.lang:
+				initialView = <LangView onLangSelect={props.LangSelectLangView}/>
+				break;
+			case ViewNames.words:
+				initialView = <WordsView changeGlobalView={props.changeGlobalView}/>
+			default:
+				break;
+		}
+		
 		viewName = props.subView;
 	}
 
@@ -35,7 +44,7 @@ function ViewController(props) {
 				break;
 
 			case ViewNames.words:
-				setView(<WordsView />);
+				setView(<WordsView changeGlobalView={props.changeGlobalView}/>);
 				break;
 
 			case ViewNames.exercises:

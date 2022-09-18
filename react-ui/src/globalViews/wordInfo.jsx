@@ -154,7 +154,14 @@ class WordInfo extends React.Component{
             const index = element.getAttribute('meaning');
 
             let stateCopy = [...this.state.meanings];
-            stateCopy.splice(index, 1);
+
+            for (let i = 0; i < stateCopy.length; i++) {
+
+                if (stateCopy[i].props.meaning == index) {
+                    stateCopy.splice(i, 1);
+                    break;
+                }
+            }
 
             this.setState({meanings: stateCopy});
 
@@ -239,7 +246,7 @@ class WordInfo extends React.Component{
                 <DataControl>
                     <h1 className='word-name'>
 
-                        <button onClick={(e) => this.props.changeGlobalView(GlobalViewNames.langWord, keys)} 
+                        <button onClick={(e) => this.props.changeGlobalView(this.props.fromView, keys)} 
                             className='go-back-btn'>
                                 Go Back  
                         </button>
@@ -299,9 +306,9 @@ class WordInfo extends React.Component{
                         <h2>Meanings:</h2>
                     </DCSection>
 
-                    <DCSection>
+                    <div>
                         {this.state.viewMeanings}
-                    </DCSection>
+                    </div>
                 </DataControl>
             </main>
         );

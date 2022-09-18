@@ -6,6 +6,11 @@ const getLangTableData = () => {
 	return data;
 };
 
+const getWordsData = () => {
+	const data = ipcRenderer.invoke('get-words', 10);
+	return data;
+}
+
 const addLang = (langName) => {
 	const newLang = ipcRenderer.invoke('new-lang', langName);
 	return newLang;
@@ -49,6 +54,7 @@ const updateMeaningWrd = (mn, id) => {
 
 contextBridge.exposeInMainWorld('electronAPI', {
 	getLangData: getLangTableData,
+	getWordsData: getWordsData,
 	addLang: addLang,
 	getLangById: getLangById,
 	getWordsAndPhrases: getWordsAndPhrases,

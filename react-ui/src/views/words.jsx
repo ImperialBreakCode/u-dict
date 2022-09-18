@@ -2,8 +2,13 @@ import React from 'react';
 import "../styles/view-styles/style.css";
 import Row from '../components/row';
 import PrimaryButton from '../components/buttons';
+import { GlobalViewNames } from '../constants';
 
 class WordsView extends React.Component{
+
+    constructor(props){
+        super(props);
+    }
 
     render(){
         return(
@@ -20,7 +25,7 @@ class WordsView extends React.Component{
                             <h2 className='mb-3'>Tables</h2>
                             <ContentRow>
                                 <h5>Table with all words</h5>
-                                <PrimaryButton style='ms-auto'>View Table</PrimaryButton>
+                                <PrimaryButton onClick={(e) => this.props.changeGlobalView(GlobalViewNames.words)} style='ms-auto'>View Table</PrimaryButton>
                             </ContentRow>
                             <ContentRow>
                                 <h5>Table with all phrases</h5>

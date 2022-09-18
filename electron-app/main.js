@@ -58,6 +58,17 @@ ipcMain.handle('get-langs', () => {
 	return langs;
 })
 
+ipcMain.handle('get-words', () => {
+	let words = db.Words;
+	words.forEach(word => {
+		const lang = db.getParent(word.foreignKeys[tableNames.Language][0]);
+
+		word.language = lang.langName;
+	});
+
+	return words;
+})
+
 ipcMain.handle('new-lang', (e, langName) => {
 	let lang = new Language(langName);
 	db.save(lang);
