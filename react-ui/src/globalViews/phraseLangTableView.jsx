@@ -9,7 +9,7 @@ import '../styles/globalView/globalViews.css';
 import { Modal } from '../components/modal';
 import { GlobalViewNames, ViewNames } from '../constants';
 
-class WordsLangGlobalView extends React.Component{
+class PhrasesLangGlobalView extends React.Component{
 
     constructor(props){
 
@@ -17,22 +17,22 @@ class WordsLangGlobalView extends React.Component{
 
         this.state = {
             lang: '',
-            words: <tr></tr>,
+            phrases: <tr></tr>,
             groups: '',
             values: {
                 genderValue: 'all',
             }
         };
 
-        this.tableHead = ['Article', 'Word', 'Meaning', 'Gramatical Gender', 'More'];
+        this.tableHead = ['Phrase', 'Meaning', 'Gramatical Gender', 'More'];
 
         this.genderChangeSelect.bind(this);
-        this.createWordsHtml.bind(this);
-        this.addNewWord.bind(this);
+        this.createPhrasesHtml.bind(this);
+        this.addNewPhrase.bind(this);
         this.deleteLanguage.bind(this);
-        this.searchWords.bind(this);
-        this.deleteWord.bind(this);
-        this.prepareDelWrd.bind(this);
+        this.searchPhrases.bind(this);
+        this.deletePhrase.bind(this);
+        this.prepareDelPhr.bind(this);
         this.moreInfo.bind(this);
     }
 
@@ -44,28 +44,27 @@ class WordsLangGlobalView extends React.Component{
         window.electronAPI.getWordsAndPhrases(this.props.langId).then(data => {
 
             if (data) {
-                data = data[0].sort((a, b) => a.word.localeCompare(b.word));
-                let words = this.createWordsHtml(data);
-                this.setState({words: words});
+                data = data[1].sort((a, b) => a.phrase.localeCompare(b.phrase));
+                let phrase = this.createPhrasesHtml(data);
+                this.setState({phrases: phrase});
             }
         });
     }
 
-    createWordsHtml(arr){
-        let words = arr.map(word => {
+    createPhrasesHtml(arr){
+        let phrases = arr.map(phrase => {
             return(
-                <tr wrd-id={word.id} key={word.id}>
-                    <td>{word.article}</td>
-                    <td>{word.word}</td>
-                    <td className={word.meanings.length > 1 ? 'meaning-expand': ''}>{word.meanings.map( (mn, i) => 
-                        <div className={i == 0 ? '': 'd-none' } key={word.id + i}>
-                            {mn} { i==0 && word.meanings.length > 1 ? <p>...</p>: ''}
+                <tr wrd-id={phrase.id} key={phrase.id}>
+                    <td>{phrase.phrase}</td>
+                    <td className={phrase.meanings.length > 1 ? 'meaning-expand': ''}>{phrase.meanings.map( (mn, i) => 
+                        <div className={i == 0 ? '': 'd-none' } key={phrase.id + i}>
+                            {mn} { i==0 && phrase.meanings.length > 1 ? <p>...</p>: ''}
                         </div>
                     )}</td>
-                    <td>{word.gramGender ?? 'none'}</td>
+                    <td>{phrase.gramGender ?? 'none'}</td>
                     <td>
-                        <PrimaryButton onClick={(e) => this.moreInfo(e)} style='table-buttons' elemId={word.id + '=more'}>More</PrimaryButton>
-                        <button wrd={word.word} mean={word.meanings[0]} gram={word.gramGender ?? 'none'} onClick={(e) => this.prepareDelWrd(e)} id={word.id + '=del'} className='purple-button sec-button hover-danger table-buttons' data-bs-toggle="modal" data-bs-target="#delete-word-modal">
+                        <PrimaryButton onClick={(e) => this.moreInfo(e)} style='table-buttons' elemId={phrase.id + '=more'}>More</PrimaryButton>
+                        <button phr={phrase.phrase} mean={phrase.meanings[0]} gram={phrase.gramGender ?? 'none'} onClick={(e) => this.prepareDelPhr(e)} id={phrase.id + '=del'} className='purple-button sec-button hover-danger table-buttons' data-bs-toggle="modal" data-bs-target="#delete-phrase-modal">
                             Delete
                         </button>
                     </td>
@@ -74,15 +73,15 @@ class WordsLangGlobalView extends React.Component{
             
         });
 
-        return words;
+        return phrases;
     }
 
     orderChangeSelect(e){
 
-        let arr = this.state.words;
+        let arr = this.state.phrases;
         arr = arr.reverse();
 
-        this.setState({words: arr});
+        this.setState({phrases: arr});
     }
 
     genderChangeSelect(e){
@@ -96,7 +95,7 @@ class WordsLangGlobalView extends React.Component{
 
             for (let i = 0; i < children.length; i++) {
                 const child = children.get(i);
-                const gend = child.childNodes[3].childNodes[0];
+                const gend = child.childNodes[2].childNodes[0];
 
                 if (gend.textContent == val) {
                     child.classList.remove('d-none');
@@ -107,64 +106,62 @@ class WordsLangGlobalView extends React.Component{
         }
     }
 
-    async addNewWord(){
-        const wordName = document.querySelector('#word-input').value.trim();
-        const wordMeaning = document.querySelector('#meaning-input').value.trim();
+    async addNewPhrase(){
+        const phraseName = document.querySelector('#phrase-input').value.trim();
+        const phraseMeaning = document.querySelector('#meaning-input').value.trim();
 
         $('#meaning-input').css('box-shadow', '');
-        $('#word-input').css('box-shadow', '');
+        $('#phrase-input').css('box-shadow', '');
 
-        if (wordName == '' || wordMeaning == '') {
+        if (phraseName == '' || phraseMeaning == '') {
 
-            if (wordName == '') {
-                $('#word-input').css('box-shadow', '0 0 0 5px #ff0000a0');
+            if (phraseName == '') {
+                $('#phrase-input').css('box-shadow', '0 0 0 5px #ff0000a0');
             }
 
-            if(wordMeaning == ''){
+            if(phraseMeaning == ''){
                 $('#meaning-input').css('box-shadow', '0 0 0 5px #ff0000a0');
             }
 
             return;
         }
 
-        const word = {
+        const phrase = {
             langId: this.props.langId,
-            word: wordName,
-            meaning: wordMeaning,
-            article: document.querySelector('#article-input').value.trim(),
+            phrase: phraseName,
+            meaning: phraseMeaning,
             gender: document.querySelector('#form-gram-gender').value
         }
 
-        document.querySelector('#word-input').value = '';
+        document.querySelector('#phrase-input').value = '';
         document.querySelector('#meaning-input').value = '';
-        document.querySelector('#article-input').value = '';
         document.querySelector('#form-gram-gender').value = 'none';
 
-        let newWord = await window.electronAPI.addNewWord(word);
-        newWord = this.createWordsHtml([newWord]);
+        let newPhrase = await window.electronAPI.addNewPhrase(phrase);
+        newPhrase = this.createPhrasesHtml([newPhrase]);
 
-        const newState = [...this.state.words, ...newWord];
-        this.setState({words: newState});
+        const newState = [...this.state.phrases, ...newPhrase];
+        this.setState({phrases: newState});
 
         $('#close-btn').click();
     }
 
-    prepareDelWrd(e){
+    prepareDelPhr(e){
         const elem = $(e.target);
 
-        const word = elem.attr('wrd');
+        const phrase = elem.attr('phr');
         const mean = elem.attr('mean');
         const gender = elem.attr('gram');
         
-        $('#wrd-mod').html('Word: ' + word);
-        $('#wrd-mean-mod').html('Meaning: ' + mean);
-        $('#wrd-gend-mod').html('Gramatical Gender: ' + gender);
-        $('#del-wrd').attr('wrd-id', e.target.id.split('=')[0]);
+        $('#phr-mod').html('Phrase: ' + phrase);
+        $('#phr-mean-mod').html('Meaning: ' + mean);
+        $('#phr-gend-mod').html('Gramatical Gender: ' + gender);
+        $('#del-phr').attr('phr-id', e.target.id.split('=')[0]);
     }
 
-    deleteWord(e){
-        const id = $(e.target).attr('wrd-id');
-        window.electronAPI.deleteWord(id);
+    deletePhrase(e){
+        const id = $(e.target).attr('phr-id');
+        window.electronAPI.deletePhrase(id);
 
         //$(`tr[wrd-id="${id}"]`).remove();
         this.componentDidMount();
@@ -187,7 +184,7 @@ class WordsLangGlobalView extends React.Component{
         }
     }
 
-    searchWords(e){
+    searchPhrases(e){
 
         let val = e.target.value.trim().toLowerCase();
         
@@ -199,7 +196,7 @@ class WordsLangGlobalView extends React.Component{
             const trList = $('tbody').children('tr');
             for (let i = 0; i < trList.length; i++) {
                 const tr = trList[i];
-                let text = tr.childNodes[1].childNodes[0].wholeText.toLowerCase();
+                let text = tr.childNodes[0].childNodes[0].wholeText.toLowerCase();
 
                 trList[i].classList.add('d-none-search');
 
@@ -207,7 +204,7 @@ class WordsLangGlobalView extends React.Component{
                     trList[i].classList.remove('d-none-search');
                 }
 
-                const listMeanings = tr.childNodes[2].childNodes;
+                const listMeanings = tr.childNodes[1].childNodes;
 
                 for (let е = 0; е < listMeanings.length; е++) {
                     text = listMeanings[е].childNodes[0].wholeText.toLowerCase();
@@ -223,14 +220,14 @@ class WordsLangGlobalView extends React.Component{
 
     moreInfo(e){
         const id = e.target.id.split('=')[0];
-        this.props.selectElement(id, GlobalViewNames.langWord);
+        this.props.selectElement(id, GlobalViewNames.langPhrase);
     }
 
     render(){
 
-        const newWordFooter = (
+        const newPhraseFooter = (
             <>
-                <PrimaryButton onClick={(e) => this.addNewWord(e)}>Add Word</PrimaryButton>
+                <PrimaryButton onClick={(e) => this.addNewPhrase(e)}>Add Phrase</PrimaryButton>
                 <SecondaryButton elemId='close-btn' dissmiss='modal'>Close</SecondaryButton>
             </>
         );
@@ -242,29 +239,25 @@ class WordsLangGlobalView extends React.Component{
             </>
         );
 
-        const deleteWordFooter = (
+        const deletePhraseFooter = (
             <>
-                <SecondaryButton elemId='del-wrd' onClick={(e)=> this.deleteWord(e)} dissmiss='modal' style='danger-btn'>Delete</SecondaryButton>
+                <SecondaryButton elemId='del-phr' onClick={(e)=> this.deletePhrase(e)} dissmiss='modal' style='danger-btn'>Delete</SecondaryButton>
                 <SecondaryButton dissmiss='modal'>Cancel</SecondaryButton>
             </>
         );
 
         return(
-            <main className='lang-words-view'>
+            <main className='lang-phrases-view'>
 
-                <Modal elemId='new-word-modal' title='Add New Word' footer={newWordFooter}>
+                <Modal elemId='new-phrase-modal' title='Add New Phrase' footer={newPhraseFooter}>
                     <form>
                         <div className="mb-3">
-                            <label htmlFor="word-input" className="col-form-label">Word:</label>
-                            <input type="text" className="form-control" id="word-input"/>
+                            <label htmlFor="phrase-input" className="col-form-label">Phrase:</label>
+                            <input type="text" className="form-control" id="phrase-input"/>
                         </div>
                         <div className="mb-3">
                             <label htmlFor="meaning-input" className="col-form-label">Meaning:</label>
                             <input type="text" className="form-control" id="meaning-input"/>
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="article-input" className="col-form-label">Article (a, an, un ...): <br></br><i>If there is no article leave the field blank</i></label>
-                            <input type="text" className="form-control" id="article-input"/>
                         </div>
                         <div className="mb-3">
                             <label>Gramatical Gender:</label>
@@ -288,11 +281,11 @@ class WordsLangGlobalView extends React.Component{
                     <input type="text" className="form-control" id="lang-del-confirm"/>
                 </Modal>
 
-                <Modal elemId='delete-word-modal' title='delete a word' footer={deleteWordFooter}>
-                    <p>Do you want to delete this word?</p>
-                    <p id='wrd-mod'></p>
-                    <p id='wrd-mean-mod'></p>
-                    <p id='wrd-gend-mod'></p>
+                <Modal elemId='delete-phrase-modal' title='delete a phrase' footer={deletePhraseFooter}>
+                    <p>Do you want to delete this phrase?</p>
+                    <p id='phr-mod'></p>
+                    <p id='phr-mean-mod'></p>
+                    <p id='phr-gend-mod'></p>
                 </Modal>
 
                 <section>
@@ -307,7 +300,7 @@ class WordsLangGlobalView extends React.Component{
 
                         <DataControl>
                             <DCSection>
-                                <button className='purple-button w-50' data-bs-toggle="modal" data-bs-target="#new-word-modal">Add new word</button>
+                                <button className='purple-button w-50' data-bs-toggle="modal" data-bs-target="#new-phrase-modal">Add new phrase</button>
                                 <button className='purple-button sec-button hover-danger w-50' data-bs-toggle="modal" data-bs-target="#delete-lang-modal">Delete language</button>
                             </DCSection>
                         </DataControl>
@@ -316,10 +309,10 @@ class WordsLangGlobalView extends React.Component{
                             <DCSection>
                                 <span>
                                     <label>Search words or meanings:</label>
-                                    <input onChange={(e) => this.searchWords(e)} className='form-control text-input' type='text'></input>
+                                    <input onChange={(e) => this.searchPhrases(e)} className='form-control text-input' type='text'></input>
                                 </span>
                                 <span>
-                                    <label>Word Order:</label>
+                                    <label>Phrase Order:</label>
                                     <select value={this.state.values.orderValue} onChange={(e) => this.orderChangeSelect(e)} className="form-select" aria-label="order select">
                                         <option value="1">A-Z</option>
                                         <option value="2">Z-A</option>
@@ -343,7 +336,7 @@ class WordsLangGlobalView extends React.Component{
                     </Row>
 
                     <Row>
-                        <Table overStyle='global-table' head={this.tableHead} data={this.state.words}/>
+                        <Table overStyle='global-table' head={this.tableHead} data={this.state.phrases}/>
                     </Row>
                 </div>
                 </section>
@@ -354,4 +347,4 @@ class WordsLangGlobalView extends React.Component{
 
 }
 
-export default WordsLangGlobalView;
+export default PhrasesLangGlobalView;

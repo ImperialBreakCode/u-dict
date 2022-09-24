@@ -32,11 +32,12 @@ var Language = /** @class */ (function (_super) {
 exports.Language = Language;
 var Phrase = /** @class */ (function (_super) {
     __extends(Phrase, _super);
-    function Phrase(phrase, meaning, group) {
+    function Phrase(phrase, meaning, info, gramGender) {
         var _this = _super.call(this, tableNames_1.tableNames.Phrase, 'phr') || this;
         _this.phrase = phrase;
-        _this.meaning = meaning;
-        _this.group = group;
+        _this.meanings = meaning;
+        _this.info = info;
+        _this.gramGender = gramGender;
         _this.foreignKeys = {};
         _this.foreignKeys[tableNames_1.tableNames.Language] = [];
         return _this;

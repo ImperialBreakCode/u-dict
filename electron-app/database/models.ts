@@ -24,20 +24,22 @@ export class Language extends Model{
 
 export class Phrase extends Model{
 
-    constructor(phrase: string, meaning: string, group?:string){
+    constructor(phrase: string, meaning: string[], info?: string, gramGender?: gramGender){
         super(tableNames.Phrase, 'phr');
 
         this.phrase = phrase;
-        this.meaning = meaning;
-        this.group = group;
+        this.meanings = meaning;
+        this.info = info;
+        this.gramGender = gramGender;
         
         this.foreignKeys = {};
         this.foreignKeys[tableNames.Language] = [];
     }
 
     public phrase: string;
-    public meaning: string;
-    public group?: string;
+    public meanings: string[];
+    public gramGender?: gramGender;
+    public info?: string;
 
     public readonly foreignKeys: {[key:string]: ForeignKey[]};
     
