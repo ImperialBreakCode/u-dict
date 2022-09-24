@@ -10,6 +10,7 @@ export const GlobalViewNames = {
     langWord: 'lang-word',
     langPhrase: 'lang-phrase',
     words: 'words',
+    phrases: 'phrases',
     infoWord: 'info-word',
     infoPhrase: 'info-phrase'
 }

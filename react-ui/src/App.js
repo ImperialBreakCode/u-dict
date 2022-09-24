@@ -6,6 +6,7 @@ import WordInfo from './globalViews/wordInfo';
 import WordsGlobalView from './globalViews/wordTableView';
 import PhrasesLangGlobalView from './globalViews/phraseLangTableView';
 import PhraseInfo from './globalViews/phraseInfo';
+import PhrasesGlobalView from './globalViews/phraseTableView';
 
 function App() {
 
@@ -47,6 +48,9 @@ function App() {
 				break;
 			case GlobalViewNames.words:
 				setView(<WordsGlobalView selectElement={wordSelect} changeGlobalView={ChangeGlobalView}></WordsGlobalView>)
+				break;
+			case GlobalViewNames.phrases:
+				setView(<PhrasesGlobalView selectElement={phraseSelect} changeGlobalView={ChangeGlobalView}></PhrasesGlobalView>)
 				break;
 			default:
 				break;

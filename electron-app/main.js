@@ -62,11 +62,20 @@ ipcMain.handle('get-words', () => {
 	let words = db.Words;
 	words.forEach(word => {
 		const lang = db.getParent(word.foreignKeys[tableNames.Language][0]);
-
 		word.language = lang.langName;
 	});
 
 	return words;
+})
+
+ipcMain.handle('get-phrases', () => {
+	let phrases = db.Phrases;
+	phrases.forEach(phrase => {
+		const lang = db.getParent(phrase.foreignKeys[tableNames.Language][0]);
+		phrase.language = lang.langName;
+	});
+
+	return phrases;
 })
 
 ipcMain.handle('new-lang', (e, langName) => {

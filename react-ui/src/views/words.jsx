@@ -29,7 +29,7 @@ class WordsView extends React.Component{
                             </ContentRow>
                             <ContentRow>
                                 <h5>Table with all phrases</h5>
-                                <PrimaryButton style='ms-auto'>View Table</PrimaryButton>
+                                <PrimaryButton onClick={(e) => this.props.changeGlobalView(GlobalViewNames.phrases)} style='ms-auto'>View Table</PrimaryButton>
                             </ContentRow>
                         </ContentBox>
                     </Row>
