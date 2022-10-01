@@ -3,6 +3,7 @@ import "../styles/view-styles/style.css";
 import Row from '../components/row';
 import PrimaryButton from '../components/buttons';
 import { GlobalViewNames } from '../constants';
+import { ContentBox, ContentRow } from '../components/contentBoxes';
 
 class WordsView extends React.Component{
 
@@ -52,22 +53,6 @@ class WordsView extends React.Component{
         );
     }
 
-}
-
-function ContentBox(props) {
-    return(
-        <div className="content-box">
-            {props.children}
-        </div>
-    );
-}
-
-function ContentRow(props) {
-    return(
-        <div className="content-row">
-            {props.children}
-        </div>
-    );
 }
 
 export default WordsView;
