@@ -2,6 +2,7 @@ import React from 'react';
 import PrimaryButton from '../components/buttons';
 import { ContentBox, ContentRow } from '../components/contentBoxes';
 import Row from '../components/row';
+import { GlobalViewNames } from '../constants';
 import "../styles/view-styles/style.css";
 
 
@@ -22,7 +23,7 @@ class ExercView extends React.Component{
                             <h2>closed answer questions</h2>
                             <ContentRow>
                                 <h5>Exercise the meanings of words and phrases</h5>
-                                <PrimaryButton style='ms-auto'>Begin Test</PrimaryButton>
+                                <PrimaryButton onClick={(e) => this.props.changeGlobalView(GlobalViewNames.prepExercise)} style='ms-auto'>Begin Test</PrimaryButton>
                             </ContentRow>
                             <ContentRow>
                                 <h5>Guess the words from a given meaning</h5>

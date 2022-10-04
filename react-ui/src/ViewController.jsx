@@ -48,7 +48,7 @@ function ViewController(props) {
 				break;
 
 			case ViewNames.exercises:
-				setView(<ExercView />);
+				setView(<ExercView changeGlobalView={props.changeGlobalView}/>);
 				break;
 		}
 	}

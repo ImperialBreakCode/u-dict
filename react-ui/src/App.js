@@ -7,6 +7,7 @@ import WordsGlobalView from './globalViews/wordTableView';
 import PhrasesLangGlobalView from './globalViews/phraseLangTableView';
 import PhraseInfo from './globalViews/phraseInfo';
 import PhrasesGlobalView from './globalViews/phraseTableView';
+import { PrepareExerciseView } from './globalViews/exercises/prepExercise';
 
 function App() {
 
@@ -35,23 +36,33 @@ function App() {
 	function ChangeGlobalView(globalView, subView) {
 
 		switch (globalView) {
+			
 			case GlobalViewNames.viewController:
 				setView(<ViewController changeGlobalView={ChangeGlobalView} subView={subView} LangSelectLangView={LangSelectLangView}/>);
 				break;
+			
 			case GlobalViewNames.langWord:
 				const lanId = subView["Languages"][0].id;
 				setView(<WordsLangGlobalView selectElement={wordSelect} changeGlobalView={ChangeGlobalView} langId={lanId}/>)
 				break;
+			
 			case GlobalViewNames.langPhrase:
 				const lanId2 = subView["Languages"][0].id;
 				setView(<PhrasesLangGlobalView selectElement={phraseSelect} changeGlobalView={ChangeGlobalView} langId={lanId2}/>)
 				break;
+			
 			case GlobalViewNames.words:
 				setView(<WordsGlobalView selectElement={wordSelect} changeGlobalView={ChangeGlobalView}></WordsGlobalView>)
 				break;
+			
 			case GlobalViewNames.phrases:
 				setView(<PhrasesGlobalView selectElement={phraseSelect} changeGlobalView={ChangeGlobalView}></PhrasesGlobalView>)
 				break;
+
+			case GlobalViewNames.prepExercise:
+				setView(<PrepareExerciseView/>)
+				break;
+			
 			default:
 				break;
 		}

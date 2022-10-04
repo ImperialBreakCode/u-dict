@@ -325,4 +325,37 @@
 .table-buttons {
   font-size: 17px;
 }
+
+.prepare-exerc-view {
+  height: 100vh;
+  background-color: #0d0020;
+}
+
+.prepare-exerc-view h1 {
+  text-align: center;
+  margin: 3%;
+  font-size: 55px;
+}
+
+.prepare-exerc-view h5 {
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+.prepare-exerc-view .nm-questions {
+  background-color: #1c1631;
+  border-color: #515174;
+  border-radius: 10px;
+  color: white;
+}
+
+.prepare-exerc-view .form-control:focus {
+  background-color: #382c53;
+  color: white;
+}
+
+.prepare-exerc-view .form-check {
+  margin-top: 15px;
+  margin-left: 10px;
+}
 /*# sourceMappingURL=globalViews.css.map */
