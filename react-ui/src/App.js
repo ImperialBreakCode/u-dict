@@ -60,7 +60,7 @@ function App() {
 				break;
 
 			case GlobalViewNames.prepExercise:
-				setView(<PrepareExerciseView/>)
+				setView(<PrepareExerciseView changeGlobalView={ChangeGlobalView}/>)
 				break;
 			
 			default:

@@ -20,6 +20,10 @@ function ViewController(props) {
 				break;
 			case ViewNames.words:
 				initialView = <WordsView changeGlobalView={props.changeGlobalView}/>
+				break;
+			case ViewNames.exercises:
+				initialView = <ExercView changeGlobalView={props.changeGlobalView}/>
+				break;
 			default:
 				break;
 		}
