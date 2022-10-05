@@ -9,7 +9,9 @@ export const PrepareExerciseView = (props) => {
 
     const [ valType, setValType ] = useState('wrd');
     const [ opLangs, setOpLangs ] = useState(null);
-    const [ valLang, setValLang ] = useState(null);
+    const [ valLang, setValLang ] = useState('');
+
+    const [ flash, setFlash ] = useState(''); 
 
     useEffect(() => {
         window.electronAPI.getLangData().then(langs => {
@@ -39,6 +41,12 @@ export const PrepareExerciseView = (props) => {
 
     const continueToTest = () => {
         const numberQestions = document.querySelector('#input-num-questions').value.trim();
+
+        if (numberQestions < 0 || isNaN(numberQestions) || numberQestions > 100) {
+            setFlash('The number of questions should be a number between 0 and 100');
+            return;
+        }
+
         const articleUsage = document.querySelector('#use-articles').checked;
 
         const result = {
@@ -48,7 +56,7 @@ export const PrepareExerciseView = (props) => {
             type: valType
         };
 
-        console.log(result);
+        props.setTest(props.forTest, result);
     }
 
     return (
@@ -74,7 +82,7 @@ export const PrepareExerciseView = (props) => {
                                 </select>
                             </DCSection>
 
-                            <h5>Number of questions (for unlimited leave it blank or type 0)</h5>
+                            <h5>Number of questions (for unlimited questions type 0 or leave it blank)</h5>
                             <DCSection>
                                 <input type="text" className="form-control nm-questions" id="input-num-questions"></input>
                             </DCSection>
@@ -86,9 +94,11 @@ export const PrepareExerciseView = (props) => {
                                 </label>
                             </div>
 
+                            <p className='mt-3'><b style={{color: 'red'}}>{flash}</b></p>
+
                             <DCSection>
-                                <SecondaryButton onClick={(e) => props.changeGlobalView(GlobalViewNames.viewController, ViewNames.exercises)} style='w-50 mt-5 ms-0'>Cancel</SecondaryButton>
-                                <PrimaryButton onClick={() => continueToTest()} style='w-50 mt-5 me-0'>Continue</PrimaryButton>
+                                <SecondaryButton onClick={(e) => props.changeGlobalView(GlobalViewNames.viewController, ViewNames.exercises)} style='w-50 mt-3 ms-0'>Cancel</SecondaryButton>
+                                <PrimaryButton onClick={() => continueToTest()} style='w-50 mt-3 me-0'>Continue</PrimaryButton>
                             </DCSection>
                             
                         </DataControl>

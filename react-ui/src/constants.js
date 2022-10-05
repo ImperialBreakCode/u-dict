@@ -13,5 +13,6 @@ export const GlobalViewNames = {
     phrases: 'phrases',
     infoWord: 'info-word',
     infoPhrase: 'info-phrase',
-    prepExercise: 'prep-exercise'
+    prepExercise: 'prep-exercise',
+    wordMeanTest: 'word-mean-test'
 }

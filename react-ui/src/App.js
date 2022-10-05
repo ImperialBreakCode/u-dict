@@ -8,6 +8,7 @@ import PhrasesLangGlobalView from './globalViews/phraseLangTableView';
 import PhraseInfo from './globalViews/phraseInfo';
 import PhrasesGlobalView from './globalViews/phraseTableView';
 import { PrepareExerciseView } from './globalViews/exercises/prepExercise';
+import { WordMeaningTest } from './globalViews/exercises/wordMeaning/wordMeanTest';
 
 function App() {
 
@@ -33,21 +34,32 @@ function App() {
 		}
 	}
 
-	function ChangeGlobalView(globalView, subView) {
+	function SetTestView(view, data) {
+		switch (view) {
+			case GlobalViewNames.wordMeanTest:
+				setView(<WordMeaningTest changeGlobalView={ChangeGlobalView} testData={data}/>)
+				break;
+		
+			default:
+				break;
+		}
+	}
+
+	function ChangeGlobalView(globalView, moreInfo) {
 
 		switch (globalView) {
 			
 			case GlobalViewNames.viewController:
-				setView(<ViewController changeGlobalView={ChangeGlobalView} subView={subView} LangSelectLangView={LangSelectLangView}/>);
+				setView(<ViewController changeGlobalView={ChangeGlobalView} subView={moreInfo} LangSelectLangView={LangSelectLangView}/>);
 				break;
 			
 			case GlobalViewNames.langWord:
-				const lanId = subView["Languages"][0].id;
+				const lanId = moreInfo["Languages"][0].id;
 				setView(<WordsLangGlobalView selectElement={wordSelect} changeGlobalView={ChangeGlobalView} langId={lanId}/>)
 				break;
 			
 			case GlobalViewNames.langPhrase:
-				const lanId2 = subView["Languages"][0].id;
+				const lanId2 = moreInfo["Languages"][0].id;
 				setView(<PhrasesLangGlobalView selectElement={phraseSelect} changeGlobalView={ChangeGlobalView} langId={lanId2}/>)
 				break;
 			
@@ -60,7 +72,7 @@ function App() {
 				break;
 
 			case GlobalViewNames.prepExercise:
-				setView(<PrepareExerciseView changeGlobalView={ChangeGlobalView}/>)
+				setView(<PrepareExerciseView changeGlobalView={ChangeGlobalView} forTest={moreInfo} setTest={SetTestView}/>)
 				break;
 			
 			default:
