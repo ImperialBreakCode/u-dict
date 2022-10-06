@@ -382,4 +382,12 @@
   max-height: 50vh;
   overflow-y: scroll;
 }
+
+.test-view div .table-wrapper tr {
+  cursor: pointer;
+}
+
+.test-view div .table-wrapper .selected-for-test td {
+  background-color: #00a8007c;
+}
 /*# sourceMappingURL=globalViews.css.map */

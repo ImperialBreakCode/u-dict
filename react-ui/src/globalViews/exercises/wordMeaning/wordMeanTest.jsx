@@ -11,8 +11,8 @@ export const WordMeaningTest = (props) => {
 
     //const articleUsage = props.testData.articleUsage;
 
-    function finishSetUp() {
-        
+    function finishSetUp(data) {
+        console.log(data);
     }
 
     const [ currentView, setCurrentView ] = useState(<TestSetUp changeGlobalView={props.changeGlobalView} testData={props.testData} finishSetUp={finishSetUp}/>)
@@ -29,6 +29,7 @@ const TestSetUp = (props) => {
 
     let tableHeads;
     const [tableData, setTableData] = useState(null);
+    const wordMeanDict = {};
 
     if (props.testData.articleUsage && props.testData.type == 'wrd') {
         tableHeads = ['Article', 'Word', 'Meaning'];
@@ -44,10 +45,10 @@ const TestSetUp = (props) => {
             if (props.testData.type === 'wrd') {
                 const reactData = data[0].map(word => {
                     return(
-                        <tr key={word.id}>
-                            {props.testData.articleUsage ? <td>{word.article}</td>: null}
-                            <td>{word.word}</td>
-                            <td>{word.meanings[0]}</td>
+                        <tr onClick={(e) => tableRowClick(e)} key={word.id}>
+                            {props.testData.articleUsage ? <td className='data-article'>{word.article}</td>: null}
+                            <td className='data-key'>{word.word}</td>
+                            <td className='data-value'>{word.meanings[0]}</td>
                         </tr>
                     );
                 });
@@ -56,9 +57,9 @@ const TestSetUp = (props) => {
             } else {
                 const reactData = data[1].map(phrase => {
                     return(
-                        <tr key={phrase.id}>
-                            <td>{phrase.phrase}</td>
-                            <td>{phrase.meanings[0]}</td>
+                        <tr onClick={(e) => tableRowClick(e)} key={phrase.id}>
+                            <td className='data-key'>{phrase.phrase}</td>
+                            <td className='data-value'>{phrase.meanings[0]}</td>
                         </tr>
                     );
                 });
@@ -71,7 +72,12 @@ const TestSetUp = (props) => {
 
     function search(e) {
         let val = e.target.value.trim().toLowerCase();
-        
+        let indexTd = 0;
+
+        if (props.testData.articleUsage && props.testData.type == 'wrd') {
+            indexTd = 1;
+        }
+
         if (val == '') {
             $('tr').removeClass('d-none-search');
         }
@@ -80,7 +86,7 @@ const TestSetUp = (props) => {
             const trList = $('tbody').children('tr');
             for (let i = 0; i < trList.length; i++) {
                 const tr = trList[i];
-                let text = tr.childNodes[0].childNodes[0].wholeText.toLowerCase();
+                let text = tr.childNodes[indexTd].childNodes[0].wholeText.toLowerCase();
 
                 trList[i].classList.add('d-none-search');
 
@@ -88,18 +94,63 @@ const TestSetUp = (props) => {
                     trList[i].classList.remove('d-none-search');
                 }
 
-                const listMeanings = tr.childNodes[1].childNodes;
+                text = tr.childNodes[indexTd + 1].childNodes[0].wholeText.toLowerCase();
 
-                for (let е = 0; е < listMeanings.length; е++) {
-                    text = listMeanings[е].childNodes[0].wholeText.toLowerCase();
-                    
-                    if (text.includes(val)) {
-                        trList[i].classList.remove('d-none-search');
-                    }
+                if (text.includes(val)) {
+                    trList[i].classList.remove('d-none-search');
                 }
             }
 
         }
+    }
+
+    function tableRowClick(e) {
+
+        const row = e.target.closest('tr');
+        const jrow = $(row);
+        let key = jrow.children('.data-key').html();
+        const value = jrow.children('.data-value').html();
+        
+        if (jrow.children('.data-article').html()) {
+            key = `${jrow.children('.data-article').html()} ${key}`;
+        }
+
+        if (row.classList.contains('selected-for-test')) {
+
+            row.classList.remove('selected-for-test');
+            delete wordMeanDict[key];
+
+        } else {
+
+            row.classList.add('selected-for-test');
+            wordMeanDict[key] = value;
+
+        }
+        
+    }
+
+    function finish() {
+
+        const keys = Object.keys(wordMeanDict);
+        const values = Object.values(wordMeanDict);
+        const len = Object.keys(wordMeanDict).length;
+
+        console.log(keys);
+        
+        for (let i = 0; i < len - 1; i++) {
+
+            for (let e = i + 1; e < len; e++) {
+                console.log(keys[i] + ' ' + keys[e])
+                if (keys[i] != keys[e] && values[i] != values[e]) {
+                    console.log('success');
+                    props.finishSetUp(wordMeanDict);
+                    return;
+                }
+            }
+        }
+
+        console.log('failure');
+
     }
 
     return(
@@ -121,7 +172,7 @@ const TestSetUp = (props) => {
             <DataControl>
                 <DCSection>
                     <SecondaryButton style='w-50' onClick={() => props.changeGlobalView(GlobalViewNames.viewController, ViewNames.exercises)}>Cancel</SecondaryButton>
-                    <PrimaryButton style='w-50'>Start the test</PrimaryButton>
+                    <PrimaryButton style='w-50' onClick={() => finish()}>Start the test</PrimaryButton>
                 </DCSection>
             </DataControl>
         </div>

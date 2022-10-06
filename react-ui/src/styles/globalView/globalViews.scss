@@ -364,6 +364,14 @@
         .table-wrapper{
             max-height: 50vh;
             overflow-y: scroll;
+
+            tr{
+                cursor: pointer;
+            }
+
+            .selected-for-test td{
+                background-color: #00a8007c;
+            }
         }
     }
 }
