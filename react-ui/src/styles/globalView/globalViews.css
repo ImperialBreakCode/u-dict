@@ -358,4 +358,28 @@
   margin-top: 15px;
   margin-left: 10px;
 }
+
+.test-view {
+  background: #0d0020;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+}
+
+.test-view div .data-control-panel {
+  background: none;
+  border: none;
+}
+
+.test-view div .table-wrapper {
+  max-height: 50vh;
+  overflow-y: scroll;
+}
 /*# sourceMappingURL=globalViews.css.map */

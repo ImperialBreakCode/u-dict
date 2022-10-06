@@ -347,3 +347,23 @@
     }
     
 }
+
+.test-view{
+    background: #0d0020;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    div{
+        .data-control-panel{
+            background: none;
+            border: none;
+        }
+
+        .table-wrapper{
+            max-height: 50vh;
+            overflow-y: scroll;
+        }
+    }
+}
