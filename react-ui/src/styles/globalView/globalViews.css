@@ -325,4 +325,69 @@
 .table-buttons {
   font-size: 17px;
 }
+
+.prepare-exerc-view {
+  min-height: 100vh;
+  background-color: #0d0020;
+}
+
+.prepare-exerc-view h1 {
+  text-align: center;
+  margin: 3%;
+  font-size: 55px;
+}
+
+.prepare-exerc-view h5 {
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+.prepare-exerc-view .nm-questions {
+  background-color: #1c1631;
+  border-color: #515174;
+  border-radius: 10px;
+  color: white;
+}
+
+.prepare-exerc-view .form-control:focus {
+  background-color: #382c53;
+  color: white;
+}
+
+.prepare-exerc-view .form-check {
+  margin-top: 15px;
+  margin-left: 10px;
+}
+
+.test-view {
+  background: #0d0020;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+}
+
+.test-view div .data-control-panel {
+  background: none;
+  border: none;
+}
+
+.test-view div .table-wrapper {
+  max-height: 50vh;
+  overflow-y: scroll;
+}
+
+.test-view div .table-wrapper tr {
+  cursor: pointer;
+}
+
+.test-view div .table-wrapper .selected-for-test td {
+  background-color: #00a8007c;
+}
 /*# sourceMappingURL=globalViews.css.map */

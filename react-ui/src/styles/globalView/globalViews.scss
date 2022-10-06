@@ -313,3 +313,65 @@
 .table-buttons{
     font-size: 17px;
 }
+
+.prepare-exerc-view{
+    min-height: 100vh;
+    background-color: #0d0020;
+
+    h1{
+        text-align: center;
+        margin: 3%;
+        font-size: 55px;
+    }
+
+    h5{
+        margin-top: 20px;
+        margin-left: 10px;
+    }
+
+    .nm-questions{
+        background-color: #1c1631;
+        border-color: #515174;
+        border-radius: 10px;
+        color: white;
+    }
+
+    .form-control:focus{
+        background-color: #382c53;
+        color: white;
+    }
+
+    .form-check{
+        margin-top: 15px;
+        margin-left: 10px;
+    }
+    
+}
+
+.test-view{
+    background: #0d0020;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    div{
+        .data-control-panel{
+            background: none;
+            border: none;
+        }
+
+        .table-wrapper{
+            max-height: 50vh;
+            overflow-y: scroll;
+
+            tr{
+                cursor: pointer;
+            }
+
+            .selected-for-test td{
+                background-color: #00a8007c;
+            }
+        }
+    }
+}

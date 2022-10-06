@@ -162,7 +162,7 @@ $main-color: #4f09ac;
     }
 }
 
-.word-view{
+.word-view, .exercises-view{
     height: 100vh;
     background-color: $main-color;
     overflow-y: scroll;
@@ -186,6 +186,10 @@ $main-color: #4f09ac;
         margin: 15px 0;
         border-radius: 20px;
         box-shadow: 0 0 20px 3px #1e1a2c63;
+
+        h2{
+            text-transform: capitalize;
+        }
 
         .content-row{
             display: flex;
