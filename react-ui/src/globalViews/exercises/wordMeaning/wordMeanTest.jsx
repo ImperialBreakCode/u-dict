@@ -12,6 +12,7 @@ export const WordMeaningTest = (props) => {
     //const articleUsage = props.testData.articleUsage;
 
     function finishSetUp(data) {
+        console.log('success');
         console.log(data);
     }
 
@@ -29,7 +30,7 @@ const TestSetUp = (props) => {
 
     let tableHeads;
     const [tableData, setTableData] = useState(null);
-    const wordMeanDict = {};
+    const [wordMeanDict, setWordMeanDict] = useState({});
 
     if (props.testData.articleUsage && props.testData.type == 'wrd') {
         tableHeads = ['Article', 'Word', 'Meaning'];
@@ -106,6 +107,8 @@ const TestSetUp = (props) => {
 
     function tableRowClick(e) {
 
+        const wordMeanDictCopy = wordMeanDict;
+
         const row = e.target.closest('tr');
         const jrow = $(row);
         let key = jrow.children('.data-key').html();
@@ -118,31 +121,27 @@ const TestSetUp = (props) => {
         if (row.classList.contains('selected-for-test')) {
 
             row.classList.remove('selected-for-test');
-            delete wordMeanDict[key];
+            delete wordMeanDictCopy[key];
 
         } else {
 
             row.classList.add('selected-for-test');
-            wordMeanDict[key] = value;
-
+            wordMeanDictCopy[key] = value;
         }
         
+        setWordMeanDict(wordMeanDictCopy);
     }
 
     function finish() {
 
         const keys = Object.keys(wordMeanDict);
         const values = Object.values(wordMeanDict);
-        const len = Object.keys(wordMeanDict).length;
-
-        console.log(keys);
+        const len = keys.length;
         
         for (let i = 0; i < len - 1; i++) {
 
             for (let e = i + 1; e < len; e++) {
-                console.log(keys[i] + ' ' + keys[e])
                 if (keys[i] != keys[e] && values[i] != values[e]) {
-                    console.log('success');
                     props.finishSetUp(wordMeanDict);
                     return;
                 }
