@@ -9,16 +9,14 @@ import { GlobalViewNames, ViewNames } from "../../../constants";
 
 export const WordMeaningTest = (props) => {
 
-    //const articleUsage = props.testData.articleUsage;
+    const [currentView, setCurrentView] = useState(<TestSetUp changeGlobalView={props.changeGlobalView} testData={props.testData} finishSetUp={finishSetUp} />)
 
     function finishSetUp(data) {
-        console.log('success');
         console.log(data);
+        setCurrentView(<Questions qstCount={props.testData.questionCount} questionsData={data} />);
     }
 
-    const [ currentView, setCurrentView ] = useState(<TestSetUp changeGlobalView={props.changeGlobalView} testData={props.testData} finishSetUp={finishSetUp}/>)
-
-    return(
+    return (
         <main className="test-view">
             {currentView}
         </main>
@@ -30,12 +28,13 @@ const TestSetUp = (props) => {
 
     let tableHeads;
     const [tableData, setTableData] = useState(null);
-    const [wordMeanDict, setWordMeanDict] = useState({});
+    const [wordMeanDict, setWordMeanDict] = useState([]);
+    const [errorMessage, setErrorMessage] = useState(null);
 
     if (props.testData.articleUsage && props.testData.type == 'wrd') {
         tableHeads = ['Article', 'Word', 'Meaning'];
     }
-    else{
+    else {
         tableHeads = ['Word', 'Meaning'];
     }
 
@@ -45,9 +44,9 @@ const TestSetUp = (props) => {
 
             if (props.testData.type === 'wrd') {
                 const reactData = data[0].map(word => {
-                    return(
+                    return (
                         <tr onClick={(e) => tableRowClick(e)} key={word.id}>
-                            {props.testData.articleUsage ? <td className='data-article'>{word.article}</td>: null}
+                            {props.testData.articleUsage ? <td className='data-article'>{word.article}</td> : null}
                             <td className='data-key'>{word.word}</td>
                             <td className='data-value'>{word.meanings[0]}</td>
                         </tr>
@@ -57,7 +56,7 @@ const TestSetUp = (props) => {
                 setTableData(reactData);
             } else {
                 const reactData = data[1].map(phrase => {
-                    return(
+                    return (
                         <tr onClick={(e) => tableRowClick(e)} key={phrase.id}>
                             <td className='data-key'>{phrase.phrase}</td>
                             <td className='data-value'>{phrase.meanings[0]}</td>
@@ -82,8 +81,8 @@ const TestSetUp = (props) => {
         if (val == '') {
             $('tr').removeClass('d-none-search');
         }
-        else{
-            
+        else {
+
             const trList = $('tbody').children('tr');
             for (let i = 0; i < trList.length; i++) {
                 const tr = trList[i];
@@ -111,48 +110,82 @@ const TestSetUp = (props) => {
 
         const row = e.target.closest('tr');
         const jrow = $(row);
+
         let key = jrow.children('.data-key').html();
         const value = jrow.children('.data-value').html();
-        
+        let article = null;
+
         if (jrow.children('.data-article').html()) {
-            key = `${jrow.children('.data-article').html()} ${key}`;
+            article = jrow.children('.data-article').html();
         }
 
         if (row.classList.contains('selected-for-test')) {
 
             row.classList.remove('selected-for-test');
-            delete wordMeanDictCopy[key];
+
+            for (let i = 0; i < wordMeanDictCopy.length; i++) {
+
+                if (wordMeanDictCopy[i].key == key) {
+                    wordMeanDictCopy.splice(i, 1);
+                    break;
+                }
+
+            }
 
         } else {
 
             row.classList.add('selected-for-test');
-            wordMeanDictCopy[key] = value;
+            wordMeanDictCopy.push({ key: key, value: value, article: article });
         }
-        
+
+        setErrorMessage(null)
         setWordMeanDict(wordMeanDictCopy);
     }
 
     function finish() {
 
-        const keys = Object.keys(wordMeanDict);
-        const values = Object.values(wordMeanDict);
-        const len = keys.length;
-        
-        for (let i = 0; i < len - 1; i++) {
+        if (wordMeanDict.length <= 0) {
 
-            for (let e = i + 1; e < len; e++) {
-                if (keys[i] != keys[e] && values[i] != values[e]) {
+            let keys = $('.data-key');
+            const values = $('.data-value');
+            let articles = $('.data-article');
+
+            const wordMeanDictCopy = wordMeanDict;
+
+            for (let i = 0; i < keys.length; i++) {
+
+                let article = null;
+
+                if (articles.length > 0) {
+                    article = articles[i].innerHTML != '' ? articles[i].innerHTML: null;
+                }
+
+                wordMeanDictCopy.push({ key: keys[i].innerHTML, value: values[i].innerHTML, article: article });
+            }
+
+            props.finishSetUp(wordMeanDictCopy);
+            
+            return;
+        }
+
+        for (let i = 0; i < wordMeanDict.length - 1; i++) {
+
+            for (let e = i + 1; e < wordMeanDict.length; e++) {
+
+                const data1 = wordMeanDict[i];
+                const data2 = wordMeanDict[e];
+
+                if (data1.key != data2.key && data1.value != data2.value) {
                     props.finishSetUp(wordMeanDict);
                     return;
                 }
             }
         }
 
-        console.log('failure');
-
+        setErrorMessage('You should select at least two syntactically diffrent words with diffrent meanings')
     }
 
-    return(
+    return (
         <div className="w-75">
 
             <h2>Choose words</h2>
@@ -163,10 +196,12 @@ const TestSetUp = (props) => {
                     <input placeholder="Search..." onChange={(e) => search(e)} className='form-control text-input' type='text'></input>
                 </DCSection>
             </DataControl>
-            
+
             <div className="table-wrapper">
-                <Table overStyle='global-table' head={tableHeads} data={tableData}/>
+                <Table overStyle='global-table' head={tableHeads} data={tableData} />
             </div>
+
+            <p><b style={{ color: 'red' }}>{errorMessage}</b></p>
 
             <DataControl>
                 <DCSection>
@@ -175,5 +210,52 @@ const TestSetUp = (props) => {
                 </DCSection>
             </DataControl>
         </div>
-    );       
+    );
+}
+
+const Questions = (props) => {
+
+    const [questionsDone, setQuestionsDone] = useState(0);
+    const [questionsPassed, setQuestionsPassed] = useState(0);
+
+    const [questArr, setQuestArr] = useState(props.questionsData);
+    const [qstDoneArr, setQstDoneArr] = useState([]);
+
+
+    useEffect(() => {
+
+    }, []);
+
+    function MakeQuestion() {
+        
+        if (props.qstCount != 0 || props.qstCount !='') {
+            if (props.qstCount <= questionsDone) {
+                // change to result
+            }
+        }
+
+        setQuestArr(shuffle(questArr));
+
+    }
+
+    return (
+        <>
+            <p>{props.qstCount}</p>
+        </>
+    );
+}
+
+// help functions
+function shuffle(array) {
+    const newArray = [...array]
+    const length = newArray.length
+
+    for (let start = 0; start < length; start++) {
+        const randomPosition = Math.floor((newArray.length - start) * Math.random())
+        const randomItem = newArray.splice(randomPosition, 1)
+
+        newArray.push(...randomItem)
+    }
+
+    return newArray
 }
