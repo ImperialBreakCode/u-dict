@@ -390,4 +390,42 @@
 .test-view div .table-wrapper .selected-for-test td {
   background-color: #00a8007c;
 }
+
+.test-view .answer {
+  padding: 20px;
+  margin: 10px;
+  background: #170036;
+  border: 1px solid #a66bff62;
+  border-radius: 20px;
+  cursor: pointer;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  font-size: 20px;
+}
+
+.test-view .answer:hover {
+  background: #31026e;
+}
+
+.test-view .ans-false {
+  background: #810000;
+  border-color: red;
+}
+
+.test-view .ans-false:hover {
+  background: #a50000;
+}
+
+.test-view .ans-true {
+  background: #007000;
+  border-color: #00bd00;
+}
+
+.test-view .ans-true:hover {
+  background: #008f00;
+}
+
+.test-view .question {
+  margin-bottom: 6%;
+}
 /*# sourceMappingURL=globalViews.css.map */

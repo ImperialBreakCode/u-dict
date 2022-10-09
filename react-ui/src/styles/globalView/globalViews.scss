@@ -374,4 +374,41 @@
             }
         }
     }
+
+    .answer{
+        padding: 20px;
+        margin: 10px;
+        background: #170036;
+        border: 1px solid #a66bff62;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: 0.2s;
+        font-size: 20px;
+
+        &:hover{
+            background: #31026e;
+        }
+    }
+
+    .ans-false{
+        background: #810000;
+        border-color: red;
+
+        &:hover{
+            background: #a50000;
+        }
+    }
+
+    .ans-true{
+        background: #007000;
+        border-color: #00bd00;
+
+        &:hover{
+            background: #008f00;
+        }
+    }
+
+    .question{
+        margin-bottom: 6%;
+    }
 }

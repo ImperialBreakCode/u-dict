@@ -12,7 +12,6 @@ export const WordMeaningTest = (props) => {
     const [currentView, setCurrentView] = useState(<TestSetUp changeGlobalView={props.changeGlobalView} testData={props.testData} finishSetUp={finishSetUp} />)
 
     function finishSetUp(data) {
-        console.log(data);
         setCurrentView(<Questions qstCount={props.testData.questionCount} questionsData={data} />);
     }
 
@@ -223,7 +222,7 @@ const Questions = (props) => {
 
 
     useEffect(() => {
-
+        MakeQuestion();
     }, []);
 
     function MakeQuestion() {
@@ -236,12 +235,53 @@ const Questions = (props) => {
 
         setQuestArr(shuffle(questArr));
 
+        let questArrCopy = questArr;
+        const questionData = questArrCopy.splice(0, 1)[0];
+        const possibleAnswers = [questionData];
+
+        for (let i = 0; i < questArr.length; i++) {
+            const answerData = questArrCopy[i];
+            
+            if (answerData.key != questionData.key && answerData.value != questionData.value) {
+                possibleAnswers.push(answerData);
+            }
+
+            if (possibleAnswers.length == 5) {
+                break;
+            }
+        }
+
+        // question count update 
     }
 
     return (
-        <>
-            <p>{props.qstCount}</p>
-        </>
+        <div className='w-50'>
+            <h1 className='question'>Question 1</h1>
+            <div className='answer-wrapper'>
+                <div className='answer ans-false'>
+                    ssdfsdfsdf
+                </div>
+
+                <div className='answer ans-true'>
+                    ssdfsdfsdf
+                </div>
+
+                <div className='answer'>
+                    ssdfsdfsdf
+                </div>
+
+                <div className='answer'>
+                    ssdfsdfsdf
+                </div>
+            </div>
+
+            <DataControl>
+                <DCSection>
+                    <SecondaryButton style='mt-4 w-50'>Stop the test</SecondaryButton>
+                    <SecondaryButton style='mt-4 w-50'>Next Question</SecondaryButton>
+                </DCSection>
+            </DataControl>
+        </div>
     );
 }
 
