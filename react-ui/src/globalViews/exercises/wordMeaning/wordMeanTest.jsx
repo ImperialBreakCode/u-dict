@@ -157,14 +157,14 @@ const TestSetUp = (props) => {
                 let article = null;
 
                 if (articles.length > 0) {
-                    article = articles[i].innerHTML != '' ? articles[i].innerHTML: null;
+                    article = articles[i].innerHTML != '' ? articles[i].innerHTML : null;
                 }
 
                 wordMeanDictCopy.push({ key: keys[i].innerHTML, value: values[i].innerHTML, article: article });
             }
 
             props.finishSetUp(wordMeanDictCopy);
-            
+
             return;
         }
 
@@ -219,10 +219,11 @@ const Questions = (props) => {
     const [questionsPassed, setQuestionsPassed] = useState(0);
 
     const [questArr, setQuestArr] = useState(props.questionsData);
-    const [allDataArr, setAllDataArr ] = useState(props.questionsData);
+    const [allDataArr, setAllDataArr] = useState(props.questionsData);
 
-    const [ displayAnswers, setDisplayAnswers ] = useState(null);
-    const [ displayQuestion, setDisplayQuestion ] = useState(null);
+    const [displayAnswers, setDisplayAnswers] = useState(null);
+    const [displayQuestion, setDisplayQuestion] = useState(null);
+    const [flash, setFlash] = useState('');
 
 
     useEffect(() => {
@@ -230,9 +231,9 @@ const Questions = (props) => {
     }, []);
 
     function MakeQuestion() {
-        
+
         // checking if the questions set are finite (!=0 ...) and then if the questions done exceeds the limit (qstCount <= ...)  
-        if (props.qstCount != 0 && props.qstCount !='') {
+        if (props.qstCount != 0 && props.qstCount != '') {
             if (props.qstCount <= questionsDone) {
                 // change to result view
             }
@@ -253,7 +254,7 @@ const Questions = (props) => {
 
         // updateting the array
         setQuestArr(questArrCopy);
-        
+
         // shuffling all the answers
         const allAnswers = shuffle(allDataArr);
         setAllDataArr(allAnswers);
@@ -266,14 +267,14 @@ const Questions = (props) => {
                 possibleAnswers.push(answerData);
             }
 
-            if (possibleAnswers.length == 5) {
+            if (possibleAnswers.length == 4) {
                 break;
             }
         }
 
         possibleAnswers = possibleAnswers.map((answer, ind) => {
-            return(
-                <div key={ind} is-true={(ind == 0).toString()} className='answer'>
+            return (
+                <div onClick={(e) => checkIfTrue(e)} key={Math.random()} is-true={(ind == 0).toString()} className='answer'>
                     {answer.value}
                 </div>
             );
@@ -284,23 +285,58 @@ const Questions = (props) => {
         setDisplayAnswers(possibleAnswers);
         setDisplayQuestion(`${questionData.article ?? ''} ${questionData.key}`);
         setQuestionsDone(questionsDone + 1);
+
+        console.log(questArr);
+
+    }
+
+    function checkIfTrue(e) {
+
+        if ($('#next-qt').hasClass('d-none')) {
+            const selectedAns = e.target;
+
+            if (selectedAns.getAttribute('is-true') == 'true') {
+
+                selectedAns.classList.add('ans-true');
+                setQuestionsPassed(questionsPassed + 1);
+                setFlash(<b style={{ color: 'green' }}>Corrent Answer!</b>);
+
+            } else {
+
+                selectedAns.classList.add('ans-false');
+                $('.answer[is-true=true]').addClass('ans-true');
+                setFlash(<b style={{ color: 'red' }}>Wrong Answer!</b>);
+
+            }
+
+            $('#next-qt').removeClass('d-none');
+        }
+    }
+
+    function nextQuestion() {
+        setFlash('');
+        MakeQuestion();
+
+        $('#next-qt').addClass('d-none');
     }
 
     return (
         <div className='w-50'>
             <h1 className='question'>
-                #{questionsDone} {props.qstCount != 0 && props.qstCount != '' ? ` of ${props.qstCount} `: ''} 
-                The meaning of:<br/> 
+                #{questionsDone} {props.qstCount != 0 && props.qstCount != '' ? ` of ${props.qstCount} ` : ''}
+                The meaning of:<br />
                 {displayQuestion}
             </h1>
             <div className='answer-wrapper'>
                 {displayAnswers}
             </div>
 
+            <p>{flash}</p>
+
             <DataControl>
                 <DCSection>
-                    <SecondaryButton style='mt-4 w-50'>Stop the test</SecondaryButton>
-                    <SecondaryButton style='mt-4 w-50'>Next Question</SecondaryButton>
+                    <SecondaryButton style='mt-4 w-50'>Finish the test</SecondaryButton>
+                    <PrimaryButton elemId={'next-qt'} onClick={() => nextQuestion()} style='mt-4 w-50 d-none'>Next Question</PrimaryButton>
                 </DCSection>
             </DataControl>
         </div>
@@ -309,15 +345,13 @@ const Questions = (props) => {
 
 // help functions
 function shuffle(array) {
-    const newArray = [...array]
-    const length = newArray.length
 
-    for (let start = 0; start < length; start++) {
-        const randomPosition = Math.floor((newArray.length - start) * Math.random())
-        const randomItem = newArray.splice(randomPosition, 1)
+    const newArray = [...array];
 
-        newArray.push(...randomItem)
+    for (let i = newArray.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
     }
 
-    return newArray
+    return newArray;
 }
