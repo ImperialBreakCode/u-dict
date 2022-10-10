@@ -314,7 +314,7 @@ const Questions = (props) => {
 
                 selectedAns.classList.add('ans-true');
                 setQuestionsPassed(questionsPassed + 1);
-                setFlash(<b style={{ color: 'green' }}>Corrent Answer!</b>);
+                setFlash(<b style={{ color: '#00ff00' }}>Corrent Answer!</b>);
 
             } else {
 
