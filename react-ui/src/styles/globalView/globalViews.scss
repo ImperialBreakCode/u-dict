@@ -410,6 +410,22 @@
 
     .question{
         margin-bottom: 5%;
-        font-size: 35px;
+        font-size: 25px;
+    }
+
+    .score-box{
+        margin: 20px 10px;
+        padding: 5%;
+        width: 100%;
+
+        p{
+            font-size: 40px;
+            margin: 0;
+        }
+    }
+
+    .qst-data-wrap{
+        font-size: 50px;
+        font-weight: 500;
     }
 }

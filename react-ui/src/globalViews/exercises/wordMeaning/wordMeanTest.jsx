@@ -11,9 +11,12 @@ export const WordMeaningTest = (props) => {
 
     const [currentView, setCurrentView] = useState(<TestSetUp changeGlobalView={props.changeGlobalView} testData={props.testData} finishSetUp={finishSetUp} />)
 
-    function finishSetUp(data) {
+    function finishTest(qstDone, qstDoneCorrect) {
+        setCurrentView(<Finish qstDone={qstDone} qstDoneCorrect={qstDoneCorrect} changeGlobalView={props.changeGlobalView}/>);
+    }
 
-        setCurrentView(<Questions qstCount={props.testData.questionCount} questionsData={data} />);
+    function finishSetUp(data) {
+        setCurrentView(<Questions qstCount={props.testData.questionCount} questionsData={data} finishTest={finishTest}/>);
     }
 
     return (
@@ -30,6 +33,7 @@ const TestSetUp = (props) => {
     const [tableData, setTableData] = useState(null);
     const [wordMeanDict, setWordMeanDict] = useState([]);
     const [errorMessage, setErrorMessage] = useState(null);
+    const [canContinue, setCanContinue] = useState(true);
 
     if (props.testData.articleUsage && props.testData.type == 'wrd') {
         tableHeads = ['Article', 'Word', 'Meaning'];
@@ -43,6 +47,12 @@ const TestSetUp = (props) => {
         window.electronAPI.getWordsAndPhrases(props.testData.langId).then(data => {
 
             if (props.testData.type === 'wrd') {
+
+                if (data[0].length == 0) {
+                    setErrorMessage('There are no words in the selected language.');
+                    setCanContinue(false);
+                }
+
                 const reactData = data[0].map(word => {
                     return (
                         <tr onClick={(e) => tableRowClick(e)} key={word.id}>
@@ -55,6 +65,12 @@ const TestSetUp = (props) => {
 
                 setTableData(reactData);
             } else {
+
+                if (data[1].length == 0) {
+                    setErrorMessage('There are no phrases in the selected language.');
+                    setCanContinue(false);
+                }
+
                 const reactData = data[1].map(phrase => {
                     return (
                         <tr onClick={(e) => tableRowClick(e)} key={phrase.id}>
@@ -144,39 +160,39 @@ const TestSetUp = (props) => {
 
     function finish() {
 
-        if (wordMeanDict.length <= 0) {
+        if (!canContinue) {
+            return;
+        }
+
+        const wordMeanDictCopy = wordMeanDict;
+
+        if (wordMeanDictCopy.length <= 0) {
 
             let keys = $('.data-key');
             const values = $('.data-value');
             let articles = $('.data-article');
-
-            const wordMeanDictCopy = wordMeanDict;
 
             for (let i = 0; i < keys.length; i++) {
 
                 let article = null;
 
                 if (articles.length > 0) {
-                    article = articles[i].innerHTML != '' ? articles[i].innerHTML: null;
+                    article = articles[i].innerHTML != '' ? articles[i].innerHTML : null;
                 }
 
                 wordMeanDictCopy.push({ key: keys[i].innerHTML, value: values[i].innerHTML, article: article });
             }
-
-            props.finishSetUp(wordMeanDictCopy);
-            
-            return;
         }
 
-        for (let i = 0; i < wordMeanDict.length - 1; i++) {
+        for (let i = 0; i < wordMeanDictCopy.length - 1; i++) {
 
-            for (let e = i + 1; e < wordMeanDict.length; e++) {
+            for (let e = i + 1; e < wordMeanDictCopy.length; e++) {
 
-                const data1 = wordMeanDict[i];
-                const data2 = wordMeanDict[e];
+                const data1 = wordMeanDictCopy[i];
+                const data2 = wordMeanDictCopy[e];
 
                 if (data1.key != data2.key && data1.value != data2.value) {
-                    props.finishSetUp(wordMeanDict);
+                    props.finishSetUp(wordMeanDictCopy);
                     return;
                 }
             }
@@ -219,10 +235,11 @@ const Questions = (props) => {
     const [questionsPassed, setQuestionsPassed] = useState(0);
 
     const [questArr, setQuestArr] = useState(props.questionsData);
-    const [allDataArr, setAllDataArr ] = useState(props.questionsData);
+    const [allDataArr, setAllDataArr] = useState(props.questionsData);
 
-    const [ displayAnswers, setDisplayAnswers ] = useState(null);
-    const [ displayQuestion, setDisplayQuestion ] = useState(null);
+    const [displayAnswers, setDisplayAnswers] = useState(null);
+    const [displayQuestion, setDisplayQuestion] = useState(null);
+    const [flash, setFlash] = useState('');
 
 
     useEffect(() => {
@@ -230,11 +247,12 @@ const Questions = (props) => {
     }, []);
 
     function MakeQuestion() {
-        
+
         // checking if the questions set are finite (!=0 ...) and then if the questions done exceeds the limit (qstCount <= ...)  
-        if (props.qstCount != 0 && props.qstCount !='') {
+        if (props.qstCount != 0 && props.qstCount != '') {
             if (props.qstCount <= questionsDone) {
                 // change to result view
+                props.finishTest(questionsDone, questionsPassed);
             }
         }
 
@@ -253,7 +271,7 @@ const Questions = (props) => {
 
         // updateting the array
         setQuestArr(questArrCopy);
-        
+
         // shuffling all the answers
         const allAnswers = shuffle(allDataArr);
         setAllDataArr(allAnswers);
@@ -266,14 +284,14 @@ const Questions = (props) => {
                 possibleAnswers.push(answerData);
             }
 
-            if (possibleAnswers.length == 5) {
+            if (possibleAnswers.length == 4) {
                 break;
             }
         }
 
         possibleAnswers = possibleAnswers.map((answer, ind) => {
-            return(
-                <div key={ind} is-true={(ind == 0).toString()} className='answer'>
+            return (
+                <div onClick={(e) => checkIfTrue(e)} key={Math.random()} is-true={(ind == 0).toString()} className='answer'>
                     {answer.value}
                 </div>
             );
@@ -284,40 +302,83 @@ const Questions = (props) => {
         setDisplayAnswers(possibleAnswers);
         setDisplayQuestion(`${questionData.article ?? ''} ${questionData.key}`);
         setQuestionsDone(questionsDone + 1);
+
+    }
+
+    function checkIfTrue(e) {
+
+        if ($('#next-qt').hasClass('d-none')) {
+            const selectedAns = e.target;
+
+            if (selectedAns.getAttribute('is-true') == 'true') {
+
+                selectedAns.classList.add('ans-true');
+                setQuestionsPassed(questionsPassed + 1);
+                setFlash(<b style={{ color: '#00ff00' }}>Corrent Answer!</b>);
+
+            } else {
+
+                selectedAns.classList.add('ans-false');
+                $('.answer[is-true=true]').addClass('ans-true');
+                setFlash(<b style={{ color: 'red' }}>Wrong Answer!</b>);
+
+            }
+
+            $('#next-qt').removeClass('d-none');
+        }
+    }
+
+    function nextQuestion() {
+        setFlash('');
+        MakeQuestion();
+
+        $('#next-qt').addClass('d-none');
     }
 
     return (
         <div className='w-50'>
             <h1 className='question'>
-                #{questionsDone} {props.qstCount != 0 && props.qstCount != '' ? ` of ${props.qstCount} `: ''} 
-                The meaning of:<br/> 
-                {displayQuestion}
+                #{questionsDone} {props.qstCount != 0 && props.qstCount != '' ? ` of ${props.qstCount} ` : ''}<br/>
+                The meaning of:<br />
+                <span className='qst-data-wrap'>{displayQuestion}</span>
             </h1>
             <div className='answer-wrapper'>
                 {displayAnswers}
             </div>
 
+            <p>{flash}</p>
+
             <DataControl>
                 <DCSection>
-                    <SecondaryButton style='mt-4 w-50'>Stop the test</SecondaryButton>
-                    <SecondaryButton style='mt-4 w-50'>Next Question</SecondaryButton>
+                    <SecondaryButton onClick={() =>  props.finishTest(questionsDone, questionsPassed)} style='mt-4 w-50'>Finish the test</SecondaryButton>
+                    <PrimaryButton elemId={'next-qt'} onClick={() => nextQuestion()} style='mt-4 w-50 d-none'>Next Question</PrimaryButton>
                 </DCSection>
             </DataControl>
         </div>
     );
 }
 
+const Finish = (props) => {
+    return(
+        <div className='w-50'>
+            <div className='score-box'>
+                <h4>Your Score:</h4>
+                <p>{props.qstDoneCorrect}/{props.qstDone}</p>
+            </div>
+            <PrimaryButton style='w-100' onClick={() => props.changeGlobalView(GlobalViewNames.viewController, ViewNames.exercises)}>Close the test</PrimaryButton>
+        </div>
+    );
+}
+
 // help functions
 function shuffle(array) {
-    const newArray = [...array]
-    const length = newArray.length
 
-    for (let start = 0; start < length; start++) {
-        const randomPosition = Math.floor((newArray.length - start) * Math.random())
-        const randomItem = newArray.splice(randomPosition, 1)
+    const newArray = [...array];
 
-        newArray.push(...randomItem)
+    for (let i = newArray.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
     }
 
-    return newArray
+    return newArray;
 }
