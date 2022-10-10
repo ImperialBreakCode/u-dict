@@ -12,6 +12,7 @@ export const WordMeaningTest = (props) => {
     const [currentView, setCurrentView] = useState(<TestSetUp changeGlobalView={props.changeGlobalView} testData={props.testData} finishSetUp={finishSetUp} />)
 
     function finishSetUp(data) {
+
         setCurrentView(<Questions qstCount={props.testData.questionCount} questionsData={data} />);
     }
 
@@ -218,7 +219,10 @@ const Questions = (props) => {
     const [questionsPassed, setQuestionsPassed] = useState(0);
 
     const [questArr, setQuestArr] = useState(props.questionsData);
-    const [qstDoneArr, setQstDoneArr] = useState([]);
+    const [allDataArr, setAllDataArr ] = useState(props.questionsData);
+
+    const [ displayAnswers, setDisplayAnswers ] = useState(null);
+    const [ displayQuestion, setDisplayQuestion ] = useState(null);
 
 
     useEffect(() => {
@@ -227,21 +231,37 @@ const Questions = (props) => {
 
     function MakeQuestion() {
         
-        if (props.qstCount != 0 || props.qstCount !='') {
+        // checking if the questions set are finite (!=0 ...) and then if the questions done exceeds the limit (qstCount <= ...)  
+        if (props.qstCount != 0 && props.qstCount !='') {
             if (props.qstCount <= questionsDone) {
-                // change to result
+                // change to result view
             }
         }
 
-        setQuestArr(shuffle(questArr));
-
         let questArrCopy = questArr;
-        const questionData = questArrCopy.splice(0, 1)[0];
-        const possibleAnswers = [questionData];
 
-        for (let i = 0; i < questArr.length; i++) {
-            const answerData = questArrCopy[i];
-            
+        // checks if there is unused questions left in the array; if there are no questions left, then fill up the array again
+        if (questArr.length == 0) {
+            setQuestArr([...allDataArr]);
+            questArrCopy = allDataArr;
+        }
+
+        // shuffling and getting the question and the true answer and removing them from the array (because the are used)
+        questArrCopy = shuffle(questArrCopy);
+        const questionData = questArrCopy.splice(0, 1)[0];
+        let possibleAnswers = [questionData];
+
+        // updateting the array
+        setQuestArr(questArrCopy);
+        
+        // shuffling all the answers
+        const allAnswers = shuffle(allDataArr);
+        setAllDataArr(allAnswers);
+
+        // filling the other posiible answers taken from allData array
+        for (let i = 0; i < allAnswers.length; i++) {
+            const answerData = allAnswers[i];
+
             if (answerData.key != questionData.key && answerData.value != questionData.value) {
                 possibleAnswers.push(answerData);
             }
@@ -251,28 +271,30 @@ const Questions = (props) => {
             }
         }
 
-        // question count update 
+        possibleAnswers = possibleAnswers.map((answer, ind) => {
+            return(
+                <div key={ind} is-true={(ind == 0).toString()} className='answer'>
+                    {answer.value}
+                </div>
+            );
+        });
+
+        possibleAnswers = shuffle(possibleAnswers);
+
+        setDisplayAnswers(possibleAnswers);
+        setDisplayQuestion(`${questionData.article ?? ''} ${questionData.key}`);
+        setQuestionsDone(questionsDone + 1);
     }
 
     return (
         <div className='w-50'>
-            <h1 className='question'>Question 1</h1>
+            <h1 className='question'>
+                #{questionsDone} {props.qstCount != 0 && props.qstCount != '' ? ` of ${props.qstCount} `: ''} 
+                The meaning of:<br/> 
+                {displayQuestion}
+            </h1>
             <div className='answer-wrapper'>
-                <div className='answer ans-false'>
-                    ssdfsdfsdf
-                </div>
-
-                <div className='answer ans-true'>
-                    ssdfsdfsdf
-                </div>
-
-                <div className='answer'>
-                    ssdfsdfsdf
-                </div>
-
-                <div className='answer'>
-                    ssdfsdfsdf
-                </div>
+                {displayAnswers}
             </div>
 
             <DataControl>
