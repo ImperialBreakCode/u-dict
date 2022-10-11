@@ -1,7 +1,7 @@
 import React from 'react';
 import NavButton from './navButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse, faLanguage, faA, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faLanguage, faA, faCheck, faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 import { ViewNames } from '../constants';
 
 const activeNavClass = 'active-nav';
@@ -67,6 +67,9 @@ class Navigation extends React.Component{
                     </NavButton>
                     <NavButton onClick={(e) => this.handleClickNavButton(e)} active={this.props.currentView == ViewNames.words} toView={ViewNames.words} text='words'>
                         <FontAwesomeIcon icon={faA}/>
+                    </NavButton>
+                    <NavButton onClick={(e) => this.handleClickNavButton(e)} active={this.props.currentView == ViewNames.groups} toView={ViewNames.groups} text='groups'>
+                        <FontAwesomeIcon icon={faLayerGroup}/>
                     </NavButton>
                     <NavButton onClick={(e) => this.handleClickNavButton(e)} active={this.props.currentView == ViewNames.exercises} toView={ViewNames.exercises} text='exercises'>
                         <FontAwesomeIcon icon={faCheck}/>

@@ -7,6 +7,7 @@ import LangView from './views/languages';
 import WordsView from './views/words';
 import ExercView from './views/exercise';
 import { ViewNames } from './constants';
+import GroupView from './views/groups';
 
 function ViewController(props) {
 
@@ -49,6 +50,10 @@ function ViewController(props) {
 
 			case ViewNames.words:
 				setView(<WordsView changeGlobalView={props.changeGlobalView}/>);
+				break;
+
+			case ViewNames.groups:
+				setView(<GroupView/>);
 				break;
 
 			case ViewNames.exercises:

@@ -2,6 +2,7 @@ export const ViewNames = {
     home: 'home',
     lang: 'languages',
     words: 'words',
+    groups: 'groups',
     exercises: 'exercises'
 }
 
