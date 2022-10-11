@@ -52,29 +52,29 @@
   --bs-body-bg: #fff;
 }
 
-.langview {
+.langview, .group-view {
   height: 100vh;
   position: relative;
 }
 
-.langview h1 {
+.langview h1, .group-view h1 {
   text-align: center;
   margin-bottom: 30px;
 }
 
-.langview .modal {
+.langview .modal, .group-view .modal {
   position: absolute;
   background-color: #1d1d1d23;
   -webkit-backdrop-filter: blur(5px);
           backdrop-filter: blur(5px);
 }
 
-.langview .modal .btn-close {
+.langview .modal .btn-close, .group-view .modal .btn-close {
   -webkit-filter: invert(1);
           filter: invert(1);
 }
 
-.langview .modal .modal-content {
+.langview .modal .modal-content, .group-view .modal .modal-content {
   background-color: #131318;
   border-radius: 20px;
   border: 1px solid #595975;
@@ -82,7 +82,7 @@
           box-shadow: 0 0 20px #0000006b;
 }
 
-.langview .modal .modal-content input[type=text] {
+.langview .modal .modal-content input[type=text], .group-view .modal .modal-content input[type=text] {
   background-color: #323241;
   border-color: #626281;
   color: white;
@@ -90,21 +90,21 @@
   transition: 0.2s;
 }
 
-.langview .modal .modal-content input[type=text]:hover {
+.langview .modal .modal-content input[type=text]:hover, .group-view .modal .modal-content input[type=text]:hover {
   background-color: #404053;
 }
 
-.langview .modal .modal-content input[type=text]:focus {
+.langview .modal .modal-content input[type=text]:focus, .group-view .modal .modal-content input[type=text]:focus {
   -webkit-box-shadow: 0 0 0 0.25rem #581ea373;
           box-shadow: 0 0 0 0.25rem #581ea373;
 }
 
-.langview .modal .modal-content .modal-header, .langview .modal .modal-content .modal-footer {
+.langview .modal .modal-content .modal-header, .langview .modal .modal-content .modal-footer, .group-view .modal .modal-content .modal-header, .group-view .modal .modal-content .modal-footer {
   border: none;
   text-transform: capitalize;
 }
 
-.langview .table-wrapper {
+.langview .table-wrapper, .group-view .table-wrapper {
   max-height: 70vh;
   overflow-y: scroll;
   -webkit-box-shadow: 0 0 20px 3px #1e1a2c63;
@@ -112,7 +112,7 @@
   border-radius: 20px;
 }
 
-.langview .table-override {
+.langview .table-override, .group-view .table-override {
   width: 100%;
   font-size: 20px;
   text-transform: capitalize;
@@ -120,53 +120,53 @@
   margin: 0;
 }
 
-.langview .table-override thead th {
+.langview .table-override thead th, .group-view .table-override thead th {
   padding: 15px;
   position: -webkit-sticky;
   position: sticky;
 }
 
-.langview .table-override thead th:first-child {
+.langview .table-override thead th:first-child, .group-view .table-override thead th:first-child {
   border-top-left-radius: 20px;
 }
 
-.langview .table-override thead th:last-child {
+.langview .table-override thead th:last-child, .group-view .table-override thead th:last-child {
   border-top-right-radius: 20px;
 }
 
-.langview .table-override tbody {
+.langview .table-override tbody, .group-view .table-override tbody {
   border-top: 1px solid;
   max-height: 70vh;
   overflow: scroll;
 }
 
-.langview .table-override tbody .langv-table-button {
+.langview .table-override tbody .langv-table-button, .group-view .table-override tbody .langv-table-button {
   opacity: 0;
   margin: 0 5px;
 }
 
-.langview .table-override tbody tr:last-child {
+.langview .table-override tbody tr:last-child, .group-view .table-override tbody tr:last-child {
   border-bottom: transparent;
 }
 
-.langview .table-override tbody tr:last-child td:first-child {
+.langview .table-override tbody tr:last-child td:first-child, .group-view .table-override tbody tr:last-child td:first-child {
   border-bottom-left-radius: 20px;
 }
 
-.langview .table-override tbody tr:last-child td:last-child {
+.langview .table-override tbody tr:last-child td:last-child, .group-view .table-override tbody tr:last-child td:last-child {
   border-bottom-right-radius: 20px;
 }
 
-.langview .table-override tbody tr:hover td {
+.langview .table-override tbody tr:hover td, .group-view .table-override tbody tr:hover td {
   background-color: #735c9e;
 }
 
-.langview .table-override tbody tr:hover .langv-table-button {
+.langview .table-override tbody tr:hover .langv-table-button, .group-view .table-override tbody tr:hover .langv-table-button {
   opacity: 1;
   margin: 20px 5px;
 }
 
-.langview .table-override tbody td {
+.langview .table-override tbody td, .group-view .table-override tbody td {
   background-color: #544474;
   padding: 15px;
   -webkit-box-shadow: none;
@@ -175,7 +175,7 @@
   transition: 0.2s;
 }
 
-.langview #add-lang {
+.langview #add-lang, .group-view #add-lang {
   font-size: 20px;
   text-transform: capitalize;
   width: 100%;
@@ -188,7 +188,7 @@
   transition: 0.2s;
 }
 
-.langview #add-lang:hover {
+.langview #add-lang:hover, .group-view #add-lang:hover {
   background-color: #735c9e;
 }
 
@@ -208,26 +208,26 @@
   margin: 10px 0;
 }
 
-.word-view, .exercises-view {
+.word-view, .exercises-view, .group-view {
   height: 100vh;
   background-color: #4f09ac;
   overflow-y: scroll;
 }
 
-.word-view .cont-view, .exercises-view .cont-view {
+.word-view .cont-view, .exercises-view .cont-view, .group-view .cont-view {
   padding: 0 8%;
 }
 
-.word-view .title-box, .exercises-view .title-box {
+.word-view .title-box, .exercises-view .title-box, .group-view .title-box {
   margin: 6vh 0;
 }
 
-.word-view .title-box h1, .exercises-view .title-box h1 {
+.word-view .title-box h1, .exercises-view .title-box h1, .group-view .title-box h1 {
   text-align: center;
   font-size: 50px;
 }
 
-.word-view .content-box, .exercises-view .content-box {
+.word-view .content-box, .exercises-view .content-box, .group-view .content-box {
   background: #160d27;
   padding: 20px;
   margin: 15px 0;
@@ -236,11 +236,11 @@
           box-shadow: 0 0 20px 3px #1e1a2c63;
 }
 
-.word-view .content-box h2, .exercises-view .content-box h2 {
+.word-view .content-box h2, .exercises-view .content-box h2, .group-view .content-box h2 {
   text-transform: capitalize;
 }
 
-.word-view .content-box .content-row, .exercises-view .content-box .content-row {
+.word-view .content-box .content-row, .exercises-view .content-box .content-row, .group-view .content-box .content-row {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -260,22 +260,49 @@
   transition: 0.2s;
 }
 
-.word-view .content-box .content-row:hover, .exercises-view .content-box .content-row:hover {
+.word-view .content-box .content-row:hover, .exercises-view .content-box .content-row:hover, .group-view .content-box .content-row:hover {
   background: #432874;
 }
 
-.word-view .content-box .content-row h5, .exercises-view .content-box .content-row h5 {
+.word-view .content-box .content-row h5, .exercises-view .content-box .content-row h5, .group-view .content-box .content-row h5 {
   margin: 0;
 }
 
 @media (max-width: 1099px) {
-  .word-view .content-box .content-row h5, .word-view .content-box .content-row button, .exercises-view .content-box .content-row h5, .exercises-view .content-box .content-row button {
+  .word-view .content-box .content-row h5, .word-view .content-box .content-row button, .exercises-view .content-box .content-row h5, .exercises-view .content-box .content-row button, .group-view .content-box .content-row h5, .group-view .content-box .content-row button {
     font-size: 15px;
   }
 }
 
-.word-view .row, .exercises-view .row {
+.word-view .row, .exercises-view .row, .group-view .row {
   width: auto;
+}
+
+.group-view .cont-view {
+  padding: 0 25%;
+}
+
+.group-view .cont-view span button {
+  width: 70px;
+  margin: 5px;
+}
+
+.group-view .cont-view .add-group {
+  width: 100%;
+  padding: 10px;
+  border-radius: 20px;
+  font-size: 20px;
+  background: #160d27;
+  border: 1px solid transparent;
+  -webkit-box-shadow: 0 0 20px 3px #1e1a2c63;
+          box-shadow: 0 0 20px 3px #1e1a2c63;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.group-view .cont-view .add-group:hover {
+  background: #21133b;
+  border: 1px solid #45297a;
 }
 
 .row {

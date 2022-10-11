@@ -60,6 +60,7 @@ export class Word extends Model{
 
         this.foreignKeys = {};
         this.foreignKeys[tableNames.Language] = [];
+        this.foreignKeys[tableNames.Group] = [];
     }
     
     public word: string;
@@ -71,5 +72,20 @@ export class Word extends Model{
     public dictTable?: any;
 
     public readonly foreignKeys: {[key: string]: ForeignKey[]};
+
+}
+
+export class Group extends Model{
+    constructor(groupName: string){
+        super(tableNames.Group, 'grp');
+
+        this.groupName = groupName;
+
+        this.relWords = new Relationship('to-many', tableNames.Word);
+    }
+
+    public groupName: string;
+
+    public relWords: Relationship;
 
 }

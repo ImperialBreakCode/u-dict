@@ -55,6 +55,13 @@ var appDatabase = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    Object.defineProperty(appDatabase.prototype, "Groups", {
+        get: function () {
+            return this.getdata(tableNames_1.tableNames.Group);
+        },
+        enumerable: false,
+        configurable: true
+    });
     appDatabase.prototype.getJson = function (fileName) {
         var fileData = fs.readFileSync(fileName, 'utf-8');
         var jsonFileData = [];
@@ -79,6 +86,19 @@ var appDatabase = /** @class */ (function () {
     };
     appDatabase.prototype.getFileName = function (chunk, nameTable) {
         return "".concat(this._dirname, "/").concat(nameTable, "/").concat(nameTable).concat(chunk, ".json");
+    };
+    appDatabase.prototype.getChunk = function (id, table) {
+        var filesCount = fs.readdirSync("".concat(this._dirname, "/").concat(table)).length;
+        for (var i = 0; i < filesCount; i++) {
+            var fileName = this.getFileName(i, table);
+            var json = this.getJson(fileName);
+            for (var e = 0; e < json.length; e++) {
+                if (json[e].id == id) {
+                    return i;
+                }
+            }
+        }
+        return false;
     };
     appDatabase.prototype.save = function (singleData) {
         var inTable = singleData.tableName;
@@ -139,6 +159,59 @@ var appDatabase = /** @class */ (function () {
                         this.deleteChildren(jsonData[i_1], rels);
                     }
                     jsonData.splice(i_1, 1);
+                    fs.writeFileSync(fileName, JSON.stringify(jsonData));
+                    return;
+                }
+            }
+        }
+    };
+    appDatabase.prototype.connectExisting = function (parent, parentRel, childId) {
+        var filesCount = fs.readdirSync("".concat(this._dirname, "/").concat(parentRel.table)).length;
+        var parentChunk = this.getChunk(parent.id, parent.tableName);
+        for (var i = 0; i < filesCount; i++) {
+            var fileName = this.getFileName(i, parentRel.table);
+            var json = this.getJson(fileName);
+            for (var e = 0; e < json.length; e++) {
+                if (json[e].id == childId) {
+                    if (parentChunk !== false) {
+                        var key = new baseModel_1.ForeignKey(parent.tableName, parentChunk, parent.id);
+                        json.foreignKeys[parent.tableName].push(key);
+                        fs.writeFileSync(fileName, JSON.stringify(json));
+                        return;
+                    }
+                }
+            }
+        }
+    };
+    appDatabase.prototype.removeChildren = function (parentId, parentTable, childrenTable) {
+        var filesCount = fs.readdirSync("".concat(this._dirname, "/").concat(childrenTable)).length;
+        for (var i = 0; i < filesCount; i++) {
+            var fileName = this.getFileName(i, childrenTable);
+            var jsonChildrenData = this.getJson(fileName);
+            var _loop_3 = function (n) {
+                var keys = jsonChildrenData[n].foreignKeys[parentTable];
+                keys.forEach(function (key, index) {
+                    if (key.id === parentId) {
+                        keys.splice(index, 1);
+                    }
+                });
+                jsonChildrenData[n].foreignKeys[parentTable] = keys;
+            };
+            for (var n = 0; n < jsonChildrenData.length; n++) {
+                _loop_3(n);
+            }
+            fs.writeFileSync(fileName, JSON.stringify(jsonChildrenData));
+        }
+    };
+    appDatabase.prototype.update = function (updatedData) {
+        ;
+        var filesCount = fs.readdirSync("".concat(this._dirname, "/").concat(updatedData.tableName)).length;
+        for (var i = 0; i < filesCount; i++) {
+            var fileName = this.getFileName(i, updatedData.tableName);
+            var jsonData = this.getJson(fileName);
+            for (var i_2 = 0; i_2 < jsonData.length; i_2++) {
+                if (jsonData[i_2].id == updatedData.id) {
+                    jsonData[i_2] = updatedData;
                     fs.writeFileSync(fileName, JSON.stringify(jsonData));
                     return;
                 }
