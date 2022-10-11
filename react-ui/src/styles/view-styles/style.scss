@@ -8,7 +8,7 @@ $cardColor: linear-gradient(90deg, $purple-600, $purple-500 );
 $backcolorHover: #735c9e;
 $main-color: #4f09ac;
 
-.langview{
+.langview, .group-view{
     height: 100vh;
     position: relative;
 
@@ -162,7 +162,7 @@ $main-color: #4f09ac;
     }
 }
 
-.word-view, .exercises-view{
+.word-view, .exercises-view, .group-view{
     height: 100vh;
     background-color: $main-color;
     overflow-y: scroll;
@@ -222,6 +222,31 @@ $main-color: #4f09ac;
 
     .row{
         width: auto;
+    }
+}
+
+.group-view .cont-view{
+    padding: 0 25%;
+
+    span button{
+        width: 70px;
+        margin: 5px 
+    }
+
+    .add-group{
+        width: 100%;
+        padding: 10px;
+        border-radius: 20px;
+        font-size: 20px;
+        background: #160d27;
+        border: 1px solid transparent;
+        box-shadow: 0 0 20px 3px #1e1a2c63;
+        transition: 0.2s;
+
+        &:hover{
+            background: #21133b;
+            border: 1px solid #45297a;
+        }
     }
 }
 
