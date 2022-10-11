@@ -223,7 +223,7 @@ export class appDatabase {
 
                 const keys: ForeignKey[] = jsonChildrenData[n].foreignKeys[parentTable];
 
-                keys.forEach( (key, index) => {
+                keys.forEach((key, index) => {
                     if (key.id === parentId) {
                         keys.splice(index, 1);
                     }
@@ -233,6 +233,27 @@ export class appDatabase {
             }
 
             fs.writeFileSync(fileName, JSON.stringify(jsonChildrenData));
+        }
+    }
+
+    public update(updatedData: Model): void{;
+
+        let filesCount = fs.readdirSync(`${this._dirname}/${updatedData.tableName}`).length;
+
+        for (let i = 0; i < filesCount; i++) {
+
+            const fileName = this.getFileName(i, updatedData.tableName);
+            let jsonData = this.getJson(fileName);
+
+            for (let i = 0; i < jsonData.length; i++) {
+                
+                if (jsonData[i].id == updatedData.id) {
+                    jsonData[i] = updatedData;
+
+                    fs.writeFileSync(fileName, JSON.stringify(jsonData));
+                    return;
+                }
+            }
         }
     }
 

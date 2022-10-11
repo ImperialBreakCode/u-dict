@@ -155,8 +155,7 @@ ipcMain.on('updateWrd', (e, wrd, id) => {
 	word.word = wrd.word;
 	word.gramGender = wrd.gramGender;
 
-	db.delete(id, tableNames.Word, false);
-	db.save(word);
+	db.update(word);
 })
 
 ipcMain.on('updatePhr', (e, phr, id) => {
@@ -166,22 +165,19 @@ ipcMain.on('updatePhr', (e, phr, id) => {
 	phrase.phrase = phr.phrase;
 	phrase.gramGender = phr.gramGender;
 
-	db.delete(id, tableNames.Phrase, false);
-	db.save(phrase);
+	db.update(phrase);
 })
 
 ipcMain.on('update-meanings-wrd', (e, mn, id) => {
 	let word = db.Words.filter(elem => elem.id == id)[0];
 	word.meanings = [...mn];
 
-	db.delete(id, tableNames.Word, false);
-	db.save(word);
+	db.update(word);
 })
 
 ipcMain.on('update-meanings-phr', (e, mn, id) => {
 	let phrase = db.Phrases.filter(elem => elem.id == id)[0];
 	phrase.meanings = [...mn];
 
-	db.delete(id, tableNames.Phrase, false);
-	db.save(phrase);
+	db.update(phrase);
 })

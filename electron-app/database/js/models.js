@@ -15,7 +15,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Word = exports.Phrase = exports.Language = void 0;
+exports.Group = exports.Word = exports.Phrase = exports.Language = void 0;
 var baseModel_1 = require("./baseModel");
 var tableNames_1 = require("./tableNames");
 var Language = /** @class */ (function (_super) {
@@ -57,9 +57,21 @@ var Word = /** @class */ (function (_super) {
         _this.gramGender = gramGender;
         _this.foreignKeys = {};
         _this.foreignKeys[tableNames_1.tableNames.Language] = [];
+        _this.foreignKeys[tableNames_1.tableNames.Group] = [];
         return _this;
     }
     return Word;
 }(baseModel_1.Model));
 exports.Word = Word;
+var Group = /** @class */ (function (_super) {
+    __extends(Group, _super);
+    function Group(groupName) {
+        var _this = _super.call(this, tableNames_1.tableNames.Group, 'grp') || this;
+        _this.groupName = groupName;
+        _this.relWords = new baseModel_1.Relationship('to-many', tableNames_1.tableNames.Word);
+        return _this;
+    }
+    return Group;
+}(baseModel_1.Model));
+exports.Group = Group;
 //# sourceMappingURL=models.js.map
