@@ -94,6 +94,34 @@
   overflow-y: scroll;
 }
 
+.word-info-view .group-wrapper, .phrase-info-view .group-wrapper {
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
+.word-info-view .group-box, .phrase-info-view .group-box {
+  text-align: center;
+  background-color: #3d1f6881;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #513972;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.word-info-view .group-box:hover, .phrase-info-view .group-box:hover {
+  background-color: #592c97ad;
+}
+
+.word-info-view .gb-selected, .phrase-info-view .gb-selected {
+  background-color: #2d863280;
+  border: 1px solid #42c4489d;
+}
+
+.word-info-view .gb-selected:hover, .phrase-info-view .gb-selected:hover {
+  background-color: #42c4489d;
+}
+
 .word-info-view .add-mean, .phrase-info-view .add-mean {
   display: -webkit-box;
   display: -ms-flexbox;

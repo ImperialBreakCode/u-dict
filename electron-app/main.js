@@ -201,3 +201,16 @@ ipcMain.on('add-edit-group', (e, type, data) => {
 		db.delete(data, tableNames.Group, false);
 	}
 })
+
+ipcMain.on('manage-group-connections', (e, action, groupId, targetId) => {
+
+	let group = db.Groups.filter(elem => elem.id == groupId)[0];
+
+	if (action == 'connect') {
+		db.connectExisting(group, group.relWords, targetId);
+	}
+	else if (action == 'disconnect') {
+		db.disconnectExisting(group, group.relWords, targetId);
+	}
+
+})

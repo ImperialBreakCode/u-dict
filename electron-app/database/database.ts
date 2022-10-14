@@ -200,7 +200,7 @@ export class appDatabase {
 
                     if (parentChunk !== false) {
                         const key = new ForeignKey(parent.tableName, parentChunk as number, parent.id)
-                        json.foreignKeys[parent.tableName].push(key);
+                        json[e].foreignKeys[parent.tableName].push(key);
 
                         fs.writeFileSync(fileName, JSON.stringify(json));
 
@@ -209,6 +209,32 @@ export class appDatabase {
                     
                 }
             }
+        }
+    }
+
+    public disconnectExisting(parent: Model, parentRel: Relationship, childId: string): void {
+        let filesCount = fs.readdirSync(`${this._dirname}/${parentRel.table}`).length;
+
+        for (let i = 0; i < filesCount; i++) {
+            const fileName = this.getFileName(i, parentRel.table);
+            const jsonChildrenData = this.getJson(fileName);
+
+            for (let n = 0; n < jsonChildrenData.length; n++) {
+
+                if (jsonChildrenData[n].id === childId) {
+                    const keys: ForeignKey[] = jsonChildrenData[n].foreignKeys[parent.tableName];
+
+                    keys.forEach((key, index) => {
+                        if (key.id === parent.id) {
+                            keys.splice(index, 1);
+                            jsonChildrenData[n].foreignKeys[parent.tableName] = keys;
+                            fs.writeFileSync(fileName, JSON.stringify(jsonChildrenData));
+
+                            return;
+                        }
+                    });
+                }
+            }     
         }
     }
 

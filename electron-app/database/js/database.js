@@ -175,7 +175,7 @@ var appDatabase = /** @class */ (function () {
                 if (json[e].id == childId) {
                     if (parentChunk !== false) {
                         var key = new baseModel_1.ForeignKey(parent.tableName, parentChunk, parent.id);
-                        json.foreignKeys[parent.tableName].push(key);
+                        json[e].foreignKeys[parent.tableName].push(key);
                         fs.writeFileSync(fileName, JSON.stringify(json));
                         return;
                     }
@@ -183,12 +183,39 @@ var appDatabase = /** @class */ (function () {
             }
         }
     };
+    appDatabase.prototype.disconnectExisting = function (parent, parentRel, childId) {
+        var filesCount = fs.readdirSync("".concat(this._dirname, "/").concat(parentRel.table)).length;
+        var _loop_3 = function (i) {
+            var fileName = this_1.getFileName(i, parentRel.table);
+            var jsonChildrenData = this_1.getJson(fileName);
+            var _loop_4 = function (n) {
+                if (jsonChildrenData[n].id === childId) {
+                    var keys_1 = jsonChildrenData[n].foreignKeys[parent.tableName];
+                    keys_1.forEach(function (key, index) {
+                        if (key.id === parent.id) {
+                            keys_1.splice(index, 1);
+                            jsonChildrenData[n].foreignKeys[parent.tableName] = keys_1;
+                            fs.writeFileSync(fileName, JSON.stringify(jsonChildrenData));
+                            return;
+                        }
+                    });
+                }
+            };
+            for (var n = 0; n < jsonChildrenData.length; n++) {
+                _loop_4(n);
+            }
+        };
+        var this_1 = this;
+        for (var i = 0; i < filesCount; i++) {
+            _loop_3(i);
+        }
+    };
     appDatabase.prototype.removeChildren = function (parentId, parentTable, childrenTable) {
         var filesCount = fs.readdirSync("".concat(this._dirname, "/").concat(childrenTable)).length;
         for (var i = 0; i < filesCount; i++) {
             var fileName = this.getFileName(i, childrenTable);
             var jsonChildrenData = this.getJson(fileName);
-            var _loop_3 = function (n) {
+            var _loop_5 = function (n) {
                 var keys = jsonChildrenData[n].foreignKeys[parentTable];
                 keys.forEach(function (key, index) {
                     if (key.id === parentId) {
@@ -198,7 +225,7 @@ var appDatabase = /** @class */ (function () {
                 jsonChildrenData[n].foreignKeys[parentTable] = keys;
             };
             for (var n = 0; n < jsonChildrenData.length; n++) {
-                _loop_3(n);
+                _loop_5(n);
             }
             fs.writeFileSync(fileName, JSON.stringify(jsonChildrenData));
         }

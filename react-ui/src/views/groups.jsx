@@ -67,6 +67,8 @@ class GroupView extends React.Component{
 
         if (name) {
             window.electronAPI.addEditGroup('add', name);
+
+            document.querySelector('#group-name-input').value = '';
             $('#close-btn').click();
             this.loadGroups();
 
@@ -171,9 +173,11 @@ class GroupView extends React.Component{
                     </Row>
 
                     <Row>
-                        <ContentBox>
-                            {this.state.groupsComp}
-                        </ContentBox>
+                        <div className='groups-wrapper'>
+                            <ContentBox>
+                                {this.state.groupsComp}
+                            </ContentBox>
+                        </div>
                     </Row>
 
                     <Row>
