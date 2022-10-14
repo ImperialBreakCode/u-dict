@@ -12,11 +12,11 @@ export const WordMeaningTest = (props) => {
     const [currentView, setCurrentView] = useState(<TestSetUp changeGlobalView={props.changeGlobalView} testData={props.testData} finishSetUp={finishSetUp} />)
 
     function finishTest(qstDone, qstDoneCorrect) {
-        setCurrentView(<Finish qstDone={qstDone} qstDoneCorrect={qstDoneCorrect} changeGlobalView={props.changeGlobalView}/>);
+        setCurrentView(<Finish qstDone={qstDone} qstDoneCorrect={qstDoneCorrect} changeGlobalView={props.changeGlobalView} />);
     }
 
     function finishSetUp(data) {
-        setCurrentView(<Questions qstCount={props.testData.questionCount} questionsData={data} finishTest={finishTest}/>);
+        setCurrentView(<Questions qstCount={props.testData.questionCount} questionsData={data} finishTest={finishTest} />);
     }
 
     return (
@@ -34,6 +34,8 @@ const TestSetUp = (props) => {
     const [wordMeanDict, setWordMeanDict] = useState([]);
     const [errorMessage, setErrorMessage] = useState(null);
     const [canContinue, setCanContinue] = useState(true);
+
+    const [groupValue, setGroupValue] = useState('all');
 
     if (props.testData.articleUsage && props.testData.type == 'wrd') {
         tableHeads = ['Article', 'Word', 'Meaning'];
@@ -201,15 +203,31 @@ const TestSetUp = (props) => {
         setErrorMessage('You should select at least two syntactically diffrent words with diffrent meanings')
     }
 
+    function groupChangeSelect(e) {
+        const val = e.target.value;
+        setGroupValue(val);
+    }
+
     return (
         <div className="w-75">
 
             <h2>Choose words</h2>
-            <p>You must choose at least two syntactically diffrent words with diffrent meanings</p>
+            <p className='mb-5'>You must choose at least two syntactically diffrent words with diffrent meanings</p>
 
             <DataControl>
                 <DCSection>
-                    <input placeholder="Search..." onChange={(e) => search(e)} className='form-control text-input' type='text'></input>
+                    <span className='w-75'>
+                    <label>Search words:</label>
+                        <input placeholder="Search..." onChange={(e) => search(e)} className='form-control text-input' type='text'></input>
+                    </span>
+
+                    <span className='w-25'>
+                        <label>Group Gender:</label>
+                        <select value={groupValue} onChange={(e) => groupChangeSelect(e)} className="form-select" aria-label="Group select">
+                            <option value="all">All</option>
+                            
+                        </select>
+                    </span>
                 </DCSection>
             </DataControl>
 
@@ -338,7 +356,7 @@ const Questions = (props) => {
     return (
         <div className='w-50'>
             <h1 className='question'>
-                #{questionsDone} {props.qstCount != 0 && props.qstCount != '' ? ` of ${props.qstCount} ` : ''}<br/>
+                #{questionsDone} {props.qstCount != 0 && props.qstCount != '' ? ` of ${props.qstCount} ` : ''}<br />
                 The meaning of:<br />
                 <span className='qst-data-wrap'>{displayQuestion}</span>
             </h1>
@@ -350,7 +368,7 @@ const Questions = (props) => {
 
             <DataControl>
                 <DCSection>
-                    <SecondaryButton onClick={() =>  props.finishTest(questionsDone, questionsPassed)} style='mt-4 w-50'>Finish the test</SecondaryButton>
+                    <SecondaryButton onClick={() => props.finishTest(questionsDone, questionsPassed)} style='mt-4 w-50'>Finish the test</SecondaryButton>
                     <PrimaryButton elemId={'next-qt'} onClick={() => nextQuestion()} style='mt-4 w-50 d-none'>Next Question</PrimaryButton>
                 </DCSection>
             </DataControl>
@@ -359,7 +377,7 @@ const Questions = (props) => {
 }
 
 const Finish = (props) => {
-    return(
+    return (
         <div className='w-50'>
             <div className='score-box'>
                 <h4>Your Score:</h4>

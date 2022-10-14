@@ -85,6 +85,34 @@
         overflow-y: scroll;
     }
 
+    .group-wrapper{
+        max-height: 300px;
+        overflow-y: scroll;
+    }
+
+    .group-box{
+        text-align: center;
+        background-color: #3d1f6881;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #513972;
+        border-radius: 5px;
+        cursor: pointer;
+
+        &:hover{
+            background-color: #592c97ad;
+        }
+    }
+
+    .gb-selected{
+        background-color: #2d863280;
+        border: 1px solid #42c4489d;
+
+        &:hover{
+            background-color: #42c4489d;
+        }
+    }
+
     .add-mean{
         display: flex;
         align-items: center;
@@ -267,7 +295,7 @@
         }
 
         span {
-            width: 25%;
+            width: 20%;
             margin-bottom: 20px;
         }
 
@@ -373,6 +401,10 @@
                 background-color: #00a8007c;
             }
         }
+    }
+
+    select, input{
+        border-radius: 5px!important;
     }
 
     .answer{

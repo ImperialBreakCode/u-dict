@@ -2,7 +2,6 @@ import React from 'react';
 import $ from 'jquery';
 import PrimaryButton, { SecondaryButton } from '../components/buttons';
 import { DataControl, DCSection } from '../components/dataControlPanel';
-import { GlobalViewNames } from '../constants';
 import { Modal } from '../components/modal';
 import '../styles/globalView/globalViews.css';
 
@@ -15,7 +14,8 @@ class WordInfo extends React.Component{
             gramGendSelect: '',
             meanings: '',
             primaryMeaning: '',
-            viewMeanings: ''
+            viewMeanings: '',
+            groups: ''
         };
 
         this.endEditing.bind(this);
@@ -25,6 +25,7 @@ class WordInfo extends React.Component{
         this.setup.bind(this);
         this.saveMeanings.bind(this);
         this.makePrimary.bind(this);
+        this.selectGroup.bind(this);
     }
 
     componentDidMount(){
@@ -57,7 +58,7 @@ class WordInfo extends React.Component{
 
                     return(
                         <>
-                            <div key={index}>
+                            <div key={index + mn}>
                                 <h4 className='text-center'>{mn}</h4>
                             </div>
                         </>
@@ -74,6 +75,32 @@ class WordInfo extends React.Component{
                 $('#meaning-wrapper').children('div').first().addClass('primary-meaning');
             }
         });
+
+        window.electronAPI.getGroups().then(groups => {
+
+            const groupsComp = groups.map(group => {
+
+                let inWord = false;
+
+                for (let i = 0; i < this.state.word.foreignKeys['Groups'].length; i++) {
+                    const key = this.state.word.foreignKeys['Groups'][i];
+                    if (key.id == group.id) {
+                        inWord = true;
+                        break;
+                    }
+                }
+
+                return(
+                    <div onClick={(e) => this.selectGroup(e)} className={`group-box ${inWord ? 'gb-selected': ''}`}
+                     key={group.id} group-id={group.id}>
+                        <h5 className='m-0'>{group.groupName}</h5>
+                    </div>
+                );
+            });
+
+            this.setState({groups: groupsComp});
+
+        })
     }
 
     endEditing(e){
@@ -176,6 +203,19 @@ class WordInfo extends React.Component{
         e.target.closest('div').classList.add('primary-meaning');
     }
 
+    selectGroup(e){
+        const selectedBox = e.target.closest('.group-box');
+        const id = selectedBox.getAttribute('group-id');
+
+        if ($(selectedBox).hasClass('gb-selected')) {
+            window.electronAPI.manageGroupConnections('disconnect', id, this.state.word.id);
+            $(selectedBox).removeClass('gb-selected');
+        } else {
+            window.electronAPI.manageGroupConnections('connect', id, this.state.word.id);
+            $(selectedBox).addClass('gb-selected');
+        }
+    }
+
     render(){
 
         const keys = this.state.word.foreignKeys;
@@ -243,6 +283,13 @@ class WordInfo extends React.Component{
                     </div>
                 </Modal>
 
+                <Modal elemId='manage-groups-modal' title='manage groups'>
+                    <p>Select groups to attach to the word</p>
+                    <div className='group-wrapper'>
+                        {this.state.groups}
+                    </div>
+                </Modal>
+
                 <DataControl>
                     <h1 className='word-name'>
 
@@ -297,6 +344,7 @@ class WordInfo extends React.Component{
                     <DCSection>
                         <button data-bs-toggle="modal" data-bs-target="#edit-wrd-modal" className='purple-button w-50'>Edit</button>
                         <button data-bs-toggle="modal" data-bs-target="#manage-meaning-modal" className='purple-button w-50'>Manage meanings</button>
+                        <button data-bs-toggle="modal" data-bs-target="#manage-groups-modal" className='purple-button w-50'>Manage Groups</button>
                     </DCSection>
 
                 </DataControl>

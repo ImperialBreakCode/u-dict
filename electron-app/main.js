@@ -3,7 +3,7 @@ const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path');
 
 const { appDatabase } = require('./database/js/database.js');
-const { Language, Word, Phrase } = require('./database/js/models');
+const { Language, Word, Phrase, Group } = require('./database/js/models');
 const { tableNames } = require('./database/js/tableNames.js');
 
 const db = new appDatabase(`${__dirname}/database/storage`);
@@ -180,4 +180,37 @@ ipcMain.on('update-meanings-phr', (e, mn, id) => {
 	phrase.meanings = [...mn];
 
 	db.update(phrase);
+})
+
+ipcMain.handle('get-groups', (e) => {
+	return db.Groups;
+})
+
+ipcMain.on('add-edit-group', (e, type, data) => {
+	if (type == 'add') {
+		const group = new Group(data);
+		db.save(group);
+	}
+	else if(type == 'edit'){
+		const group = db.Groups.filter(elem => elem.id == data.id)[0];
+		group.groupName = data.name;
+
+		db.update(group);
+	}
+	else if(type == 'delete'){
+		db.delete(data, tableNames.Group, false);
+	}
+})
+
+ipcMain.on('manage-group-connections', (e, action, groupId, targetId) => {
+
+	let group = db.Groups.filter(elem => elem.id == groupId)[0];
+
+	if (action == 'connect') {
+		db.connectExisting(group, group.relWords, targetId);
+	}
+	else if (action == 'disconnect') {
+		db.disconnectExisting(group, group.relWords, targetId);
+	}
+
 })

@@ -74,6 +74,19 @@ const updateMeaningPhr = (mn, id) => {
 	ipcRenderer.send('update-meanings-phr', mn, id)
 }
 
+const getGroups = () => {
+	const groups = ipcRenderer.invoke('get-groups')
+	return groups;
+}
+
+const addEditGroup = (type, data) => {
+	ipcRenderer.send('add-edit-group', type, data)
+}
+
+const manageGroupConnections = (action, groupId, targetId) => {
+	ipcRenderer.send('manage-group-connections', action, groupId, targetId);
+} 
+
 contextBridge.exposeInMainWorld('electronAPI', {
 	getLangData: getLangTableData,
 	getWordsData: getWordsData,
@@ -90,5 +103,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
 	updateWord: updateWord,
 	updatePhrase: updatePhrase,
 	updateMeaningWrd: updateMeaningWrd,
-	updateMeaningPhr: updateMeaningPhr
+	updateMeaningPhr: updateMeaningPhr,
+	getGroups: getGroups,
+	addEditGroup: addEditGroup,
+	manageGroupConnections: manageGroupConnections
 });

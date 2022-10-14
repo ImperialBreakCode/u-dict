@@ -305,6 +305,12 @@
   border: 1px solid #45297a;
 }
 
+.group-view .cont-view .groups-wrapper {
+  max-height: 50vh;
+  overflow-y: scroll;
+  margin: 20px 0;
+}
+
 .row {
   width: 70%;
 }

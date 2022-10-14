@@ -18,15 +18,18 @@ class WordsLangGlobalView extends React.Component{
         this.state = {
             lang: '',
             words: <tr></tr>,
-            groups: '',
+            groupOptions: '',
             values: {
                 genderValue: 'all',
+                groupValue: 'all'
             }
         };
 
         this.tableHead = ['Article', 'Word', 'Meaning', 'Gramatical Gender', 'More'];
 
         this.genderChangeSelect.bind(this);
+        this.groupChangeSelect.bind(this);
+        this.orderChangeSelect.bind(this);
         this.createWordsHtml.bind(this);
         this.addNewWord.bind(this);
         this.deleteLanguage.bind(this);
@@ -49,12 +52,27 @@ class WordsLangGlobalView extends React.Component{
                 this.setState({words: words});
             }
         });
+
+        window.electronAPI.getGroups().then(groups => {
+            const groupOptions = groups.map(group => {
+                return(
+                    <option key={group.id} value={group.id}>{group.groupName}</option>
+                )
+            });
+
+            this.setState({groupOptions: groupOptions});
+        })
     }
 
     createWordsHtml(arr){
         let words = arr.map(word => {
+
+            const groupIds = word.foreignKeys['Groups'].map(key => {
+                return key.id;
+            });
+
             return(
-                <tr wrd-id={word.id} key={word.id}>
+                <tr data-groups={groupIds} wrd-id={word.id} key={word.id}>
                     <td>{word.article}</td>
                     <td>{word.word}</td>
                     <td className={word.meanings.length > 1 ? 'meaning-expand': ''}>{word.meanings.map( (mn, i) => 
@@ -105,6 +123,28 @@ class WordsLangGlobalView extends React.Component{
                 }
             }
         }
+    }
+
+    groupChangeSelect(e){
+        const val = e.target.value;
+        this.setState({values: {groupValue: val}});
+
+        const rows = document.querySelectorAll('tr');
+
+        if (val != 'all') {
+            for (let i = 1; i < rows.length; i++) {
+                let ids = rows[i].getAttribute('data-groups');
+                ids = ids.split(',');
+                if (ids.includes(val)) {
+                    rows[i].classList.remove('d-none');
+                } else {
+                    rows[i].classList.add('d-none');
+                }
+            }
+        } else {
+            $(rows).removeClass('d-none');
+        }
+        
     }
 
     async addNewWord(){
@@ -320,7 +360,7 @@ class WordsLangGlobalView extends React.Component{
                                 </span>
                                 <span>
                                     <label>Word Order:</label>
-                                    <select value={this.state.values.orderValue} onChange={(e) => this.orderChangeSelect(e)} className="form-select" aria-label="order select">
+                                    <select value={this.state.values.orderValue} onChange={(e) => this.orderChangeSelect(e)} className="form-select" aria-label="Order select">
                                         <option value="1">A-Z</option>
                                         <option value="2">Z-A</option>
                                     </select>
@@ -336,6 +376,13 @@ class WordsLangGlobalView extends React.Component{
                                         <option value="animate">animate</option>
                                         <option value="inanimate">inanimate</option>
                                         <option value="common">common</option>
+                                    </select>
+                                </span>
+                                <span>
+                                    <label>Group Gender:</label>
+                                    <select value={this.state.values.groupValue} onChange={(e) => this.groupChangeSelect(e)} className="form-select" aria-label="Group select">
+                                        <option value="all">All</option>
+                                        {this.state.groupOptions}
                                     </select>
                                 </span>
                             </DCSection>
