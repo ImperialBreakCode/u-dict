@@ -311,7 +311,7 @@
 }
 
 .data-control-panel .dc-section span {
-  width: 25%;
+  width: 20%;
   margin-bottom: 20px;
 }
 
@@ -417,6 +417,10 @@
 
 .test-view div .table-wrapper .selected-for-test td {
   background-color: #00a8007c;
+}
+
+.test-view select, .test-view input {
+  border-radius: 5px !important;
 }
 
 .test-view .answer {
