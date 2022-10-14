@@ -36,6 +36,7 @@ const TestSetUp = (props) => {
     const [canContinue, setCanContinue] = useState(true);
 
     const [groupValue, setGroupValue] = useState('all');
+    const [groupOptions, setGroupOptions] = useState([]);
 
     if (props.testData.articleUsage && props.testData.type == 'wrd') {
         tableHeads = ['Article', 'Word', 'Meaning'];
@@ -56,8 +57,13 @@ const TestSetUp = (props) => {
                 }
 
                 const reactData = data[0].map(word => {
+
+                    const groupIds = word.foreignKeys['Groups'].map(key => {
+                        return key.id;
+                    });
+
                     return (
-                        <tr onClick={(e) => tableRowClick(e)} key={word.id}>
+                        <tr className='for-test' data-groups={groupIds} onClick={(e) => tableRowClick(e)} key={word.id}>
                             {props.testData.articleUsage ? <td className='data-article'>{word.article}</td> : null}
                             <td className='data-key'>{word.word}</td>
                             <td className='data-value'>{word.meanings[0]}</td>
@@ -85,6 +91,16 @@ const TestSetUp = (props) => {
                 setTableData(reactData);
             }
         });
+
+        window.electronAPI.getGroups().then(groups => {
+            const groupOp = groups.map(group => {
+                return (
+                    <option key={group.id} value={group.id}>{group.groupName}</option>
+                );
+            });
+
+            setGroupOptions(groupOp);
+        })
 
     }, [])
 
@@ -143,7 +159,7 @@ const TestSetUp = (props) => {
 
             for (let i = 0; i < wordMeanDictCopy.length; i++) {
 
-                if (wordMeanDictCopy[i].key == key) {
+                if (wordMeanDictCopy[i].key == key && wordMeanDictCopy[i].value == value) {
                     wordMeanDictCopy.splice(i, 1);
                     break;
                 }
@@ -170,9 +186,10 @@ const TestSetUp = (props) => {
 
         if (wordMeanDictCopy.length <= 0) {
 
-            let keys = $('.data-key');
-            const values = $('.data-value');
-            let articles = $('.data-article');
+            const rows = $('.for-test');
+            let keys = rows.children('.data-key');
+            const values = rows.children('.data-value');
+            let articles = rows.children('.data-article');
 
             for (let i = 0; i < keys.length; i++) {
 
@@ -206,28 +223,54 @@ const TestSetUp = (props) => {
     function groupChangeSelect(e) {
         const val = e.target.value;
         setGroupValue(val);
+
+        const rows = document.querySelectorAll('tr');
+
+        if (val != 'all') {
+
+            $(rows).removeClass('selected-for-test');
+            setWordMeanDict([]);
+
+            for (let i = 1; i < rows.length; i++) {
+                let ids = rows[i].getAttribute('data-groups');
+                ids = ids.split(',');
+                if (ids.includes(val)) {
+                    rows[i].classList.remove('d-none');
+                    rows[i].classList.add('for-test');
+                } else {
+                    rows[i].classList.add('d-none');
+                    rows[i].classList.remove('for-test');
+                }
+            }
+        } else {
+            $(rows).removeClass('d-none');
+            $(rows).addClass('for-test');
+        }
     }
 
     return (
         <div className="w-75">
 
-            <h2>Choose words</h2>
-            <p className='mb-5'>You must choose at least two syntactically diffrent words with diffrent meanings</p>
+            <h2>Choose {props.testData.type == 'wrd' ? 'words' : 'phrases'}</h2>
+            <p className='mb-5'>You must choose at least two syntactically diffrent {props.testData.type == 'wrd' ? 'words' : 'phrases'} with diffrent meanings</p>
 
             <DataControl>
                 <DCSection>
-                    <span className='w-75'>
-                    <label>Search words:</label>
+                    <span className={props.testData.type == 'wrd' ? 'w-75' : 'w-100'}>
+                        <label>Search:</label>
                         <input placeholder="Search..." onChange={(e) => search(e)} className='form-control text-input' type='text'></input>
                     </span>
 
-                    <span className='w-25'>
-                        <label>Group Gender:</label>
-                        <select value={groupValue} onChange={(e) => groupChangeSelect(e)} className="form-select" aria-label="Group select">
-                            <option value="all">All</option>
-                            
-                        </select>
-                    </span>
+                    {props.testData.type == 'wrd' ? (
+                        <span className='w-25'>
+                            <label>Group Gender:</label>
+                            <select value={groupValue} onChange={(e) => groupChangeSelect(e)} className="form-select" aria-label="Group select">
+                                <option value="all">All</option>
+                                {groupOptions}
+                            </select>
+                        </span>
+                    ) : <></>}
+
                 </DCSection>
             </DataControl>
 
