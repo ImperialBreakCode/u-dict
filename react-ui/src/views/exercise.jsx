@@ -23,11 +23,11 @@ class ExercView extends React.Component{
                             <h2>closed answer questions</h2>
                             <ContentRow>
                                 <h5>Exercise the meanings of words and phrases</h5>
-                                <PrimaryButton onClick={(e) => this.props.changeGlobalView(GlobalViewNames.prepExercise, GlobalViewNames.wordMeanTest)} style='ms-auto'>Begin Test</PrimaryButton>
+                                <PrimaryButton onClick={(e) => this.props.changeGlobalView(GlobalViewNames.prepExercise, GlobalViewNames.wordPhraseMeaningTest)} style='ms-auto'>Begin Test</PrimaryButton>
                             </ContentRow>
                             <ContentRow>
                                 <h5>Guess the words from a given meaning</h5>
-                                <PrimaryButton style='ms-auto'>Begin Test</PrimaryButton>
+                                <PrimaryButton onClick={(e) => this.props.changeGlobalView(GlobalViewNames.prepExercise, GlobalViewNames.meaningWordPhrase)} style='ms-auto'>Begin Test</PrimaryButton>
                             </ContentRow>
                             <ContentRow>
                                 <h5>Guess the grammatical gender</h5>

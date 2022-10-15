@@ -7,7 +7,7 @@ import { Table } from "../../../components/table";
 import { GlobalViewNames, ViewNames } from "../../../constants";
 
 
-export const WordMeaningTest = (props) => {
+export const MeaningWordPhraseTest = (props) => {
 
     const [currentView, setCurrentView] = useState(<TestSetUp changeGlobalView={props.changeGlobalView} testData={props.testData} finishSetUp={finishSetUp} />)
 
@@ -65,8 +65,8 @@ const TestSetUp = (props) => {
                     return (
                         <tr className='for-test' data-groups={groupIds} onClick={(e) => tableRowClick(e)} key={word.id}>
                             {props.testData.articleUsage ? <td className='data-article'>{word.article}</td> : null}
-                            <td className='data-key'>{word.word}</td>
-                            <td className='data-value'>{word.meanings[0]}</td>
+                            <td className='data-value'>{word.word}</td>
+                            <td className='data-key'>{word.meanings[0]}</td>
                         </tr>
                     );
                 });
@@ -353,7 +353,7 @@ const Questions = (props) => {
         possibleAnswers = possibleAnswers.map((answer, ind) => {
             return (
                 <div onClick={(e) => checkIfTrue(e)} key={Math.random()} is-true={(ind == 0).toString()} className='answer'>
-                    {answer.value}
+                    {answer.article ?? ''} {answer.value}
                 </div>
             );
         });
@@ -361,7 +361,7 @@ const Questions = (props) => {
         possibleAnswers = shuffle(possibleAnswers);
 
         setDisplayAnswers(possibleAnswers);
-        setDisplayQuestion(`${questionData.article ?? ''} ${questionData.key}`);
+        setDisplayQuestion(questionData.key);
         setQuestionsDone(questionsDone + 1);
 
     }
@@ -400,7 +400,7 @@ const Questions = (props) => {
         <div className='w-50'>
             <h1 className='question'>
                 #{questionsDone} {props.qstCount != 0 && props.qstCount != '' ? ` of ${props.qstCount} ` : ''}<br />
-                The meaning of:<br />
+                Choose an answer with that meaning:<br />
                 <span className='qst-data-wrap'>{displayQuestion}</span>
             </h1>
             <div className='answer-wrapper'>
