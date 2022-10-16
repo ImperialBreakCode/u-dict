@@ -7,7 +7,7 @@ import { Table } from "../../../components/table";
 import { GlobalViewNames, ViewNames } from "../../../constants";
 
 
-export const MeaningWordPhraseTest = (props) => {
+export const GramGenderTest = (props) => {
 
     const [currentView, setCurrentView] = useState(<TestSetUp changeGlobalView={props.changeGlobalView} testData={props.testData} finishSetUp={finishSetUp} />)
 
@@ -51,12 +51,16 @@ const TestSetUp = (props) => {
 
             if (props.testData.type === 'wrd') {
 
-                if (data[0].length == 0) {
-                    setErrorMessage('There are no words in the selected language.');
+                let reactData = data[0].filter(item =>{
+                    return item.gramGender != null;
+                });
+
+                if (reactData.length == 0) {
+                    setErrorMessage('There are no words with grammatical gender in the selected language.');
                     setCanContinue(false);
                 }
 
-                const reactData = data[0].map(word => {
+                reactData = reactData.map(word => {
 
                     const groupIds = word.foreignKeys['Groups'].map(key => {
                         return key.id;
@@ -65,8 +69,8 @@ const TestSetUp = (props) => {
                     return (
                         <tr className='for-test' data-groups={groupIds} onClick={(e) => tableRowClick(e)} key={word.id}>
                             {props.testData.articleUsage ? <td className='data-article'>{word.article}</td> : null}
-                            <td className='data-value'>{word.word}</td>
-                            <td className='data-key'>{word.meanings[0]}</td>
+                            <td className='data-key'>{word.word}</td>
+                            <td className='data-value'>{word.gramGender}</td>
                         </tr>
                     );
                 });
@@ -74,16 +78,20 @@ const TestSetUp = (props) => {
                 setTableData(reactData);
             } else {
 
-                if (data[1].length == 0) {
-                    setErrorMessage('There are no phrases in the selected language.');
+                let reactData = data[1].filter(item =>{
+                    return item.gramGender != null;
+                });
+
+                if (reactData.length == 0) {
+                    setErrorMessage('There are no phrases with grammatical gender in the selected language.');
                     setCanContinue(false);
                 }
 
-                const reactData = data[1].map(phrase => {
+                reactData = reactData.map(phrase => {
                     return (
                         <tr onClick={(e) => tableRowClick(e)} key={phrase.id}>
                             <td className='data-key'>{phrase.phrase}</td>
-                            <td className='data-value'>{phrase.meanings[0]}</td>
+                            <td className='data-value'>{phrase.gramGender}</td>
                         </tr>
                     );
                 });
@@ -123,12 +131,6 @@ const TestSetUp = (props) => {
                 let text = tr.childNodes[indexTd].childNodes[0].wholeText.toLowerCase();
 
                 trList[i].classList.add('d-none-search');
-
-                if (text.includes(val)) {
-                    trList[i].classList.remove('d-none-search');
-                }
-
-                text = tr.childNodes[indexTd + 1].childNodes[0].wholeText.toLowerCase();
 
                 if (text.includes(val)) {
                     trList[i].classList.remove('d-none-search');
@@ -217,7 +219,7 @@ const TestSetUp = (props) => {
             }
         }
 
-        setErrorMessage('You should select at least two syntactically diffrent words with diffrent meanings')
+        setErrorMessage('You should select at least two syntactically diffrent words with diffrent grammatical genders')
     }
 
     function groupChangeSelect(e) {
@@ -256,7 +258,7 @@ const TestSetUp = (props) => {
         <div className="w-75">
 
             <h2>Choose {props.testData.type == 'wrd' ? 'words' : 'phrases'}</h2>
-            <p className='mb-5'>You must choose at least two syntactically diffrent {props.testData.type == 'wrd' ? 'words' : 'phrases'} with diffrent meanings</p>
+            <p className='mb-5'>You must choose at least two syntactically diffrent {props.testData.type == 'wrd' ? 'words' : 'phrases'} with diffrent grammatical genders</p>
 
             <DataControl>
                 <DCSection>
@@ -300,7 +302,7 @@ const Questions = (props) => {
     const [questionsPassed, setQuestionsPassed] = useState(0);
 
     const [questArr, setQuestArr] = useState(props.questionsData);
-    const [allDataArr, setAllDataArr] = useState(props.questionsData);
+    const [question, setQuestion] = useState(null);
 
     const [displayAnswers, setDisplayAnswers] = useState(null);
     const [displayQuestion, setDisplayQuestion] = useState(null);
@@ -308,6 +310,27 @@ const Questions = (props) => {
 
 
     useEffect(() => {
+
+        let answers = [];
+
+        for (let i = 0; i < props.questionsData.length; i++) {
+            const answerData = props.questionsData[i];
+
+            if (!answers.includes(answerData.value)) {
+                answers.push(answerData.value);
+            }
+        }
+
+        answers = answers.map((answer, ind) => {
+            return (
+                <div onClick={(e) => checkIfTrue(e)} key={Math.random()} className='answer'>
+                    {answer}
+                </div>
+            );
+        });
+
+        setDisplayAnswers(answers);
+
         MakeQuestion();
     }, []);
 
@@ -325,47 +348,20 @@ const Questions = (props) => {
 
         // checks if there is unused questions left in the array; if there are no questions left, then fill up the array again
         if (questArr.length == 0) {
-            setQuestArr([...allDataArr]);
-            questArrCopy = allDataArr;
+            const arr = shuffle(props.questionsData);
+            setQuestArr([...arr]);
+            questArrCopy = arr;
         }
 
-        // shuffling and getting the question and the true answer and removing them from the array (because the are used)
+        // shuffling and getting the question and removing them from the array (because they are used)
         questArrCopy = shuffle(questArrCopy);
         const questionData = questArrCopy.splice(0, 1)[0];
-        let possibleAnswers = [questionData];
+        setQuestion(questionData);
 
         // updateting the array
         setQuestArr(questArrCopy);
 
-        // shuffling all the answers
-        const allAnswers = shuffle(allDataArr);
-        setAllDataArr(allAnswers);
-
-        // filling the other posiible answers taken from allData array
-        for (let i = 0; i < allAnswers.length; i++) {
-            const answerData = allAnswers[i];
-
-            if (answerData.key != questionData.key && answerData.value != questionData.value) {
-                possibleAnswers.push(answerData);
-            }
-
-            if (possibleAnswers.length == 4) {
-                break;
-            }
-        }
-
-        possibleAnswers = possibleAnswers.map((answer, ind) => {
-            return (
-                <div onClick={(e) => checkIfTrue(e)} key={Math.random()} is-true={(ind == 0).toString()} className='answer'>
-                    {answer.article ?? ''} {answer.value}
-                </div>
-            );
-        });
-
-        possibleAnswers = shuffle(possibleAnswers);
-
-        setDisplayAnswers(possibleAnswers);
-        setDisplayQuestion(questionData.key);
+        setDisplayQuestion(`${questionData.article ?? ''} ${questionData.key}`);
         setQuestionsDone(questionsDone + 1);
 
     }
@@ -375,7 +371,7 @@ const Questions = (props) => {
         if ($('#next-qt').hasClass('d-none')) {
             const selectedAns = e.target;
 
-            if (selectedAns.getAttribute('is-true') == 'true') {
+            if (selectedAns.innerHTML == question) {
 
                 selectedAns.classList.add('ans-true');
                 setQuestionsPassed(questionsPassed + 1);
@@ -384,7 +380,7 @@ const Questions = (props) => {
             } else {
 
                 selectedAns.classList.add('ans-false');
-                $('.answer[is-true=true]').addClass('ans-true');
+                //$('.answer').addClass('ans-true');
                 setFlash(<b style={{ color: 'red' }}>Wrong Answer!</b>);
 
             }
@@ -397,6 +393,7 @@ const Questions = (props) => {
         setFlash('');
         MakeQuestion();
 
+        $('.answer').removeClass('ans-true').removeClass('ans-false');
         $('#next-qt').addClass('d-none');
     }
 
@@ -404,7 +401,7 @@ const Questions = (props) => {
         <div className='w-50'>
             <h1 className='question'>
                 #{questionsDone} {props.qstCount != 0 && props.qstCount != '' ? ` of ${props.qstCount} ` : ''}<br />
-                Choose an answer with that meaning:<br />
+                The meaning of:<br />
                 <span className='qst-data-wrap'>{displayQuestion}</span>
             </h1>
             <div className='answer-wrapper'>

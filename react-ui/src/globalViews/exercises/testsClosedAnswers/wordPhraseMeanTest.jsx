@@ -221,6 +221,10 @@ const TestSetUp = (props) => {
     }
 
     function groupChangeSelect(e) {
+
+        setErrorMessage(null);
+        setWordMeanDict([]);
+
         const val = e.target.value;
         setGroupValue(val);
 

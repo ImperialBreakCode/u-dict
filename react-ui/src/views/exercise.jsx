@@ -31,7 +31,7 @@ class ExercView extends React.Component{
                             </ContentRow>
                             <ContentRow>
                                 <h5>Guess the grammatical gender</h5>
-                                <PrimaryButton style='ms-auto'>Begin Test</PrimaryButton>
+                                <PrimaryButton onClick={(e) => this.props.changeGlobalView(GlobalViewNames.prepExercise, GlobalViewNames.gramGenderTest)} style='ms-auto'>Begin Test</PrimaryButton>
                             </ContentRow>
                         </ContentBox>
 

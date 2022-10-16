@@ -10,6 +10,7 @@ import PhrasesGlobalView from './globalViews/phraseTableView';
 import { PrepareExerciseView } from './globalViews/exercises/prepExercise';
 import { WordPhraseMeaningTest } from './globalViews/exercises/testsClosedAnswers/wordPhraseMeanTest';
 import { MeaningWordPhraseTest } from './globalViews/exercises/testsClosedAnswers/meanWordPhraseTest';
+import { GramGenderTest } from './globalViews/exercises/testsClosedAnswers/gramGenderTest';
 
 function App() {
 
@@ -43,6 +44,10 @@ function App() {
 	
 			case GlobalViewNames.meaningWordPhrase:
 				setView(<MeaningWordPhraseTest changeGlobalView={ChangeGlobalView} testData={data}/>)
+				break;
+				
+			case GlobalViewNames.gramGenderTest:
+				setView(<GramGenderTest changeGlobalView={ChangeGlobalView} testData={data}/>)
 				break;
 				
 			default:
