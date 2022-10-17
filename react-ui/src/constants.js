@@ -15,5 +15,7 @@ export const GlobalViewNames = {
     infoWord: 'info-word',
     infoPhrase: 'info-phrase',
     prepExercise: 'prep-exercise',
-    wordMeanTest: 'word-mean-test'
+    wordPhraseMeaningTest: 'word-mean-test',
+    meaningWordPhrase: 'meaning-of-word-phrase',
+    gramGenderTest: 'grammatical-gender-test'
 }

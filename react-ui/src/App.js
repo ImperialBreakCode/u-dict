@@ -8,7 +8,9 @@ import PhrasesLangGlobalView from './globalViews/phraseLangTableView';
 import PhraseInfo from './globalViews/phraseInfo';
 import PhrasesGlobalView from './globalViews/phraseTableView';
 import { PrepareExerciseView } from './globalViews/exercises/prepExercise';
-import { WordMeaningTest } from './globalViews/exercises/wordMeaning/wordMeanTest';
+import { WordPhraseMeaningTest } from './globalViews/exercises/testsClosedAnswers/wordPhraseMeanTest';
+import { MeaningWordPhraseTest } from './globalViews/exercises/testsClosedAnswers/meanWordPhraseTest';
+import { GramGenderTest } from './globalViews/exercises/testsClosedAnswers/gramGenderTest';
 
 function App() {
 
@@ -36,10 +38,18 @@ function App() {
 
 	function SetTestView(view, data) {
 		switch (view) {
-			case GlobalViewNames.wordMeanTest:
-				setView(<WordMeaningTest changeGlobalView={ChangeGlobalView} testData={data}/>)
+			case GlobalViewNames.wordPhraseMeaningTest:
+				setView(<WordPhraseMeaningTest changeGlobalView={ChangeGlobalView} testData={data}/>)
 				break;
-		
+	
+			case GlobalViewNames.meaningWordPhrase:
+				setView(<MeaningWordPhraseTest changeGlobalView={ChangeGlobalView} testData={data}/>)
+				break;
+				
+			case GlobalViewNames.gramGenderTest:
+				setView(<GramGenderTest changeGlobalView={ChangeGlobalView} testData={data}/>)
+				break;
+				
 			default:
 				break;
 		}
