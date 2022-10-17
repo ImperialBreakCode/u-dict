@@ -11,6 +11,7 @@ import { PrepareExerciseView } from './globalViews/exercises/prepExercise';
 import { WordPhraseMeaningTest } from './globalViews/exercises/testsClosedAnswers/wordPhraseMeanTest';
 import { MeaningWordPhraseTest } from './globalViews/exercises/testsClosedAnswers/meanWordPhraseTest';
 import { GramGenderTest } from './globalViews/exercises/testsClosedAnswers/gramGenderTest';
+import { WordPhraseSpelling } from './globalViews/exercises/openEndedAnswers/wordPhraseSpelling';
 
 function App() {
 
@@ -49,7 +50,11 @@ function App() {
 			case GlobalViewNames.gramGenderTest:
 				setView(<GramGenderTest changeGlobalView={ChangeGlobalView} testData={data}/>)
 				break;
-				
+			
+			case GlobalViewNames.wordPhraseSpellingExercise:
+				setView(<WordPhraseSpelling changeGlobalView={ChangeGlobalView} testData={data}/>)
+				break;
+
 			default:
 				break;
 		}
