@@ -297,12 +297,11 @@ const TestSetUp = (props) => {
 }
 
 const Questions = (props) => {
-
+    
     const [questionsDone, setQuestionsDone] = useState(0);
     const [questionsPassed, setQuestionsPassed] = useState(0);
 
     const [questArr, setQuestArr] = useState(props.questionsData);
-    const [question, setQuestion] = useState(null);
 
     const [displayAnswers, setDisplayAnswers] = useState(null);
     const [displayQuestion, setDisplayQuestion] = useState(null);
@@ -356,7 +355,7 @@ const Questions = (props) => {
         // shuffling and getting the question and removing them from the array (because they are used)
         questArrCopy = shuffle(questArrCopy);
         const questionData = questArrCopy.splice(0, 1)[0];
-        setQuestion(questionData);
+        $('.question').data(questionData);
 
         // updateting the array
         setQuestArr(questArrCopy);
@@ -370,16 +369,28 @@ const Questions = (props) => {
 
         if ($('#next-qt').hasClass('d-none')) {
             const selectedAns = e.target;
+            const question = $('.question').data();
 
-            if (selectedAns.innerHTML == question) {
+            if (selectedAns.innerHTML === question.value) {
 
                 selectedAns.classList.add('ans-true');
-                setQuestionsPassed(questionsPassed + 1);
+                const questionsPassedUpdated = questionsPassed + 1;
+                setQuestionsPassed(questionsPassedUpdated);
                 setFlash(<b style={{ color: '#00ff00' }}>Corrent Answer!</b>);
 
             } else {
 
+                const answers = $('.answer');
                 selectedAns.classList.add('ans-false');
+
+                for (let i = 0; i < answers.length; i++) {
+                    
+                    if (answers[i].innerHTML == question.value) {
+                        answers[i].classList.add('ans-true');
+                        break;
+                    }
+
+                }
                 //$('.answer').addClass('ans-true');
                 setFlash(<b style={{ color: 'red' }}>Wrong Answer!</b>);
 
@@ -401,7 +412,7 @@ const Questions = (props) => {
         <div className='w-50'>
             <h1 className='question'>
                 #{questionsDone} {props.qstCount != 0 && props.qstCount != '' ? ` of ${props.qstCount} ` : ''}<br />
-                The meaning of:<br />
+                The grammatical gender of:<br />
                 <span className='qst-data-wrap'>{displayQuestion}</span>
             </h1>
             <div className='answer-wrapper'>
