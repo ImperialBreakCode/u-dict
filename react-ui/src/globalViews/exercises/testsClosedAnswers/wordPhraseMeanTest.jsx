@@ -267,7 +267,7 @@ const TestSetUp = (props) => {
 
                     {props.testData.type == 'wrd' ? (
                         <span className='w-25'>
-                            <label>Group Gender:</label>
+                            <label>Group:</label>
                             <select value={groupValue} onChange={(e) => groupChangeSelect(e)} className="form-select" aria-label="Group select">
                                 <option value="all">All</option>
                                 {groupOptions}

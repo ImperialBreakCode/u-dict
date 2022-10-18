@@ -39,7 +39,7 @@ class ExercView extends React.Component{
                             <h2>questions with open ended answers</h2>
                             <ContentRow>
                                 <h5>Exercise the spelling of words and phrases</h5>
-                                <PrimaryButton style='ms-auto'>Begin Test</PrimaryButton>
+                                <PrimaryButton onClick={(e) => this.props.changeGlobalView(GlobalViewNames.prepExercise, GlobalViewNames.wordPhraseSpellingExercise)} style='ms-auto'>Begin Test</PrimaryButton>
                             </ContentRow>
                         </ContentBox>
                     </Row>

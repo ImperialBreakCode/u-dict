@@ -422,6 +422,31 @@
         }
     }
 
+    .input-answer-box{
+        background-color: #2a1655;
+        border: 1px solid #8a64c2a1;
+        border-radius: 20px;
+        padding: 20px;
+        display: flex;
+        flex-direction: row;
+
+        input{
+            margin: 0 5px;
+            background: #1b0e38;
+            border: 1px solid #8a64c2a1;
+            color: white;
+
+            &:hover{
+                border-color: #ffffff81;
+            }
+
+            &:focus{
+                border-color: #c099ff;
+                box-shadow: none;
+            }
+        }
+    }
+
     .ans-false{
         background: #810000;
         border-color: red;

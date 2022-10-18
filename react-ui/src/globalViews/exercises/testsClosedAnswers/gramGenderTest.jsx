@@ -269,7 +269,7 @@ const TestSetUp = (props) => {
 
                     {props.testData.type == 'wrd' ? (
                         <span className='w-25'>
-                            <label>Group Gender:</label>
+                            <label>Group:</label>
                             <select value={groupValue} onChange={(e) => groupChangeSelect(e)} className="form-select" aria-label="Group select">
                                 <option value="all">All</option>
                                 {groupOptions}
@@ -299,7 +299,6 @@ const TestSetUp = (props) => {
 const Questions = (props) => {
     
     const [questionsDone, setQuestionsDone] = useState(0);
-    const [questionsPassed, setQuestionsPassed] = useState(0);
 
     const [questArr, setQuestArr] = useState(props.questionsData);
 
@@ -310,6 +309,7 @@ const Questions = (props) => {
 
     useEffect(() => {
 
+        $('.question').data('passed', 0);
         let answers = [];
 
         for (let i = 0; i < props.questionsData.length; i++) {
@@ -339,7 +339,7 @@ const Questions = (props) => {
         if (props.qstCount != 0 && props.qstCount != '') {
             if (props.qstCount <= questionsDone) {
                 // change to result view
-                props.finishTest(questionsDone, questionsPassed);
+                props.finishTest(questionsDone, $('.question').data('passed') );
             }
         }
 
@@ -355,7 +355,7 @@ const Questions = (props) => {
         // shuffling and getting the question and removing them from the array (because they are used)
         questArrCopy = shuffle(questArrCopy);
         const questionData = questArrCopy.splice(0, 1)[0];
-        $('.question').data(questionData);
+        $('.question').data('question', questionData);
 
         // updateting the array
         setQuestArr(questArrCopy);
@@ -369,13 +369,15 @@ const Questions = (props) => {
 
         if ($('#next-qt').hasClass('d-none')) {
             const selectedAns = e.target;
-            const question = $('.question').data();
+            const question = $('.question').data('question');
 
             if (selectedAns.innerHTML === question.value) {
 
                 selectedAns.classList.add('ans-true');
-                const questionsPassedUpdated = questionsPassed + 1;
-                setQuestionsPassed(questionsPassedUpdated);
+                
+                let qstPassed = $('.question').data('passed');
+                $('.question').data('passed', qstPassed + 1);
+
                 setFlash(<b style={{ color: '#00ff00' }}>Corrent Answer!</b>);
 
             } else {
@@ -423,7 +425,7 @@ const Questions = (props) => {
 
             <DataControl>
                 <DCSection>
-                    <SecondaryButton onClick={() => props.finishTest(questionsDone, questionsPassed)} style='mt-4 w-50'>Finish the test</SecondaryButton>
+                    <SecondaryButton onClick={() => props.finishTest(questionsDone, $('.question').data('passed') )} style='mt-4 w-50'>Finish the test</SecondaryButton>
                     <PrimaryButton elemId={'next-qt'} onClick={() => nextQuestion()} style='mt-4 w-50 d-none'>Next Question</PrimaryButton>
                 </DCSection>
             </DataControl>
