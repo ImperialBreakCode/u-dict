@@ -198,6 +198,8 @@ ipcMain.on('add-edit-group', (e, type, data) => {
 		db.update(group);
 	}
 	else if(type == 'delete'){
+		
+		db.removeChildren(data, tableNames.Group, tableNames.Word);
 		db.delete(data, tableNames.Group, false);
 	}
 })

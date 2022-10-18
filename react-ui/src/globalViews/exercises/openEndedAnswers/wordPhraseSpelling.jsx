@@ -16,7 +16,7 @@ export const WordPhraseSpelling = (props) => {
     }
 
     function finishSetUp(data) {
-        setCurrentView(<Questions qstCount={props.testData.questionCount} questionsData={data} finishTest={finishTest} />);
+        setCurrentView(<Questions qstCount={props.testData.questionCount} questionsData={data} finishTest={finishTest} articleUsage={props.testData.articleUsage}/>);
     }
 
     return (
@@ -313,6 +313,13 @@ const Questions = (props) => {
         // shuffling and getting the question and the true answer and removing them from the array (because the are used)
         questArrCopy = shuffle(questArrCopy);
         const questionData = questArrCopy.splice(0, 1)[0];
+        $('.question').data(questionData);
+
+        if (questionData.article) {
+            $('#article-input').removeClass('d-none');
+        } else {
+            $('#article-input').addClass('d-none');
+        }
 
         // updateting the array
         setQuestArr(questArrCopy);
@@ -324,50 +331,87 @@ const Questions = (props) => {
 
     function checkIfTrue(e) {
 
-        if ($('#next-qt').hasClass('d-none')) {
-            const selectedAns = e.target;
+        let ans = $('#word-phrase-input').val();
+        let artAns = $('#article-input').val();
+        ans = ans.replace(/\s+/g,' ').trim();
+        artAns = artAns.replace(/\s+/g,' ').trim();
 
-            if (selectedAns.getAttribute('is-true') == 'true') {
+        let correctAns = $('.question').data();
 
-                selectedAns.classList.add('ans-true');
-                setQuestionsPassed(questionsPassed + 1);
-                setFlash(<b style={{ color: '#00ff00' }}>Corrent Answer!</b>);
+        const isSpellingCorrect = ans === correctAns.value;
+        let isArticleCorrect = true;
+        
+        if (artAns) {
+            isArticleCorrect = artAns === correctAns.article;
+        }
+        
+        $('#word-phrase-input').css('border-color', '#00ff00');
+        $('#article-input').css('border-color', '#00ff00');
 
-            } else {
+        if (isSpellingCorrect && isArticleCorrect) {
+            setFlash(<b style={{ color: '#00ff00' }}>Corrent Answer!</b>);
+            setQuestionsPassed(questionsPassed + 1);
+        }
+        else{
+            setFlash(
+                <b style={{ color: 'red' }}>
+                    Wrong Answer!<br/> 
+                    {!isArticleCorrect ? <>Correct article: {correctAns.article}<br/></>: ''}
+                    {!isSpellingCorrect ? <>Correct word spelling: {correctAns.value}</>: ''}
+                </b>
+            );
 
-                selectedAns.classList.add('ans-false');
-                $('.answer[is-true=true]').addClass('ans-true');
-                setFlash(<b style={{ color: 'red' }}>Wrong Answer!</b>);
-
+            if (!isArticleCorrect) {
+                $('#article-input').css('border-color', '#ff0000');
             }
 
-            $('#next-qt').removeClass('d-none');
+            if (!isSpellingCorrect) {
+                $('#word-phrase-input').css('border-color', '#ff0000');
+            }
+            
         }
+
+        $('#next-qt').removeClass('d-none');
+        $('#confirm-ans').addClass('d-none');
     }
 
     function nextQuestion() {
         setFlash('');
+
+        $('#word-phrase-input').css('border-color', '');
+        $('#article-input').css('border-color', '');
+
+        $('#word-phrase-input').val('');
+        $('#article-input').val('');
+
         MakeQuestion();
 
         $('#next-qt').addClass('d-none');
+        $('#confirm-ans').removeClass('d-none');
     }
 
     return (
         <div className='w-50'>
             <h1 className='question'>
                 #{questionsDone} {props.qstCount != 0 && props.qstCount != '' ? ` of ${props.qstCount} ` : ''}<br />
-                Choose an answer with that meaning:<br />
+                White the word with the meaning of:<br />
                 <span className='qst-data-wrap'>{displayQuestion}</span>
             </h1>
             <div className='input-answer-box'>
+                {props.articleUsage ? 
+                    <input id='article-input' placeholder='article...' className='form-control text-input w-25' type='text'></input>
+                    : ''}
+
+                <input id='word-phrase-input' placeholder='word...' className='form-control text-input' type='text'></input>
             </div>
 
-            <p>{flash}</p>
+            <p className='mt-3'>{flash}</p>
 
             <DataControl>
                 <DCSection>
                     <SecondaryButton onClick={() => props.finishTest(questionsDone, questionsPassed)} style='mt-4 w-50'>Finish the test</SecondaryButton>
-                    <PrimaryButton elemId={'next-qt'} onClick={() => nextQuestion()} style='mt-4 w-50 d-none'>Next Question</PrimaryButton>
+                    <PrimaryButton elemId='confirm-ans' onClick={() => checkIfTrue()} style='mt-4 w-50'>Confirm Answer</PrimaryButton>
+                    <PrimaryButton elemId='next-qt' onClick={() => nextQuestion()} style='mt-4 w-50 d-none'>Next Question</PrimaryButton>
                 </DCSection>
             </DataControl>
         </div>

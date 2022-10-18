@@ -439,6 +439,37 @@
   background: #31026e;
 }
 
+.test-view .input-answer-box {
+  background-color: #2a1655;
+  border: 1px solid #8a64c2a1;
+  border-radius: 20px;
+  padding: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.test-view .input-answer-box input {
+  margin: 0 5px;
+  background: #1b0e38;
+  border: 1px solid #8a64c2a1;
+  color: white;
+}
+
+.test-view .input-answer-box input:hover {
+  border-color: #ffffff81;
+}
+
+.test-view .input-answer-box input:focus {
+  border-color: #c099ff;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
 .test-view .ans-false {
   background: #810000;
   border-color: red;
