@@ -216,3 +216,18 @@ ipcMain.on('manage-group-connections', (e, action, groupId, targetId) => {
 	}
 
 })
+
+ipcMain.handle('get-connected', (e, type) => {
+
+	let data;
+
+	if (type == 'wrd') {
+		data = db.ConnectedWords;
+	} 
+	else if (this == 'phr') {
+		data = db.ConnectedPhrases;
+	}
+
+	return data;
+
+})

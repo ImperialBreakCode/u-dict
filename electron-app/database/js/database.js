@@ -20,7 +20,7 @@ var appDatabase = /** @class */ (function () {
             fs.mkdirSync(dirPath);
             var initialData = [];
             var jsonInitData_1 = JSON.stringify(initialData);
-            var propertyNames = [tableNames_1.tableNames.Language, tableNames_1.tableNames.Word, tableNames_1.tableNames.Phrase, tableNames_1.tableNames.Group];
+            var propertyNames = [tableNames_1.tableNames.Language, tableNames_1.tableNames.Word, tableNames_1.tableNames.Phrase, tableNames_1.tableNames.Group, tableNames_1.tableNames.ConnectedWords, tableNames_1.tableNames.ConnectedPhrases];
             propertyNames.forEach(function (name) {
                 fs.mkdirSync("".concat(dirPath, "/").concat(name));
                 fs.writeFile("".concat(dirPath, "/").concat(name, "/").concat(name, "0.json"), jsonInitData_1, function (err) {
@@ -58,6 +58,20 @@ var appDatabase = /** @class */ (function () {
     Object.defineProperty(appDatabase.prototype, "Groups", {
         get: function () {
             return this.getdata(tableNames_1.tableNames.Group);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(appDatabase.prototype, "ConnectedWords", {
+        get: function () {
+            return this.getdata(tableNames_1.tableNames.ConnectedWords);
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(appDatabase.prototype, "ConnectedPhrases", {
+        get: function () {
+            return this.getdata(tableNames_1.tableNames.ConnectedPhrases);
         },
         enumerable: false,
         configurable: true

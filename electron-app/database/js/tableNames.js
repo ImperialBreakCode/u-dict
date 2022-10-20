@@ -7,5 +7,7 @@ var tableNames;
     tableNames["Word"] = "Words";
     tableNames["Phrase"] = "Phrases";
     tableNames["Group"] = "Groups";
+    tableNames["ConnectedWords"] = "Connected_Words";
+    tableNames["ConnectedPhrases"] = "Connected_Phrases";
 })(tableNames = exports.tableNames || (exports.tableNames = {}));
 //# sourceMappingURL=tableNames.js.map

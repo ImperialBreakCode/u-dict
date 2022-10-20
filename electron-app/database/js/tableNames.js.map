@@ -1,1 +1,1 @@
-{"version":3,"file":"tableNames.js","sourceRoot":"","sources":["../tableNames.ts"],"names":[],"mappings":";;;AAAA,IAAY,UAKX;AALD,WAAY,UAAU;IAClB,oCAAsB,CAAA;IACtB,4BAAc,CAAA;IACd,gCAAkB,CAAA;IAClB,8BAAgB,CAAA;AACpB,CAAC,EALW,UAAU,GAAV,kBAAU,KAAV,kBAAU,QAKrB"}
+{"version":3,"file":"tableNames.js","sourceRoot":"","sources":["../tableNames.ts"],"names":[],"mappings":";;;AAAA,IAAY,UAOX;AAPD,WAAY,UAAU;IAClB,oCAAsB,CAAA;IACtB,4BAAc,CAAA;IACd,gCAAkB,CAAA;IAClB,8BAAgB,CAAA;IAChB,gDAAkC,CAAA;IAClC,oDAAsC,CAAA;AAC1C,CAAC,EAPW,UAAU,GAAV,kBAAU,KAAV,kBAAU,QAOrB"}

@@ -39,12 +39,12 @@ class WordsView extends React.Component{
                         <ContentBox>
                             <h2 className='mb-3'>Connected Words</h2>
                             <ContentRow>
-                                <h5>Words, from different languages grouped by meaning</h5>
-                                <PrimaryButton style='ms-auto'>View Table</PrimaryButton>
+                                <h5>Words from different languages, grouped by meaning</h5>
+                                <PrimaryButton onClick={(e) => this.props.changeGlobalView(GlobalViewNames.connectedWrdPhr, 'wrd')} style='ms-auto'>View Table</PrimaryButton>
                             </ContentRow>
                             <ContentRow>
-                                <h5>Phrases, from different languages grouped by meaning</h5>
-                                <PrimaryButton style='ms-auto'>View Table</PrimaryButton>
+                                <h5>Phrases from different languages, grouped by meaning</h5>
+                                <PrimaryButton onClick={(e) => this.props.changeGlobalView(GlobalViewNames.connectedWrdPhr, 'phr')} style='ms-auto'>View Table</PrimaryButton>
                             </ContentRow>
                         </ContentBox>
                     </Row>

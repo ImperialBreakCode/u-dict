@@ -3,4 +3,6 @@ export enum tableNames{
     Word = 'Words',
     Phrase = 'Phrases',
     Group = 'Groups',
+    ConnectedWords = 'Connected_Words',
+    ConnectedPhrases = 'Connected_Phrases'
 }
