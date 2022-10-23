@@ -1,10 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
-import $ from 'jquery';
+import PrimaryButton, { SecondaryButton } from '../components/buttons';
 import { ContentBox, ContentRow } from '../components/contentBoxes';
 import Row from '../components/row';
 import "../styles/view-styles/style.css";
+import { GlobalViewNames, ViewNames } from '../constants';
 
 
 class ConnectedWordsPhrases extends React.Component {
@@ -44,6 +45,7 @@ class ConnectedWordsPhrases extends React.Component {
                 <div className="container cont-con">
                     <Row>
                         <div className="title-box">
+                            <SecondaryButton onClick={() => this.props.changeGlobalView(GlobalViewNames.viewController, ViewNames.words)} style='go-back-btn'>Go Back</SecondaryButton>
                             <h1>Connected {this.props.type == 'wrd'? <>words</>: <>phrases</>}</h1>
                         </div>
                     </Row>
@@ -57,10 +59,9 @@ class ConnectedWordsPhrases extends React.Component {
                     </Row>
 
                     <Row>
-                        <button className='add-con'>
-                            <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
-                            Add Group
-                        </button>
+                        <PrimaryButton onClick={() => this.props.changeGlobalView(GlobalViewNames.createEditConnected, [this.props.type, null])} style='add-con'>
+                            <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon> Add Connected {this.props.type == 'wrd'? <>Word</>: <>Phrase</>}
+                        </PrimaryButton>
                     </Row>
                 </div>
             </main>

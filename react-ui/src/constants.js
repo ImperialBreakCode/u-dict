@@ -19,5 +19,6 @@ export const GlobalViewNames = {
     meaningWordPhrase: 'meaning-of-word-phrase',
     gramGenderTest: 'grammatical-gender-test',
     wordPhraseSpellingExercise: 'word-phrase-spelling-exercise',
-    connectedWrdPhr: 'connected-words-phrases'
+    connectedWrdPhr: 'connected-words-phrases',
+    createEditConnected: 'create-edit-connected'
 }
