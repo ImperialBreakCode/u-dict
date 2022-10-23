@@ -524,27 +524,27 @@
 
     h1{
         text-align: center;
-        margin-top: 30px;
-        margin-bottom: 50px;
+        margin-top: 25px;
+        margin-bottom: 30px;
     }
 
-    h4{
+    h4, h5{
         text-align: center;
     }
 
     input{
-        background-color: #1c073b;
+        background-color: #170c33;
         border-color: #55556d;
         color: white;
         border-radius: 10px;
 
         &:hover{
-            background-color: #34175f;
+            background-color: #2c1761;
             border-color: #737394;
         }
 
         &:focus{
-            background-color: #34175f;
+            background-color: #261357;
             border-color: #737394;
             color: white;
         }
@@ -561,19 +561,19 @@
     }
 
     .item{
-        background: #26193b;
+        background: #20193b;
         margin: 8px 0;
         padding: 20px;
         border-radius: 10px;
-        border: 1px solid #cc8dff3f;
+        border: 1px solid #e4c2ff3f;
         position: relative;
         transition: 0.2s;
 
         &:hover{
-            background: #32214e;
+            background: #33285e;
         }
 
-        .add-btn{
+        .add-btn, .remove-btn{
             position: absolute;
             right: 2%;
             top: 50%;
@@ -583,7 +583,7 @@
 
         p{
             display: inline;
-            font-size: 25px;
+            font-size: 20px;
             font-weight: 500;
             margin: 0;
         }
