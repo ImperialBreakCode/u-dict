@@ -15,7 +15,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Group = exports.Word = exports.Phrase = exports.Language = void 0;
+exports.ConnectedPhrases = exports.ConnectedWords = exports.Group = exports.Word = exports.Phrase = exports.Language = void 0;
 var baseModel_1 = require("./baseModel");
 var tableNames_1 = require("./tableNames");
 var Language = /** @class */ (function (_super) {
@@ -40,6 +40,7 @@ var Phrase = /** @class */ (function (_super) {
         _this.gramGender = gramGender;
         _this.foreignKeys = {};
         _this.foreignKeys[tableNames_1.tableNames.Language] = [];
+        _this.foreignKeys[tableNames_1.tableNames.ConnectedPhrases] = [];
         return _this;
     }
     return Phrase;
@@ -58,6 +59,7 @@ var Word = /** @class */ (function (_super) {
         _this.foreignKeys = {};
         _this.foreignKeys[tableNames_1.tableNames.Language] = [];
         _this.foreignKeys[tableNames_1.tableNames.Group] = [];
+        _this.foreignKeys[tableNames_1.tableNames.ConnectedWords] = [];
         return _this;
     }
     return Word;
@@ -74,4 +76,26 @@ var Group = /** @class */ (function (_super) {
     return Group;
 }(baseModel_1.Model));
 exports.Group = Group;
+var ConnectedWords = /** @class */ (function (_super) {
+    __extends(ConnectedWords, _super);
+    function ConnectedWords(commonMeaning) {
+        var _this = _super.call(this, tableNames_1.tableNames.ConnectedWords, 'cntwrds') || this;
+        _this.commonMeaning = commonMeaning;
+        _this.relWords = new baseModel_1.Relationship('to-many', tableNames_1.tableNames.Word);
+        return _this;
+    }
+    return ConnectedWords;
+}(baseModel_1.Model));
+exports.ConnectedWords = ConnectedWords;
+var ConnectedPhrases = /** @class */ (function (_super) {
+    __extends(ConnectedPhrases, _super);
+    function ConnectedPhrases(commonMeaning) {
+        var _this = _super.call(this, tableNames_1.tableNames.ConnectedPhrases, 'cntphrs') || this;
+        _this.commonMeaning = commonMeaning;
+        _this.relPhrases = new baseModel_1.Relationship('to-many', tableNames_1.tableNames.Phrase);
+        return _this;
+    }
+    return ConnectedPhrases;
+}(baseModel_1.Model));
+exports.ConnectedPhrases = ConnectedPhrases;
 //# sourceMappingURL=models.js.map

@@ -34,6 +34,7 @@ export class Phrase extends Model{
         
         this.foreignKeys = {};
         this.foreignKeys[tableNames.Language] = [];
+        this.foreignKeys[tableNames.ConnectedPhrases] = [];
     }
 
     public phrase: string;
@@ -61,6 +62,7 @@ export class Word extends Model{
         this.foreignKeys = {};
         this.foreignKeys[tableNames.Language] = [];
         this.foreignKeys[tableNames.Group] = [];
+        this.foreignKeys[tableNames.ConnectedWords] = [];
     }
     
     public word: string;
@@ -76,16 +78,42 @@ export class Word extends Model{
 }
 
 export class Group extends Model{
+
     constructor(groupName: string){
         super(tableNames.Group, 'grp');
 
         this.groupName = groupName;
-
         this.relWords = new Relationship('to-many', tableNames.Word);
     }
 
     public groupName: string;
-
     public relWords: Relationship;
 
+}
+
+export class ConnectedWords extends Model{
+
+    constructor(commonMeaning: string){
+        super(tableNames.ConnectedWords, 'cntwrds')
+
+        this.commonMeaning = commonMeaning;
+        this.relWords = new Relationship('to-many', tableNames.Word);
+    }
+
+    public commonMeaning: string;
+    public relWords: Relationship;
+}
+
+export class ConnectedPhrases extends Model{
+
+    constructor(commonMeaning: string){
+        super(tableNames.ConnectedPhrases, 'cntphrs')
+
+        this.commonMeaning = commonMeaning;
+        this.relPhrases = new Relationship('to-many', tableNames.Phrase);
+    }
+
+    public commonMeaning: string;
+
+    public relPhrases: Relationship;
 }

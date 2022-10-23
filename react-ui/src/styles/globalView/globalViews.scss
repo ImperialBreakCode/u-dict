@@ -289,41 +289,41 @@
         flex-direction: row;
         justify-content: space-evenly;
         align-items: center;
+    }
 
-        label {
-            margin-bottom: 10px;
-        }
+    label {
+        margin-bottom: 10px;
+    }
 
-        span {
-            width: 20%;
-            margin-bottom: 20px;
-        }
+    span {
+        width: 20%;
+        margin-bottom: 20px;
+    }
 
-        select {
-            font-weight: 500;
-            border-radius: 10px;
-            border: 1px solid #6450a5;
-            background: #221844;
+    select {
+        font-weight: 500;
+        border-radius: 10px;
+        border: 1px solid #6450a5;
+        background: #221844;
+        color: #c0c0c0;
+
+        option {
             color: #c0c0c0;
-
-            option {
-                color: #c0c0c0;
-                font-weight: 500;
-            }
+            font-weight: 500;
         }
+    }
 
-        .form-select {
-            background-image: url('data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27><path fill=%27none%27 stroke=%27%23c0c0c0%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27M2 5l6 6 6-6%27/></svg>');
-            background-repeat: no-repeat;
-            background-position: right 0.75rem center;
-            background-size: 16px 12px;
-        }
+    .form-select {
+        background-image: url('data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27><path fill=%27none%27 stroke=%27%23c0c0c0%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27M2 5l6 6 6-6%27/></svg>');
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 16px 12px;
+    }
 
-        .text-input{
-            background-color: #372968;
-            color: white;
-            border-color: #694fc9;
-        }
+    .text-input{
+        background-color: #372968;
+        color: white;
+        border-color: #694fc9;
     }
 }
 
@@ -484,5 +484,112 @@
     .qst-data-wrap{
         font-size: 50px;
         font-weight: 500;
+    }
+}
+
+.connected-wrd-phr-view{
+
+    background: #07060e;
+    text-align: center;
+
+    .title-box{
+        margin-top: 5%;
+        position: relative;
+    }
+
+    .cont-con{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .add-con{
+        width: 100%;
+        padding: 5px;
+        border-radius: 20px;
+        font-size: 20px;
+        margin: 0;
+    }
+
+    .wrapper{
+        max-height: 50vh;
+        overflow-y: scroll;
+        margin-top: 70px;
+        margin-bottom: 30px;;
+    }
+}
+
+.connected-create-edit{
+    background: linear-gradient(90deg, #04040c, #14012e);
+
+    h1{
+        text-align: center;
+        margin-top: 25px;
+        margin-bottom: 30px;
+    }
+
+    h4, h5{
+        text-align: center;
+    }
+
+    input{
+        background-color: #170c33;
+        border-color: #55556d;
+        color: white;
+        border-radius: 10px;
+
+        &:hover{
+            background-color: #2c1761;
+            border-color: #737394;
+        }
+
+        &:focus{
+            background-color: #261357;
+            border-color: #737394;
+            color: white;
+        }
+    }
+
+    .item-box{
+        background: #130824;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 10px;
+        border: 1px solid #ffffff7a;
+        max-height: 40vh;
+        overflow-y: scroll;
+    }
+
+    .item{
+        background: #20193b;
+        margin: 8px 0;
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid #e4c2ff3f;
+        position: relative;
+        transition: 0.2s;
+
+        &:hover{
+            background: #33285e;
+        }
+
+        .add-btn, .remove-btn{
+            position: absolute;
+            right: 2%;
+            top: 50%;
+            transform: translate(0, -50%);
+            padding: 10px 20px;
+        }
+
+        p{
+            display: inline;
+            font-size: 20px;
+            font-weight: 500;
+            margin: 0;
+        }
+    }
+
+    .row{
+        width: 100%;
     }
 }

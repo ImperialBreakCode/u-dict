@@ -7,11 +7,13 @@ import WordsGlobalView from './globalViews/wordTableView';
 import PhrasesLangGlobalView from './globalViews/phraseLangTableView';
 import PhraseInfo from './globalViews/phraseInfo';
 import PhrasesGlobalView from './globalViews/phraseTableView';
+import ConnectedWordsPhrases from './globalViews/connectedWrdPhr';
 import { PrepareExerciseView } from './globalViews/exercises/prepExercise';
 import { WordPhraseMeaningTest } from './globalViews/exercises/testsClosedAnswers/wordPhraseMeanTest';
 import { MeaningWordPhraseTest } from './globalViews/exercises/testsClosedAnswers/meanWordPhraseTest';
 import { GramGenderTest } from './globalViews/exercises/testsClosedAnswers/gramGenderTest';
 import { WordPhraseSpelling } from './globalViews/exercises/openEndedAnswers/wordPhraseSpelling';
+import ConnectedCreateEdit from './globalViews/createEditConnected';
 
 function App() {
 
@@ -89,6 +91,15 @@ function App() {
 			case GlobalViewNames.prepExercise:
 				setView(<PrepareExerciseView changeGlobalView={ChangeGlobalView} forTest={moreInfo} setTest={SetTestView}/>)
 				break;
+			
+			case GlobalViewNames.connectedWrdPhr:
+				setView(<ConnectedWordsPhrases changeGlobalView={ChangeGlobalView} type={moreInfo}/>)
+				break;
+			
+			case GlobalViewNames.createEditConnected:
+				const [type, editData] = moreInfo;
+				setView(<ConnectedCreateEdit changeGlobalView={ChangeGlobalView} type={type} editData={editData}/>)
+				break;	
 			
 			default:
 				break;

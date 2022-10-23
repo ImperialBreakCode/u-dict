@@ -85,7 +85,15 @@ const addEditGroup = (type, data) => {
 
 const manageGroupConnections = (action, groupId, targetId) => {
 	ipcRenderer.send('manage-group-connections', action, groupId, targetId);
-} 
+}
+
+const getConnected = (type) => {
+	return ipcRenderer.invoke('get-connected', type);
+}
+
+const manageConnectedItems = (action, type, data) => {
+	ipcRenderer.send('manage-connected-items', action, type, data);
+}
 
 contextBridge.exposeInMainWorld('electronAPI', {
 	getLangData: getLangTableData,
@@ -106,5 +114,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
 	updateMeaningPhr: updateMeaningPhr,
 	getGroups: getGroups,
 	addEditGroup: addEditGroup,
-	manageGroupConnections: manageGroupConnections
+	manageGroupConnections: manageGroupConnections,
+	getConnected: getConnected,
+	manageConnectedItems: manageConnectedItems
 });

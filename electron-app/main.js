@@ -3,7 +3,7 @@ const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path');
 
 const { appDatabase } = require('./database/js/database.js');
-const { Language, Word, Phrase, Group } = require('./database/js/models');
+const { Language, Word, Phrase, Group, ConnectedWords, ConnectedPhrases } = require('./database/js/models');
 const { tableNames } = require('./database/js/tableNames.js');
 
 const db = new appDatabase(`${__dirname}/database/storage`);
@@ -215,4 +215,44 @@ ipcMain.on('manage-group-connections', (e, action, groupId, targetId) => {
 		db.disconnectExisting(group, group.relWords, targetId);
 	}
 
+})
+
+ipcMain.handle('get-connected', (e, type) => {
+
+	if (type == 'wrd') {
+		return db.ConnectedWords;
+	} 
+	else if (type == 'phr') {
+		return db.ConnectedPhrases;
+	}
+
+})
+
+ipcMain.on('manage-connected-items', (e, action, type, data) => {
+	if (type === 'wrd') {
+		
+		if (action == 'create') {
+			const [name, ids] = data;
+
+			const connectedWord = new ConnectedWords(name);
+			db.save(connectedWord);
+
+			for (let i = 0; i < ids.length; i++) {
+				db.connectExisting(connectedWord, connectedWord.relWords, ids[i]);
+			}
+		}
+	}
+	else if (type === 'phr') {
+		
+		if (action == 'create') {
+			const [name, ids] = data;
+
+			const connectedPhrase = new ConnectedPhrases(name);
+			db.save(connectedPhrase);
+
+			for (let i = 0; i < ids.length; i++) {
+				db.connectExisting(connectedPhrase, connectedPhrase.relPhrases, ids[i]);
+			}
+		}
+	}
 })
