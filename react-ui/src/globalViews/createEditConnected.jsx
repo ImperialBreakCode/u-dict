@@ -23,6 +23,7 @@ class ConnectedCreateEdit extends React.Component {
         this.search.bind(this);
         this.addItem.bind(this);
         this.removeItem.bind(this);
+        this.createConnected.bind(this);
     }
 
     componentDidMount() {
@@ -88,24 +89,47 @@ class ConnectedCreateEdit extends React.Component {
         const data = div.getAttribute('item-data');
         const meaning = div.getAttribute('meaning');
 
-        const addedItem = (
-            <div item-data={data} meaning={meaning} className='item' key={id}>
-                Word: <p>{data}</p> <br />
-                Meaning: <p>{meaning}</p>
-                <SecondaryButton onClick={(e) => this.removeItem(e)} style='remove-btn hover-danger'>Remove</SecondaryButton>
-            </div>
-        );
-
-        const newArrComp = [...this.state.selectedItemsComp];
         const newArr = [...this.state.selectedItems];
-        newArr.push(id);
-        newArrComp.push(addedItem);
-        this.setState({selectedItemsComp: newArrComp});
-        this.setState({selectedItems: newArr});
+
+        if (!newArr.includes(id)) {
+            newArr.push(id);
+            this.setState({ selectedItems: newArr });
+
+            const addedItem = (
+                <div item-id={id} className='item' key={id}>
+                    Word: <p>{data}</p> <br />
+                    Meaning: <p>{meaning}</p>
+                    <SecondaryButton onClick={(e) => this.removeItem(e)} style='remove-btn hover-danger'>Remove</SecondaryButton>
+                </div>
+            );
+
+            const newArrComp = [...this.state.selectedItemsComp];
+            newArrComp.push(addedItem);
+            this.setState({ selectedItemsComp: newArrComp });
+        }
     }
 
-    removeItem(e){
-        
+    removeItem(e) {
+        const id = e.target.closest('div').getAttribute('item-id');
+
+        const itemsSelectedCompCopy = [...this.state.selectedItemsComp];
+        const selectedItemsCopy = [...this.state.selectedItems];
+
+        for (let i = 0; i < itemsSelectedCompCopy.length; i++) {
+            if (itemsSelectedCompCopy[i].key == id) {
+                itemsSelectedCompCopy.splice(i, 1);
+                break;
+            }
+        }
+        this.setState({ selectedItemsComp: itemsSelectedCompCopy });
+
+        for (let i = 0; i < selectedItemsCopy.length; i++) {
+            if (selectedItemsCopy[i] == id) {
+                selectedItemsCopy.splice(i, 1);
+                break;
+            }
+        }
+        this.setState({ selectedItems: selectedItemsCopy });
     }
 
     search(e) {
@@ -132,6 +156,16 @@ class ConnectedCreateEdit extends React.Component {
         }
     }
 
+    createConnected(){
+        const val = $('#cn-name').val().trim();
+
+        if (val != '') {
+            window.electronAPI.manageConnectedItems('create', this.props.type, [val, this.state.selectedItems]);
+            this.props.changeGlobalView(GlobalViewNames.connectedWrdPhr, this.props.type);
+        }
+        
+    }
+
     langChangeSelect(e) {
         this.setState({ langValue: e.target.value });
         this.loadItems(e.target.value);
@@ -148,7 +182,7 @@ class ConnectedCreateEdit extends React.Component {
                     <div className="row mb-3">
                         <div className="col-12">
                             <label className='mb-2'>Item Title:</label>
-                            <input placeholder='Write the name / common meaning of the connected item here...' className='form-control text-input cn-name' type='text'></input>
+                            <input id='cn-name' placeholder='Write the name / common meaning of the connected item here...' className='form-control text-input' type='text'></input>
                         </div>
                     </div>
 
@@ -192,7 +226,7 @@ class ConnectedCreateEdit extends React.Component {
                             <SecondaryButton onClick={() => this.props.changeGlobalView(GlobalViewNames.connectedWrdPhr, this.props.type)} style='w-100 ms-0'>Cancel</SecondaryButton>
                         </div>
                         <div className="col-6">
-                            <PrimaryButton style='w-100 ms-0'>Save</PrimaryButton>
+                            <PrimaryButton onClick={() => this.createConnected()} style='w-100 ms-0'>Save</PrimaryButton>
                         </div>
                     </div>
                 </div>

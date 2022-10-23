@@ -91,6 +91,10 @@ const getConnected = (type) => {
 	return ipcRenderer.invoke('get-connected', type);
 }
 
+const manageConnectedItems = (action, type, data) => {
+	ipcRenderer.send('manage-connected-items', action, type, data);
+}
+
 contextBridge.exposeInMainWorld('electronAPI', {
 	getLangData: getLangTableData,
 	getWordsData: getWordsData,
@@ -111,5 +115,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
 	getGroups: getGroups,
 	addEditGroup: addEditGroup,
 	manageGroupConnections: manageGroupConnections,
-	getConnected: getConnected
+	getConnected: getConnected,
+	manageConnectedItems: manageConnectedItems
 });
