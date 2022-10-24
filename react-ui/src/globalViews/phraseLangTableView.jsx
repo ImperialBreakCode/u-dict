@@ -170,9 +170,6 @@ class PhrasesLangGlobalView extends React.Component{
     deleteLanguage(){
 
         const langName = document.querySelector('#lang-del-confirm').value.trim();
-
-        console.log(langName);
-        console.log(this.state.lang.langName);
         
         if (langName == this.state.lang.langName) {
             window.electronAPI.deleteLang(this.state.lang.id);

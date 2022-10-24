@@ -131,6 +131,28 @@ ipcMain.handle('get-item', (e, id)=>{
 		const phrase = db.Phrases.filter(elem => elem.id == id)[0];
 		return phrase;
 	}
+	else if(id.startsWith('cntwrds')){
+		const item = db.ConnectedWords.filter(elem => elem.id == id)[0];
+
+		const children = db.getChildren(item, item.relWords);
+		children.forEach(child => {
+			child.language = db.getParent(child.foreignKeys[tableNames.Language][0]).langName;
+		});
+
+		item.children = children;
+		return item;
+	}
+	else if(id.startsWith('cntphrs')){
+		const item = db.ConnectedPhrases.filter(elem => elem.id == id)[0];
+
+		const children = db.getChildren(item, item.relPhrases);
+		children.forEach(child => {
+			child.language = db.getParent(child.foreignKeys[tableNames.Language][0]).langName;
+		});
+
+		item.children = children;
+		return item;
+	}
 })
 
 ipcMain.on('delete-lang', (e, id) =>{
@@ -241,6 +263,22 @@ ipcMain.on('manage-connected-items', (e, action, type, data) => {
 				db.connectExisting(connectedWord, connectedWord.relWords, ids[i]);
 			}
 		}
+		else if (action == 'delete') {
+			db.removeChildren(data, tableNames.ConnectedWords, tableNames.Word);
+			db.delete(data, tableNames.ConnectedWords, false);
+		}
+		else if (action == 'edit') {
+			const item = db.ConnectedWords.filter(elem => elem.id == data.id)[0];
+			item.commonMeaning = data.name;
+
+			db.removeChildren(item.id, item.tableName, tableNames.Word);
+
+			for (let i = 0; i < data.children.length; i++) {
+				db.connectExisting(item, item.relWords, data.children[i]);
+			}
+
+			db.update(item);
+		}
 	}
 	else if (type === 'phr') {
 		
@@ -253,6 +291,22 @@ ipcMain.on('manage-connected-items', (e, action, type, data) => {
 			for (let i = 0; i < ids.length; i++) {
 				db.connectExisting(connectedPhrase, connectedPhrase.relPhrases, ids[i]);
 			}
+		}
+		else if (action == 'delete') {
+			db.removeChildren(data, tableNames.ConnectedPhrases, tableNames.Phrase);
+			db.delete(data, tableNames.ConnectedPhrases, false);
+		}
+		else if (action == 'edit') {
+			const item = db.ConnectedPhrases.filter(elem => elem.id == data.id)[0];
+			item.commonMeaning = data.name;
+
+			db.removeChildren(item.id, item.tableName, tableNames.Phrase);
+
+			for (let i = 0; i < data.children.length; i++) {
+				db.connectExisting(item, item.relPhrases, data.children[i]);
+			}
+
+			db.update(item);
 		}
 	}
 })

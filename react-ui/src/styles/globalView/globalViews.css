@@ -1,20 +1,20 @@
-.lang-words-view, .lang-phrases-view {
+.lang-words-view, .lang-phrases-view, .connected-table-view {
   background: -webkit-gradient(linear, left top, right top, from(#04040c), to(#14012e));
   background: linear-gradient(90deg, #04040c, #14012e);
   height: 100vh;
 }
 
-.lang-words-view section, .lang-phrases-view section {
+.lang-words-view section, .lang-phrases-view section, .connected-table-view section {
   background: inherit;
 }
 
-.lang-words-view h1, .lang-phrases-view h1 {
+.lang-words-view h1, .lang-phrases-view h1, .connected-table-view h1 {
   text-align: center;
   margin: 5% 0;
   font-size: 40px;
 }
 
-.lang-words-view .row, .lang-phrases-view .row {
+.lang-words-view .row, .lang-phrases-view .row, .connected-table-view .row {
   width: inherit;
 }
 

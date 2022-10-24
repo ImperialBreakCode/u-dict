@@ -116,5 +116,5 @@ contextBridge.exposeInMainWorld('electronAPI', {
 	addEditGroup: addEditGroup,
 	manageGroupConnections: manageGroupConnections,
 	getConnected: getConnected,
-	manageConnectedItems: manageConnectedItems
+	manageConnectedItems: manageConnectedItems,
 });

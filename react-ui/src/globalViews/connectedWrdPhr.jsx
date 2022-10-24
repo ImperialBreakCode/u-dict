@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import PrimaryButton, { SecondaryButton } from '../components/buttons';
-import { ContentBox, ContentRow } from '../components/contentBoxes';
 import Row from '../components/row';
 import "../styles/view-styles/style.css";
 import { GlobalViewNames, ViewNames } from '../constants';
@@ -15,6 +14,8 @@ class ConnectedWordsPhrases extends React.Component {
         this.state = {
             connectedData: <h5 className='text-center mb-0'>No items</h5>
         };
+
+        this.selectItem.bind(this);
     }
 
     componentDidMount() {
@@ -23,7 +24,7 @@ class ConnectedWordsPhrases extends React.Component {
             if (data.length != 0) {
                 data = data.map(item => {
                     return (
-                        <div key={item.id} className='connected-item'>
+                        <div onClick={(e) => this.selectItem(e)} item-id={item.id} key={item.id} className='connected-item'>
                             <h5>{item.commonMeaning}</h5>
                         </div>
                     );
@@ -33,6 +34,11 @@ class ConnectedWordsPhrases extends React.Component {
             }
             
         });
+    }
+
+    selectItem(e){
+        const id = e.target.closest('div').getAttribute('item-id');
+        this.props.changeGlobalView(GlobalViewNames.connectedTable, [id, this.props.type]);
     }
 
     render() {
