@@ -1,4 +1,4 @@
-.lang-words-view, .lang-phrases-view {
+.lang-words-view, .lang-phrases-view, .connected-table-view {
     background: linear-gradient(90deg, #04040c, #14012e);
     height: 100vh;
 
@@ -492,6 +492,25 @@
     background: #07060e;
     text-align: center;
 
+    .connected-item{
+        background: #1a1a4e;
+        padding: 20px 0;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        border: 1px solid #595996;
+        transition: 0.2s;
+        cursor: pointer;
+
+        &:hover{
+            background: #272772;
+            border: 1px solid #7a7ad3;
+        }
+
+        h5{
+            margin: 0;
+        }
+    }
+
     .title-box{
         margin-top: 5%;
         position: relative;
@@ -506,13 +525,13 @@
     .add-con{
         width: 100%;
         padding: 5px;
-        border-radius: 20px;
+        border-radius: 10px;
         font-size: 20px;
         margin: 0;
     }
 
     .wrapper{
-        max-height: 50vh;
+        max-height: 60vh;
         overflow-y: scroll;
         margin-top: 70px;
         margin-bottom: 30px;;

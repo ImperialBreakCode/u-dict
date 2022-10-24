@@ -14,6 +14,7 @@ import { MeaningWordPhraseTest } from './globalViews/exercises/testsClosedAnswer
 import { GramGenderTest } from './globalViews/exercises/testsClosedAnswers/gramGenderTest';
 import { WordPhraseSpelling } from './globalViews/exercises/openEndedAnswers/wordPhraseSpelling';
 import ConnectedCreateEdit from './globalViews/createEditConnected';
+import ConnectedWrdPhrTable from './globalViews/connectedTable';
 
 function App() {
 
@@ -101,6 +102,11 @@ function App() {
 				setView(<ConnectedCreateEdit changeGlobalView={ChangeGlobalView} type={type} editData={editData}/>)
 				break;	
 			
+			case GlobalViewNames.connectedTable:
+				const [id, cnType] = moreInfo;
+				setView(<ConnectedWrdPhrTable changeGlobalView={ChangeGlobalView} cnId={id} type={cnType}/>)
+				break;
+
 			default:
 				break;
 		}

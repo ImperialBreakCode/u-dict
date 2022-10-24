@@ -20,5 +20,6 @@ export const GlobalViewNames = {
     gramGenderTest: 'grammatical-gender-test',
     wordPhraseSpellingExercise: 'word-phrase-spelling-exercise',
     connectedWrdPhr: 'connected-words-phrases',
-    createEditConnected: 'create-edit-connected'
+    createEditConnected: 'create-edit-connected',
+    connectedTable: 'connected-word-phrase-table'
 }

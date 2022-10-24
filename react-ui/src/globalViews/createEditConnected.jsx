@@ -5,7 +5,6 @@ import { DataControl } from '../components/dataControlPanel';
 import { GlobalViewNames } from '../constants';
 
 
-
 class ConnectedCreateEdit extends React.Component {
 
     constructor(props) {
@@ -23,7 +22,7 @@ class ConnectedCreateEdit extends React.Component {
         this.search.bind(this);
         this.addItem.bind(this);
         this.removeItem.bind(this);
-        this.createConnected.bind(this);
+        this.saveConnected.bind(this);
     }
 
     componentDidMount() {
@@ -43,6 +42,29 @@ class ConnectedCreateEdit extends React.Component {
             }
 
         });
+
+        if (this.props.editData) {
+            
+            const selected = this.props.editData.children.map(item => {
+                return(
+                    <div item-id={item.id} className='item' key={item.id}>
+                        Word: <p>{this.props.type === 'wrd'? item.word: item.phrase}</p> <br />
+                        Meaning: <p>{item.meanings[0]}</p>
+                        <SecondaryButton onClick={(e) => this.removeItem(e)} style='remove-btn hover-danger'>Remove</SecondaryButton>
+                    </div>
+                );
+            });
+            this.setState({selectedItemsComp: selected});
+
+            const arrCopy = [...this.state.selectedItems];
+            this.props.editData.children.forEach(item => {
+                
+                arrCopy.push(item.id);
+            });
+            this.setState({selectedItems: arrCopy});
+
+            $('#cn-name').val(this.props.editData.commonMeaning);
+        }
     }
 
     loadItems(id) {
@@ -156,12 +178,27 @@ class ConnectedCreateEdit extends React.Component {
         }
     }
 
-    createConnected(){
+    saveConnected(){
         const val = $('#cn-name').val().trim();
 
         if (val != '') {
-            window.electronAPI.manageConnectedItems('create', this.props.type, [val, this.state.selectedItems]);
-            this.props.changeGlobalView(GlobalViewNames.connectedWrdPhr, this.props.type);
+
+            if (this.props.editData) {
+
+                const saveData = {
+                    id: this.props.editData.id,
+                    name: val,
+                    children: this.state.selectedItems
+                }
+
+                window.electronAPI.manageConnectedItems('update', this.props.type, saveData);
+                this.props.changeGlobalView(GlobalViewNames.connectedTable, [this.props.editData.id, this.props.type]);
+
+            } else {
+                window.electronAPI.manageConnectedItems('create', this.props.type, [val, this.state.selectedItems]);
+                this.props.changeGlobalView(GlobalViewNames.connectedWrdPhr, this.props.type);
+            }
+            
         }
         
     }
@@ -226,7 +263,7 @@ class ConnectedCreateEdit extends React.Component {
                             <SecondaryButton onClick={() => this.props.changeGlobalView(GlobalViewNames.connectedWrdPhr, this.props.type)} style='w-100 ms-0'>Cancel</SecondaryButton>
                         </div>
                         <div className="col-6">
-                            <PrimaryButton onClick={() => this.createConnected()} style='w-100 ms-0'>Save</PrimaryButton>
+                            <PrimaryButton onClick={() => this.saveConnected()} style='w-100 ms-0'>Save</PrimaryButton>
                         </div>
                     </div>
                 </div>
