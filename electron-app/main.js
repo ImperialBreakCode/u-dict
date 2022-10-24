@@ -267,7 +267,8 @@ ipcMain.on('manage-connected-items', (e, action, type, data) => {
 			db.removeChildren(data, tableNames.ConnectedWords, tableNames.Word);
 			db.delete(data, tableNames.ConnectedWords, false);
 		}
-		else if (action == 'edit') {
+		else if (action == 'update') {
+
 			const item = db.ConnectedWords.filter(elem => elem.id == data.id)[0];
 			item.commonMeaning = data.name;
 
@@ -296,7 +297,7 @@ ipcMain.on('manage-connected-items', (e, action, type, data) => {
 			db.removeChildren(data, tableNames.ConnectedPhrases, tableNames.Phrase);
 			db.delete(data, tableNames.ConnectedPhrases, false);
 		}
-		else if (action == 'edit') {
+		else if (action == 'update') {
 			const item = db.ConnectedPhrases.filter(elem => elem.id == data.id)[0];
 			item.commonMeaning = data.name;
 

@@ -193,6 +193,7 @@ class ConnectedCreateEdit extends React.Component {
 
                 window.electronAPI.manageConnectedItems('update', this.props.type, saveData);
                 this.props.changeGlobalView(GlobalViewNames.connectedTable, [this.props.editData.id, this.props.type]);
+
             } else {
                 window.electronAPI.manageConnectedItems('create', this.props.type, [val, this.state.selectedItems]);
                 this.props.changeGlobalView(GlobalViewNames.connectedWrdPhr, this.props.type);
