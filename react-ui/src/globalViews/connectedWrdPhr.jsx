@@ -23,11 +23,9 @@ class ConnectedWordsPhrases extends React.Component {
             if (data.length != 0) {
                 data = data.map(item => {
                     return (
-                        <span key={item.id}>
-                            <ContentRow>
-                                <h5>{item.commonMeaning}</h5>
-                            </ContentRow>
-                        </span>
+                        <div key={item.id} className='connected-item'>
+                            <h5>{item.commonMeaning}</h5>
+                        </div>
                     );
                 });
 
@@ -52,9 +50,7 @@ class ConnectedWordsPhrases extends React.Component {
 
                     <Row>
                         <div className='wrapper'>
-                            <ContentBox>
-                                {this.state.connectedData}
-                            </ContentBox>
+                            {this.state.connectedData}
                         </div>
                     </Row>
 
