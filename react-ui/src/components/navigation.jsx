@@ -65,7 +65,7 @@ class Navigation extends React.Component{
                     <NavButton onClick={(e) => this.handleClickNavButton(e)} active={this.props.currentView == ViewNames.lang} toView={ViewNames.lang} text='languages'>
                         <FontAwesomeIcon icon={faLanguage}/>
                     </NavButton>
-                    <NavButton onClick={(e) => this.handleClickNavButton(e)} active={this.props.currentView == ViewNames.words} toView={ViewNames.words} text='words'>
+                    <NavButton onClick={(e) => this.handleClickNavButton(e)} active={this.props.currentView == ViewNames.words} toView={ViewNames.words} text='words and phrases'>
                         <FontAwesomeIcon icon={faA}/>
                     </NavButton>
                     <NavButton onClick={(e) => this.handleClickNavButton(e)} active={this.props.currentView == ViewNames.groups} toView={ViewNames.groups} text='groups'>

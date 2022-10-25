@@ -107,8 +107,6 @@
 .langview .table-wrapper, .group-view .table-wrapper {
   max-height: 70vh;
   overflow-y: scroll;
-  -webkit-box-shadow: 0 0 20px 3px #1e1a2c63;
-          box-shadow: 0 0 20px 3px #1e1a2c63;
   border-radius: 20px;
 }
 
@@ -124,6 +122,7 @@
   padding: 15px;
   position: -webkit-sticky;
   position: sticky;
+  text-align: center;
 }
 
 .langview .table-override thead th:first-child, .group-view .table-override thead th:first-child {
@@ -167,19 +166,30 @@
 }
 
 .langview .table-override tbody td, .group-view .table-override tbody td {
-  background-color: #544474;
+  background-color: #5a4474;
   padding: 15px;
   -webkit-box-shadow: none;
           box-shadow: none;
   -webkit-transition: 0.2s;
   transition: 0.2s;
+  text-align: center;
+}
+
+@media (max-width: 1293px) {
+  .langview .table-override tbody .langv-table-button, .group-view .table-override tbody .langv-table-button {
+    margin: 0 5px;
+  }
+  .langview .table-override tbody tr:hover .langv-table-button, .group-view .table-override tbody tr:hover .langv-table-button {
+    opacity: 1;
+    margin: 2px 5px;
+  }
 }
 
 .langview #add-lang, .group-view #add-lang {
   font-size: 20px;
   text-transform: capitalize;
   width: 100%;
-  background-color: #544474;
+  background-color: #5a4474;
   border: 1px solid #7d6caa;
   border-radius: 10px;
   padding: 10px 0;

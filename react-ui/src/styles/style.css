@@ -41,6 +41,7 @@
 
 body {
   background: linear-gradient(45deg, #5c0079, #2b0091);
+  background: linear-gradient(45deg, #1b0b41, #4f0c5e);
   height: 100vh;
 }
 
@@ -103,7 +104,7 @@ main {
 .navigation {
   color: white;
   background: #130f1d;
-  width: 20em;
+  width: 23em;
 }
 
 .navigation .app-title {
