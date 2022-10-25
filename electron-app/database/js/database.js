@@ -144,16 +144,20 @@ var appDatabase = /** @class */ (function () {
             var _loop_1 = function (i) {
                 var fileName = _this.getFileName(i, rel.table);
                 var json = _this.getJson(fileName);
+                var indexes = [];
                 var _loop_2 = function (e) {
                     var keys = json[e].foreignKeys[tableName];
                     keys.forEach(function (key) {
                         if (key.id == id) {
-                            json.splice(e, 1);
+                            indexes.push(e);
                         }
                     });
                 };
                 for (var e = 0; e < json.length; e++) {
                     _loop_2(e);
+                }
+                for (var e = 0; e < indexes.length; e++) {
+                    json.splice(indexes[e] - e, 1);
                 }
                 fs.writeFileSync(fileName, JSON.stringify(json));
             };

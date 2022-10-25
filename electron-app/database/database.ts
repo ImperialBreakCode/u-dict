@@ -153,14 +153,20 @@ export class appDatabase {
                 const fileName = this.getFileName(i, rel.table);
                 const json = this.getJson(fileName);
 
+                const indexes: number[] = [];
+
                 for (let e = 0; e < json.length; e++) {
                     const keys: ForeignKey[] = json[e].foreignKeys[tableName];
 
                     keys.forEach(key => {
                         if (key.id == id) {
-                            json.splice(e, 1);
+                            indexes.push(e);
                         }
                     });
+                }
+
+                for (let e = 0; e < indexes.length; e++) {
+                    json.splice(indexes[e] - e, 1);
                 }
 
                 fs.writeFileSync(fileName, JSON.stringify(json));
