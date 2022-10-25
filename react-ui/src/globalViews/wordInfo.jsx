@@ -12,10 +12,10 @@ class WordInfo extends React.Component{
         this.state = {
             word: '',
             gramGendSelect: '',
-            meanings: '',
+            meanings: [],
             primaryMeaning: '',
-            viewMeanings: '',
-            groups: ''
+            viewMeanings: [],
+            groups: 'No groups Available'
         };
 
         this.endEditing.bind(this);
@@ -45,7 +45,7 @@ class WordInfo extends React.Component{
                     }
 
                     return (
-                        <div className={'meaning-box ' + (index == 0 ? 'primary-meaning': '')} meaning={index} key={meaning}>
+                        <div className={'meaning-box ' + (index == 0 ? 'primary-meaning': '')} meaning={index} key={meaning + index + Math.random()}>
                             <SecondaryButton style='me-auto' onClick={(e) => this.makePrimary(e)}>P</SecondaryButton>
                             <h5 className='m-0'>{meaning}</h5>
                             <SecondaryButton onClick={(e) => {this.removeMeaning(e)}} style='danger-btn ms-auto'>Remove</SecondaryButton>
@@ -55,20 +55,17 @@ class WordInfo extends React.Component{
                 })
 
                 const viewMeaning = wrd.meanings.map((mn, index) => {
-
                     return(
-                        <>
-                            <div key={index + mn}>
-                                <h4 className='text-center'>{mn}</h4>
-                            </div>
-                        </>
+                        <div key={mn + index + Math.random()}>
+                            <h4 className='text-center'>{mn}</h4>
+                        </div>
                         
                     );
                     
                 });
 
                 this.setState({word: wrd});
-                this.setState({gramGendSelect: wrd.gramGender});
+                this.setState({gramGendSelect: wrd.gramGender ?? 'none'});
                 this.setState({meanings: meanings});
                 this.setState({viewMeanings: viewMeaning});
 
@@ -78,40 +75,44 @@ class WordInfo extends React.Component{
 
         window.electronAPI.getGroups().then(groups => {
 
-            const groupsComp = groups.map(group => {
+            if (groups && groups.length != 0) {
+                
+                const groupsComp = groups.map(group => {
 
-                let inWord = false;
-
-                for (let i = 0; i < this.state.word.foreignKeys['Groups'].length; i++) {
-                    const key = this.state.word.foreignKeys['Groups'][i];
-                    if (key.id == group.id) {
-                        inWord = true;
-                        break;
+                    let inWord = false;
+    
+                    for (let i = 0; i < this.state.word.foreignKeys['Groups'].length; i++) {
+                        const key = this.state.word.foreignKeys['Groups'][i];
+                        if (key.id == group.id) {
+                            inWord = true;
+                            break;
+                        }
                     }
-                }
+    
+                    return(
+                        <div onClick={(e) => this.selectGroup(e)} className={`group-box ${inWord ? 'gb-selected': ''}`}
+                         key={group.id} group-id={group.id}>
+                            <h5 className='m-0'>{group.groupName}</h5>
+                        </div>
+                    );
+                });
+    
+                this.setState({groups: groupsComp});
 
-                return(
-                    <div onClick={(e) => this.selectGroup(e)} className={`group-box ${inWord ? 'gb-selected': ''}`}
-                     key={group.id} group-id={group.id}>
-                        <h5 className='m-0'>{group.groupName}</h5>
-                    </div>
-                );
-            });
-
-            this.setState({groups: groupsComp});
+            }
 
         })
     }
 
     endEditing(e){
-        this.setState({gramGendSelect: this.state.word.gramGender});
+        this.setState({gramGendSelect: this.state.word.gramGender ?? 'none'});
         document.querySelector('#word-input').value = this.state.word.word;
         document.querySelector('#article-input').value = this.state.word.article;
         document.querySelector('#plural-input').value = this.state.word.plural;
         document.querySelector('#word-info').value = this.state.word.info;
     }
 
-    save(e){
+    save(){
 
         const final = {
             word: document.querySelector('#word-input').value.trim() == '' ? this.state.word.word: document.querySelector('#word-input').value.trim(),
@@ -125,9 +126,8 @@ class WordInfo extends React.Component{
 
         window.electronAPI.getItem(this.props.wordId).then(wrd => {
             if(wrd){
-                console.log(wrd);
                 this.setState({word: wrd});
-                this.setState({gramGendSelect: wrd.gramGender})
+                this.setState({gramGendSelect: wrd.gramGender ?? 'none'})
             }
         });
     }
@@ -284,7 +284,7 @@ class WordInfo extends React.Component{
                 </Modal>
 
                 <Modal elemId='manage-groups-modal' title='manage groups'>
-                    <p>Select groups to attach to the word</p>
+                    <p>Select groups to attach to the word: </p>
                     <div className='group-wrapper'>
                         {this.state.groups}
                     </div>

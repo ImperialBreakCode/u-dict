@@ -21,9 +21,6 @@
 .word-info-view, .phrase-info-view {
   background: #140529;
   padding: 20px;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
 }
 
 .word-info-view .word-name, .word-info-view .phrase-name, .phrase-info-view .word-name, .phrase-info-view .phrase-name {
@@ -339,6 +336,11 @@
   background-color: #372968;
   color: white;
   border-color: #694fc9;
+}
+
+.data-control-panel .text-input:focus {
+  background-color: #3c2c74;
+  color: white;
 }
 
 .d-none-search {

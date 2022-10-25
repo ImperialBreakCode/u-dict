@@ -49,14 +49,19 @@ export const PrepareExerciseView = (props) => {
 
         const articleUsage = document.querySelector('#use-articles').checked;
 
-        const result = {
-            questionCount: numberQestions,
-            articleUsage: articleUsage,
-            langId: valLang,
-            type: valType
-        };
-
-        props.setTest(props.forTest, result);
+        if (valLang != '') {
+            const result = {
+                questionCount: numberQestions,
+                articleUsage: articleUsage,
+                langId: valLang,
+                type: valType
+            };
+    
+            props.setTest(props.forTest, result);
+        } else{
+            setFlash('No languages available');
+        }
+  
     }
 
     return (

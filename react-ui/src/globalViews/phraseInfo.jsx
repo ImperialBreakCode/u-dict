@@ -43,7 +43,7 @@ class PhraseInfo extends React.Component{
                     }
 
                     return (
-                        <div className={'meaning-box ' + (index == 0 ? 'primary-meaning': '')} meaning={index} key={meaning}>
+                        <div className={'meaning-box ' + (index == 0 ? 'primary-meaning': '')} meaning={index} key={meaning + index + Math.random()}>
                             <SecondaryButton style='me-auto' onClick={(e) => this.makePrimary(e)}>P</SecondaryButton>
                             <h5 className='m-0'>{meaning}</h5>
                             <SecondaryButton onClick={(e) => {this.removeMeaning(e)}} style='danger-btn ms-auto'>Remove</SecondaryButton>
@@ -55,18 +55,16 @@ class PhraseInfo extends React.Component{
                 const viewMeaning = phr.meanings.map((mn, index) => {
 
                     return(
-                        <>
-                            <div key={index}>
-                                <h4 className='text-center'>{mn}</h4>
-                            </div>
-                        </>
+                        <div key={index + mn +Math.random()}>
+                            <h4 className='text-center'>{mn}</h4>
+                        </div>
                         
                     );
                     
                 });
 
                 this.setState({phrase: phr});
-                this.setState({gramGendSelect: phr.gramGender});
+                this.setState({gramGendSelect: phr.gramGender ?? 'none'});
                 this.setState({meanings: meanings});
                 this.setState({viewMeanings: viewMeaning});
 
@@ -76,12 +74,12 @@ class PhraseInfo extends React.Component{
     }
 
     endEditing(e){
-        this.setState({gramGendSelect: this.state.phrase.gramGender});
+        this.setState({gramGendSelect: this.state.phrase.gramGender ?? 'none'});
         document.querySelector('#phrase-input').value = this.state.phrase.phrase;
         document.querySelector('#phrase-info').value = this.state.phrase.info;
     }
 
-    save(e){
+    save(){
 
         const final = {
             phrase: document.querySelector('#phrase-input').value.trim() == '' ? this.state.phrase.phrase: document.querySelector('#phrase-input').value.trim(),
@@ -94,7 +92,7 @@ class PhraseInfo extends React.Component{
         window.electronAPI.getItem(this.props.phraseId).then(phr => {
             if(phr){
                 this.setState({phrase: phr});
-                this.setState({gramGendSelect: phr.gramGender})
+                this.setState({gramGendSelect: phr.gramGender ?? 'none'})
             }
         });
     }
