@@ -16,7 +16,7 @@ class LangView extends React.Component{
 
     constructor(props){
         super(props);
-        this.headTable = ['languages', 'word and phrase count', ''];
+        this.headTable = ['language', 'word count', 'phrase count', ''];
         this.state = { languages: [] };
 
         this.getLangs.bind(this);
@@ -36,7 +36,8 @@ class LangView extends React.Component{
                 let data = result.map(lang => 
                     <tr key={lang.id} lang-id={lang.id}>
                         <td>{lang.langName}</td>
-                        <td>{lang.lenWords + lang.lenPhrases}</td>
+                        <td>{lang.lenWords}</td>
+                        <td>{lang.lenPhrases}</td>
                         <td>
                             <SecondaryButton onClick={(e) => this.props.onLangSelect(e, 'wrd')} style='langv-table-button'>Words</SecondaryButton>
                             <SecondaryButton onClick={(e) => this.props.onLangSelect(e, 'phr')} style='langv-table-button'>Phrases</SecondaryButton>
@@ -68,6 +69,7 @@ class LangView extends React.Component{
             let newlangElement = (
                 <tr key={newlang.id} lang-id={newlang.id}>
                     <td>{newlang.langName}</td>
+                    <td>0</td>
                     <td>0</td>
                     <td>
                         <SecondaryButton onClick={(e) => this.props.onLangSelect(e, 'wrd')} style='langv-table-button'>Words</SecondaryButton>
@@ -119,7 +121,7 @@ class LangView extends React.Component{
 
                 <div className="container d-flex align-items-center justify-content-center cont-view">
                     <Row>
-                        <h1>Your Languages</h1>
+                        <h1>Languages</h1>
                     </Row>
 
                     <Row>

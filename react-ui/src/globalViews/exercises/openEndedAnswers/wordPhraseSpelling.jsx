@@ -81,9 +81,9 @@ const TestSetUp = (props) => {
 
                 const reactData = data[1].map(phrase => {
                     return (
-                        <tr onClick={(e) => tableRowClick(e)} key={phrase.id}>
-                            <td className='data-key'>{phrase.phrase}</td>
-                            <td className='data-value'>{phrase.meanings[0]}</td>
+                        <tr className='for-test' onClick={(e) => tableRowClick(e)} key={phrase.id}>
+                            <td className='data-value'>{phrase.phrase}</td>
+                            <td className='data-key'>{phrase.meanings[0]}</td>
                         </tr>
                     );
                 });
@@ -334,14 +334,17 @@ const Questions = (props) => {
         let ans = $('#word-phrase-input').val();
         let artAns = $('#article-input').val();
         ans = ans.replace(/\s+/g,' ').trim();
-        artAns = artAns.replace(/\s+/g,' ').trim();
+
+        if (artAns || artAns == '') {
+            artAns = artAns.replace(/\s+/g,' ').trim();
+        }
 
         let correctAns = $('.question').data();
 
         const isSpellingCorrect = ans === correctAns.value;
         let isArticleCorrect = true;
         
-        if (artAns) {
+        if ((artAns || artAns == '') && !$('#article-input').hasClass('d-none')) {
             isArticleCorrect = artAns === correctAns.article;
         }
         
@@ -394,7 +397,7 @@ const Questions = (props) => {
         <div className='w-50'>
             <h1 className='question'>
                 #{questionsDone} {props.qstCount != 0 && props.qstCount != '' ? ` of ${props.qstCount} ` : ''}<br />
-                White the word with the meaning of:<br />
+                Write the word with the meaning of:<br />
                 <span className='qst-data-wrap'>{displayQuestion}</span>
             </h1>
             <div className='input-answer-box'>

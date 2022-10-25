@@ -44,8 +44,7 @@ $font-white: white;
 }
 
 body{
-    //background: linear-gradient(45deg, #31133f, #10003b);
-    background: linear-gradient(45deg, #5c0079, #2b0091);
+    background: linear-gradient(45deg, #770086, #3a007c);
     height: 100vh;    
 }
 
@@ -101,7 +100,7 @@ main{
 .navigation{
     color: $font-white;
     background: #130f1d;
-    width: 20em;
+    width: 23em;
 
     .app-title{
         display: flex;

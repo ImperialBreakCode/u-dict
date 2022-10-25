@@ -13,8 +13,8 @@ class ConnectedCreateEdit extends React.Component {
             selectedItems: [],
             langValue: '',
             langsOp: [],
-            itemComp: [],
-            selectedItemsComp: []
+            itemComp: 'No items',
+            selectedItemsComp: 'No items'
         };
 
         this.langChangeSelect.bind(this);
@@ -72,7 +72,7 @@ class ConnectedCreateEdit extends React.Component {
             if (this.props.type == 'wrd') {
                 data = data[0];
 
-                if (data) {
+                if (data && data.length != 0) {
                     data = data.map(item => {
                         return (
                             <div item-id={item.id} item-data={item.word} meaning={item.meanings[0]} className='item' key={item.id}>
@@ -84,22 +84,27 @@ class ConnectedCreateEdit extends React.Component {
                     });
 
                     this.setState({ itemComp: data });
+                } else {
+                    this.setState({ itemComp: 'No Items' });
                 }
+
             } else {
                 data = data[1];
 
-                if (data) {
+                if (data && data.length != 0) {
                     data = data.map(item => {
                         return (
                             <div item-id={item.id} item-data={item.phrase} meaning={item.meanings} className='item' key={item.id}>
                                 Phrase: <p>{item.phrase}</p> <br />
-                                Meaning: <p>{item.meanings}</p>
+                                Meaning: <p>{item.meanings[0]}</p>
                                 <PrimaryButton onClick={(e) => this.addItem(e)} style='add-btn'>Add</PrimaryButton>
                             </div>
                         );
                     });
 
                     this.setState({ itemComp: data });
+                } else {
+                    this.setState({ itemComp: 'No Items' });
                 }
             }
         });
@@ -125,7 +130,12 @@ class ConnectedCreateEdit extends React.Component {
                 </div>
             );
 
-            const newArrComp = [...this.state.selectedItemsComp];
+            let newArrComp = [...this.state.selectedItemsComp];
+
+            if (newArrComp[0] == 'N') {
+                newArrComp = [];
+            }
+
             newArrComp.push(addedItem);
             this.setState({ selectedItemsComp: newArrComp });
         }
@@ -143,7 +153,12 @@ class ConnectedCreateEdit extends React.Component {
                 break;
             }
         }
-        this.setState({ selectedItemsComp: itemsSelectedCompCopy });
+
+        if (itemsSelectedCompCopy.length == 0) {
+            this.setState({ selectedItemsComp: 'No items' });
+        } else {
+            this.setState({ selectedItemsComp: itemsSelectedCompCopy });
+        }
 
         for (let i = 0; i < selectedItemsCopy.length; i++) {
             if (selectedItemsCopy[i] == id) {
@@ -151,7 +166,9 @@ class ConnectedCreateEdit extends React.Component {
                 break;
             }
         }
+
         this.setState({ selectedItems: selectedItemsCopy });
+        
     }
 
     search(e) {

@@ -37,7 +37,7 @@ class WordsView extends React.Component{
 
                     <Row>
                         <ContentBox>
-                            <h2 className='mb-3'>Connected Words</h2>
+                            <h2 className='mb-3'>Connected Words and Phrases</h2>
                             <ContentRow>
                                 <h5>Words from different languages, grouped by meaning</h5>
                                 <PrimaryButton onClick={(e) => this.props.changeGlobalView(GlobalViewNames.connectedWrdPhr, 'wrd')} style='ms-auto'>View Table</PrimaryButton>

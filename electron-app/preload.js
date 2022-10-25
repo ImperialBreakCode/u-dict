@@ -1,5 +1,9 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
+const getStats = () => {
+	const data = ipcRenderer.invoke('get-stats');
+	return data;
+}
 
 const getLangTableData = () => {
 	const data = ipcRenderer.invoke('get-langs', 10);
@@ -96,6 +100,7 @@ const manageConnectedItems = (action, type, data) => {
 }
 
 contextBridge.exposeInMainWorld('electronAPI', {
+	getStats: getStats,
 	getLangData: getLangTableData,
 	getWordsData: getWordsData,
 	getPhrasesData: getPhrasesData,

@@ -20,7 +20,6 @@
 .word-info-view, .phrase-info-view{
     background: #140529;
     padding: 20px;
-    height: fit-content;
 
     .word-name, .phrase-name{
         position: relative;
@@ -324,6 +323,11 @@
         background-color: #372968;
         color: white;
         border-color: #694fc9;
+
+        &:focus{
+            background-color: #3c2c74;
+            color: white;
+        }
     }
 }
 
