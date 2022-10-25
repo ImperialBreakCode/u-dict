@@ -14,8 +14,8 @@ const createWindow = () => {
 	const mainWindow = new BrowserWindow({
 		width: 1250,
 		minWidth: 1000,
-		height: 600,
-		mainHeight: 600,
+		height: 650,
+		minHeight: 650,
 		webPreferences: {
 			preload: path.join(__dirname, 'preload.js'),
 			//nodeIntegration: true
@@ -46,6 +46,17 @@ app.on('window-all-closed', () => {
 
 
 // renderer communication
+ipcMain.handle('get-stats', () => {
+
+	const data = {};
+	data.langCount = db.Languages.length;
+	data.wordCount = db.Words.length;
+	data.phraseCount = db.Phrases.length;
+
+	return data;
+
+})
+
 ipcMain.handle('get-langs', () => {
 	let langs = db.Languages;
 	langs.forEach(lang => {

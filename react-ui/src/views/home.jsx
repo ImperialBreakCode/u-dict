@@ -5,25 +5,47 @@ import Row from '../components/row';
 
 class HomeView extends React.Component{
 
+    constructor(props){
+        super(props);
+
+        this.state = {
+            data: ''
+        }
+    }
+
+    componentDidMount(){
+        window.electronAPI.getStats().then(stats => {
+            this.setState({data: stats});
+        })
+    }
+
     render(){
         return(
             <div className='home-view'>
-                <div className="container d-flex align-items-center justify-content-center cont-view">
+                <div className="container cont-view">
                     <Row>
-                        <h1 className='home-title'>Dashboard</h1>
+                        <div className='title-wrapper'>
+                            <h1 className='home-title'>App</h1>
+                        </div>
                     </Row>
 
-                    <div className="row">
-                        <div className="col-xl-4">
-                            <Card title='languages' data='10' />
+                    <div className="container inner-cont">
+                        <div className="row">
+                            <h2>Stats</h2>
                         </div>
-                        <div className="col-xl-4">
-                            <Card title='words' data='10' />
-                        </div>
-                        <div className="col-xl-4">
-                            <Card title='phrases' data='10' />
+                        <div className="row">
+                            <div className="col-xl-4">
+                                <Card title='languages' data={this.state.data.langCount} />
+                            </div>
+                            <div className="col-xl-4">
+                                <Card title='words' data={this.state.data.wordCount} />
+                            </div>
+                            <div className="col-xl-4">
+                                <Card title='phrases' data={this.state.data.phraseCount} />
+                            </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
         );

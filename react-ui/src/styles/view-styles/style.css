@@ -204,18 +204,44 @@
 
 .home-view {
   height: 100vh;
+  background-color: #130f1d;
+}
+
+.home-view .inner-cont {
+  padding: 0 20px;
+}
+
+.home-view .title-wrapper {
+  padding: 5%;
+  margin: 20px;
+  border-radius: 20px;
+  background: linear-gradient(45deg, #8e009b, #3a007c);
 }
 
 .home-view .home-title {
   text-align: center;
+  font-size: 70px;
 }
 
 .home-view .dash-card {
-  background: -webkit-gradient(linear, left top, right top, from(#59359a), to(#6f42c1));
-  background: linear-gradient(90deg, #59359a, #6f42c1);
+  background: linear-gradient(45deg, #8e009b, #3a007c);
   border-radius: 20px;
   text-transform: capitalize;
   margin: 10px 0;
+}
+
+.home-view .row {
+  width: 100%;
+}
+
+@media (max-width: 1200px) {
+  .home-view .title-wrapper {
+    padding: 2%;
+    margin: 20px;
+  }
+  .home-view .dash-card {
+    margin: 5px 0;
+  }
 }
 
 .word-view, .exercises-view, .group-view {

@@ -4,7 +4,7 @@
 @import "../../../node_modules/bootstrap/scss/root";
 
 $backcolor: #5a4474;
-$cardColor: linear-gradient(90deg, $purple-600, $purple-500 );
+$cardColor:  linear-gradient(45deg, #8e009b, #3a007c);
 $backcolorHover: #735c9e;
 $main-color: #4f09ac;
 
@@ -164,9 +164,22 @@ $main-color: #4f09ac;
 
 .home-view{
     height: 100vh;
+    background-color: #130f1d;
+
+    .inner-cont{
+        padding: 0 20px;
+    }
+
+    .title-wrapper{
+        padding: 5%;
+        margin: 20px;
+        border-radius: 20px;
+        background: linear-gradient(45deg, #8e009b, #3a007c);
+    }
 
     .home-title{
         text-align: center;
+        font-size: 70px;
     }
 
     .dash-card{
@@ -174,6 +187,21 @@ $main-color: #4f09ac;
         border-radius: 20px;
         text-transform: capitalize;
         margin: 10px 0;
+    }
+
+    .row{
+        width: 100%;
+    }
+
+    @media (max-width: 1200px) {
+        .title-wrapper{
+            padding: 2%;
+            margin: 20px;
+        }
+
+        .dash-card{
+            margin: 5px 0;
+        }
     }
 }
 
