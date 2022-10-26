@@ -9,7 +9,7 @@ const activeNavClass = 'active-nav';
 function AppTitle() {
     return(
         <div className='app-title'>
-            <h3>App</h3>
+            <h3>UDict</h3>
         </div>
     );
 }

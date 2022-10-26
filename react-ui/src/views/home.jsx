@@ -25,7 +25,7 @@ class HomeView extends React.Component{
                 <div className="container cont-view">
                     <Row>
                         <div className='title-wrapper'>
-                            <h1 className='home-title'>App</h1>
+                            <h1 className='home-title'>UDict</h1>
                         </div>
                     </Row>
 
