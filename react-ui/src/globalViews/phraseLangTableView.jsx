@@ -231,7 +231,7 @@ class PhrasesLangGlobalView extends React.Component{
 
         const deletLangFooter = (
             <>
-                <SecondaryButton dissmiss='modal' onClick={() => this.deleteLanguage()} style='danger-btn'>Delete Language</SecondaryButton>
+                <SecondaryButton onClick={() => this.deleteLanguage()} style='danger-btn'>Delete Language</SecondaryButton>
                 <SecondaryButton elemId='close-del-lang-modal' dissmiss='modal'>Cancel</SecondaryButton>
             </>
         );
