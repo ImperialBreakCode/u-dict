@@ -100,6 +100,12 @@ const manageConnectedItems = (action, type, data) => {
 }
 
 contextBridge.exposeInMainWorld('electronAPI', {
+	app: {
+		quit: () => {ipcRenderer.send('app-quit')},
+		fullscreen: () => {ipcRenderer.send('window-full-screen')},
+		exitfullscreen: () => {ipcRenderer.send('window-exit-full-screen')},
+		minimize: () => {ipcRenderer.send('window-minimize')}
+	},
 	getStats: getStats,
 	getLangData: getLangTableData,
 	getWordsData: getWordsData,
