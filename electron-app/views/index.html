@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="./favicon.ico" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Web site created using create-react-app" />
+    <link rel="apple-touch-icon" href="./logo192.png" />
+    <link rel="manifest" href="./manifest.json" />
+    <title>UDict</title>
+    <script defer="defer" src="./static/js/main.beddd535.js"></script>
+    <link href="./static/css/main.5cc34483.css" rel="stylesheet">
+    <link href="./title_style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="title-bar">
+        <p>UDict - preview version</p>
+
+        <div id="quit-app" class="app-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                class="bi bi-x-lg" viewBox="0 0 16 16">
+                <path
+                    d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+            </svg>
+        </div>
+
+        <div id="full-screen"class="app-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                class="bi bi-square" viewBox="0 0 16 16">
+                <path
+                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+            </svg>
+        </div>
+
+        <div id="exit-full-screen" class="app-btn d-none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+                fill="currentColor" class="bi bi-fullscreen-exit" viewBox="0 0 16 16">
+                <path
+                    d="M5.5 0a.5.5 0 0 1 .5.5v4A1.5 1.5 0 0 1 4.5 6h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5zm5 0a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 10 4.5v-4a.5.5 0 0 1 .5-.5zM0 10.5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 6 11.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5zm10 1a1.5 1.5 0 0 1 1.5-1.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4z" />
+            </svg>
+        </div>
+
+        <div id="minimize" class="app-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                class="bi bi-dash-lg" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z" />
+            </svg>
+        </div>
+
+    </div>
+
+    <div id="root"></div>
+
+    <script>
+        const quit = document.querySelector('#quit-app');
+        const full = document.querySelector('#full-screen');
+        const exitFull = document.querySelector('#exit-full-screen');
+        const minimize = document.querySelector('#minimize');
+
+        quit.addEventListener('click', () => {
+            window.electronAPI.app.quit();
+        });
+
+        full.addEventListener('click', () => {
+
+            full.classList.add('d-none');
+            exitFull.classList.remove('d-none');
+
+            window.electronAPI.app.fullscreen();
+        });
+
+        exitFull.addEventListener('click', () => {
+
+            full.classList.remove('d-none');
+            exitFull.classList.add('d-none');
+            
+            window.electronAPI.app.exitfullscreen();
+        });
+
+        minimize.addEventListener('click', () => {            
+            window.electronAPI.app.minimize();
+        });
+    </script>
+</body>
+
+</html>

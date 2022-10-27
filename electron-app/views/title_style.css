@@ -1,0 +1,62 @@
+.dialog {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #000;
+    background: rgba(0, 0, 0, 0.5);
+    -webkit-app-region: no-drag;
+}
+
+.title-bar{
+    height: 50px;
+    width: 100%;
+    background-color: #130f1d;
+    position: fixed;
+    -webkit-app-region: drag;
+}
+
+.title-bar p{
+    font-size: 20px;
+    margin: 10px;
+    text-align: center;
+}
+
+.title-bar svg{
+    margin: 12.5px;
+    position: absolute;
+}
+
+.title-bar .app-btn{
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    top: 0;
+    transition: 0.2s;
+    -webkit-app-region: no-drag;
+}
+
+.title-bar .app-btn:hover{
+    background: #413562;
+}
+
+#quit-app{
+    right: 0;
+}
+
+#quit-app:hover{
+    background: #cf0000;
+}
+
+#full-screen, #exit-full-screen{
+    right: 50px;
+}
+
+#full-screen svg{
+    margin: 15px;
+}
+
+#minimize{
+    right: 100px;
+}

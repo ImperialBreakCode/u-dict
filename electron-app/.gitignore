@@ -1,7 +1,6 @@
 /node_modules
-/views
 /database/storage
 
-
+/views/*
 !/views/index.html
 !/views/title_style.css
