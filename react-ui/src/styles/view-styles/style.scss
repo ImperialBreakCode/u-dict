@@ -7,9 +7,10 @@ $backcolor: #5a4474;
 $cardColor:  linear-gradient(45deg, #8e009b, #3a007c);
 $backcolorHover: #735c9e;
 $main-color: #4f09ac;
+$view-height: calc(100vh - 50px);
 
 .langview, .group-view{
-    height: 100vh;
+    height: $view-height;
     position: relative;
 
     h1{
@@ -163,7 +164,7 @@ $main-color: #4f09ac;
 }
 
 .home-view{
-    height: 100vh;
+    max-height: $view-height;
     background-color: #130f1d;
 
     .inner-cont{
@@ -236,7 +237,7 @@ $main-color: #4f09ac;
 }
 
 .word-view, .exercises-view, .group-view{
-    height: 100vh;
+    height: $view-height;
     background-color: $main-color;
     overflow-y: scroll;
     border-top-left-radius: 50px;

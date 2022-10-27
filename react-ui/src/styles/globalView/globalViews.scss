@@ -1,6 +1,8 @@
+$view-height: calc(100vh - 50px);
+
 .lang-words-view, .lang-phrases-view, .connected-table-view {
     background: linear-gradient(90deg, #04040c, #14012e);
-    height: 100vh;
+    height: $view-height;
 
     section{
         background: inherit;
@@ -347,7 +349,7 @@
 }
 
 .prepare-exerc-view{
-    min-height: 100vh;
+    height: $view-height;
     background-color: #0d0020;
 
     h1{

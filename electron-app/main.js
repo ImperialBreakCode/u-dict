@@ -14,18 +14,19 @@ const createWindow = () => {
 	const mainWindow = new BrowserWindow({
 		width: 1250,
 		minWidth: 1000,
-		height: 650,
-		minHeight: 650,
+		height: 700,
+		minHeight: 700,
+		titleBarStyle: 'hidden',
 		webPreferences: {
 			preload: path.join(__dirname, 'preload.js'),
 			//nodeIntegration: true
 		}
 	})
 
-	mainWindow.loadURL('http://localhost:3000')
-	//mainWindow.loadFile('views/index.html')
+	//mainWindow.loadURL('http://localhost:3000')
+	mainWindow.loadFile('views/index.html')
 
-	mainWindow.webContents.openDevTools()
+	//mainWindow.webContents.openDevTools()
 	mainWindow.removeMenu()
 }
 
@@ -44,8 +45,27 @@ app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') app.quit()
 })
 
-
 // renderer communication
+
+ipcMain.on('app-quit', () => {
+	app.quit();
+})
+
+ipcMain.on('window-full-screen', () => {
+	let window = BrowserWindow.getFocusedWindow();
+	window.maximize();
+})
+
+ipcMain.on('window-exit-full-screen', () => {
+	let window = BrowserWindow.getFocusedWindow();
+	window.unmaximize();
+})
+
+ipcMain.on('window-minimize', () => {
+	let window = BrowserWindow.getFocusedWindow();
+	window.minimize();
+})
+
 ipcMain.handle('get-stats', () => {
 
 	const data = {};

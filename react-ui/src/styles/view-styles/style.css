@@ -53,7 +53,7 @@
 }
 
 .langview, .group-view {
-  height: 100vh;
+  height: calc(100vh - 50px);
   position: relative;
 }
 
@@ -203,7 +203,7 @@
 }
 
 .home-view {
-  height: 100vh;
+  max-height: calc(100vh - 50px);
   background-color: #130f1d;
 }
 
@@ -275,7 +275,7 @@
 }
 
 .word-view, .exercises-view, .group-view {
-  height: 100vh;
+  height: calc(100vh - 50px);
   background-color: #4f09ac;
   overflow-y: scroll;
   border-top-left-radius: 50px;
@@ -381,4 +381,3 @@
 .row {
   width: 70%;
 }
-/*# sourceMappingURL=style.css.map */
