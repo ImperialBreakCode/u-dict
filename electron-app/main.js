@@ -14,16 +14,16 @@ const createWindow = () => {
 	const mainWindow = new BrowserWindow({
 		width: 1250,
 		minWidth: 1000,
-		height: 650,
-		minHeight: 650,
+		height: 700,
+		minHeight: 700,
 		webPreferences: {
 			preload: path.join(__dirname, 'preload.js'),
 			//nodeIntegration: true
 		}
 	})
 
-	//mainWindow.loadURL('http://localhost:3000')
-	mainWindow.loadFile('views/index.html')
+	mainWindow.loadURL('http://localhost:3000')
+	//mainWindow.loadFile('views/index.html')
 
 	mainWindow.webContents.openDevTools()
 	mainWindow.removeMenu()

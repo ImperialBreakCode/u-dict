@@ -57,7 +57,8 @@ main {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  min-height: 100vh;
+  padding-top: 50px;
+  min-height: calc(100vh - 50px);
 }
 
 .purple-button {
@@ -135,7 +136,7 @@ main {
 }
 
 .navigation .nav-control {
-  height: 75vh;
+  max-height: calc(75vh - 50px);
 }
 
 .navigation .button-box-nav {
