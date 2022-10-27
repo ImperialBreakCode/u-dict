@@ -22,8 +22,8 @@ const createWindow = () => {
 		}
 	})
 
-	mainWindow.loadURL('http://localhost:3000')
-	//mainWindow.loadFile('views/index.html')
+	//mainWindow.loadURL('http://localhost:3000')
+	mainWindow.loadFile('views/index.html')
 
 	mainWindow.webContents.openDevTools()
 	mainWindow.removeMenu()
