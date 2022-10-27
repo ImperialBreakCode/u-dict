@@ -111,21 +111,31 @@ main {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  height: 15vh;
+  height: 25vh;
 }
 
 .navigation .app-title h3 {
   font-size: 40px;
+  margin-bottom: 0;
+}
+
+.navigation .app-title img {
+  width: 24%;
+  margin: 10px 5px;
 }
 
 .navigation .nav-control {
-  height: 85vh;
+  height: 75vh;
 }
 
 .navigation .button-box-nav {

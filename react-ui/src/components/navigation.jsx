@@ -3,13 +3,15 @@ import NavButton from './navButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse, faLanguage, faA, faCheck, faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 import { ViewNames } from '../constants';
+import icon from '../images/icon.png'
 
 const activeNavClass = 'active-nav';
 
 function AppTitle() {
     return(
         <div className='app-title'>
-            <h3>UDict</h3>
+            <img src={icon}></img>
+            <h3>Dict</h3>
         </div>
     );
 }
