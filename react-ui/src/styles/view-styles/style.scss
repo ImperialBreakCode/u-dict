@@ -170,6 +170,32 @@ $main-color: #4f09ac;
         padding: 0 20px;
     }
 
+    .inner-cont-2{
+        padding: 0 20px;
+        margin-top: 20px;
+        font-size: 25px;
+    }
+
+    .view-btn{
+        background: linear-gradient(45deg, #8e009b, #3a007c);
+        padding: 20px;
+        border-radius: 20px;
+        border: 2px solid transparent;
+        transition: 0.2s;
+        height: 85px;
+
+        p{
+            cursor: default;
+        }
+
+        &:hover{
+            border-color: white;
+            height: 120px;
+            padding-left: 50px;
+            font-size: 50px;
+        }
+    }
+
     .title-wrapper{
         padding: 3%;
         margin: 20px;
@@ -201,6 +227,10 @@ $main-color: #4f09ac;
 
         .dash-card{
             margin: 5px 0;
+        }
+
+        .inner-cont-2{
+            display: none;
         }
     }
 }

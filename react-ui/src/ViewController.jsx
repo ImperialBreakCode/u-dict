@@ -11,7 +11,7 @@ import GroupView from './views/groups';
 
 function ViewController(props) {
 
-	let initialView = <HomeView/>;
+	let initialView = <HomeView changeGlobalView={props.changeGlobalView}/>;
 	let viewName = ViewNames.home;
 
 	if (props.subView) {
@@ -41,7 +41,7 @@ function ViewController(props) {
 
 		switch (toView) {
 			case ViewNames.home:
-				setView(<HomeView />);
+				setView(<HomeView changeGlobalView={props.changeGlobalView}/>);
 				break;
 
 			case ViewNames.lang:

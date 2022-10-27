@@ -1,6 +1,7 @@
 import React from 'react';
 import "../styles/view-styles/style.css";
 import Row from '../components/row';
+import { GlobalViewNames } from '../constants';
 
 
 class HomeView extends React.Component{
@@ -42,6 +43,20 @@ class HomeView extends React.Component{
                             </div>
                             <div className="col-xl-4">
                                 <Card title='phrases' data={this.state.data.phraseCount} />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="container inner-cont-2">
+                        <div className="row">
+                            <h2>Shortcuts</h2>
+                        </div>
+                        <div className="row">
+                            <div onClick={() => this.props.changeGlobalView(GlobalViewNames.words)} className="col-6">
+                                <div className='view-btn'><p>View Words</p></div>
+                            </div>
+                            <div onClick={() => this.props.changeGlobalView(GlobalViewNames.phrases)} className="col-6">
+                                <div className='view-btn'><p>View Phrases</p></div>
                             </div>
                         </div>
                     </div>
