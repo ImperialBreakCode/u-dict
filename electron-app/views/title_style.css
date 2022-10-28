@@ -1,19 +1,10 @@
-.dialog {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #000;
-    background: rgba(0, 0, 0, 0.5);
-    -webkit-app-region: no-drag;
-}
-
 .title-bar{
     height: 50px;
     width: 100%;
     background-color: #130f1d;
     position: fixed;
+    top: 0;
+    left: 0;
     -webkit-app-region: drag;
 }
 

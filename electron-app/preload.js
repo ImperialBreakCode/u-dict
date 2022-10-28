@@ -104,7 +104,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
 		quit: () => {ipcRenderer.send('app-quit')},
 		fullscreen: () => {ipcRenderer.send('window-full-screen')},
 		exitfullscreen: () => {ipcRenderer.send('window-exit-full-screen')},
-		minimize: () => {ipcRenderer.send('window-minimize')}
+		minimize: () => {ipcRenderer.send('window-minimize')},
+		onMaximize: (callback) => ipcRenderer.on('window-maximized', callback),
+		onUnmaximize: (callback) => ipcRenderer.on('window-unmaximized', callback)
 	},
 	getStats: getStats,
 	getLangData: getLangTableData,

@@ -28,6 +28,15 @@ const createWindow = () => {
 
 	//mainWindow.webContents.openDevTools()
 	mainWindow.removeMenu()
+
+	// event listeners
+	mainWindow.on('maximize', ()=> {
+		mainWindow.webContents.send('window-maximized');
+	})
+
+	mainWindow.on('unmaximize', ()=> {
+		mainWindow.webContents.send('window-unmaximized');
+	})
 }
 
 
@@ -45,8 +54,8 @@ app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') app.quit()
 })
 
-// renderer communication
 
+// renderer communication
 ipcMain.on('app-quit', () => {
 	app.quit();
 })
