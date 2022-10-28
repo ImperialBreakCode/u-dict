@@ -1,7 +1,7 @@
 {
-  "name": "language-app",
-  "productName": "Language App",
-  "version": "1.0.0",
+  "name": "udict",
+  "productName": "UDict",
+  "version": "0.1.0",
   "description": "",
   "main": "main.js",
   "scripts": {
@@ -12,7 +12,8 @@
   "author": "Ch Alex",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^17.2.0",
+    "@electron/asar": "^3.2.1",
+    "electron": "^17.4.7",
     "electron-packager": "^15.4.0"
   },
   "dependencies": {

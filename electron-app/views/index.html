@@ -65,24 +65,26 @@
         });
 
         full.addEventListener('click', () => {
-
-            full.classList.add('d-none');
-            exitFull.classList.remove('d-none');
-
             window.electronAPI.app.fullscreen();
         });
 
         exitFull.addEventListener('click', () => {
-
-            full.classList.remove('d-none');
-            exitFull.classList.add('d-none');
-            
             window.electronAPI.app.exitfullscreen();
         });
 
         minimize.addEventListener('click', () => {            
             window.electronAPI.app.minimize();
         });
+
+        window.electronAPI.app.onMaximize(() => {
+            full.classList.add('d-none');
+            exitFull.classList.remove('d-none');
+        })
+
+        window.electronAPI.app.onUnmaximize(() => {
+            full.classList.remove('d-none');
+            exitFull.classList.add('d-none');
+        })
     </script>
 </body>
 

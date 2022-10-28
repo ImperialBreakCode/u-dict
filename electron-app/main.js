@@ -6,7 +6,7 @@ const { appDatabase } = require('./database/js/database.js');
 const { Language, Word, Phrase, Group, ConnectedWords, ConnectedPhrases } = require('./database/js/models');
 const { tableNames } = require('./database/js/tableNames.js');
 
-const db = new appDatabase(`${__dirname}/database/storage`);
+const db = new appDatabase(`../data/storage`);
 
 // create main window
 const createWindow = () => {
@@ -28,6 +28,15 @@ const createWindow = () => {
 
 	//mainWindow.webContents.openDevTools()
 	mainWindow.removeMenu()
+
+	// event listeners
+	mainWindow.on('maximize', ()=> {
+		mainWindow.webContents.send('window-maximized');
+	})
+
+	mainWindow.on('unmaximize', ()=> {
+		mainWindow.webContents.send('window-unmaximized');
+	})
 }
 
 
@@ -45,8 +54,8 @@ app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') app.quit()
 })
 
-// renderer communication
 
+// renderer communication
 ipcMain.on('app-quit', () => {
 	app.quit();
 })
