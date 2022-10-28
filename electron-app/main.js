@@ -6,7 +6,7 @@ const { appDatabase } = require('./database/js/database.js');
 const { Language, Word, Phrase, Group, ConnectedWords, ConnectedPhrases } = require('./database/js/models');
 const { tableNames } = require('./database/js/tableNames.js');
 
-const db = new appDatabase(`${__dirname}/database/storage`);
+const db = new appDatabase(`../data/storage`);
 
 // create main window
 const createWindow = () => {
