@@ -6,27 +6,27 @@ const { appDatabase } = require('./database/js/database.js');
 const { Language, Word, Phrase, Group, ConnectedWords, ConnectedPhrases } = require('./database/js/models');
 const { tableNames } = require('./database/js/tableNames.js');
 
-const db = new appDatabase(`storage`);
+const db = new appDatabase(`../data/storage`);
 
 // create main window
 const createWindow = () => {
 
 	const mainWindow = new BrowserWindow({
-		width: 1250,
+		width: 1285,
 		minWidth: 1000,
 		height: 700,
 		minHeight: 700,
-		//titleBarStyle: 'hidden',
+		titleBarStyle: 'hidden',
 		webPreferences: {
 			preload: path.join(__dirname, 'preload.js'),
 			//nodeIntegration: true
 		}
 	})
 
-	mainWindow.loadURL('http://localhost:3000')
-	//mainWindow.loadFile('views/index.html')
+	//mainWindow.loadURL('http://localhost:3000')
+	mainWindow.loadFile('views/index.html')
 
-	mainWindow.webContents.openDevTools()
+	//mainWindow.webContents.openDevTools()
 	mainWindow.removeMenu()
 
 	// event listeners
