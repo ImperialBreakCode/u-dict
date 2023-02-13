@@ -1,26 +1,24 @@
 @font-face {
-  font-family: 'Quicksand';
+  font-family: "Quicksand";
   src: url("./fonts/Quicksand-Medium.ttf") format("truetype");
   font-weight: 500;
 }
-
 @font-face {
-  font-family: 'Quicksand';
+  font-family: "Quicksand";
   src: url("./fonts/Quicksand-Regular.ttf") format("truetype");
   font-weight: 400;
 }
-
 * {
   margin: 0;
   padding: 0;
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
   font-weight: 400;
   color: white;
 }
 
 /* width */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 /* Track */
@@ -30,7 +28,7 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #d3a0ff;
+  background: #8b3fd6;
   border-radius: 20px;
 }
 
@@ -47,18 +45,18 @@ body {
 
 main {
   width: 100%;
+  height: calc(100vh - 50px);
+}
+
+#top-pannel {
+  height: 50px;
 }
 
 #root {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  padding-top: 50px;
+  flex-direction: row;
   min-height: calc(100vh - 50px);
+  overflow-y: scroll;
 }
 
 .purple-button {
@@ -68,10 +66,8 @@ main {
   margin: 5px 10px;
   border-radius: 10px;
   font-weight: 500;
-  -webkit-transition: 0.2s;
   transition: 0.2s;
 }
-
 .purple-button:hover {
   background: #7d1aff;
 }
@@ -80,7 +76,6 @@ main {
   background-color: #222441;
   border: 1px solid #4e4e99;
 }
-
 .sec-button:hover {
   background: #3b3963;
 }
@@ -89,17 +84,13 @@ main {
   background-color: #4a0c0c;
   border: 1px solid #ad0404;
 }
-
 .danger-btn:hover {
   background-color: #851313;
 }
 
 .cont-view {
   height: 100%;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
 }
 
 .navigation {
@@ -107,47 +98,28 @@ main {
   background: #130f1d;
   width: 23em;
 }
-
 .navigation .app-title {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   height: 25vh;
 }
-
 .navigation .app-title h3 {
   font-size: 40px;
   margin-bottom: 0;
 }
-
 .navigation .app-title img {
   width: 24%;
   margin: 10px 5px;
 }
-
 .navigation .nav-control {
   max-height: calc(75vh - 50px);
 }
-
 .navigation .button-box-nav {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  justify-content: center;
 }
-
 .navigation .button-box-nav .nav-btn {
   position: relative;
   font-size: 18px;
@@ -158,41 +130,31 @@ main {
   width: 90%;
   padding: 10px 0;
   margin: 10px 0;
-  -webkit-transition: 0.2s;
   transition: 0.2s;
   border-radius: 10px;
   text-align: start;
 }
-
 .navigation .button-box-nav .nav-btn span {
   padding: 30px;
   position: relative;
 }
-
 .navigation .button-box-nav .nav-btn span svg {
   position: absolute;
   top: 50%;
   left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   padding: 0 10px;
 }
-
 .navigation .button-box-nav .nav-btn:hover {
   background-color: #2b2240;
   border: 1px solid #53407e;
 }
-
 .navigation .button-box-nav .active-nav {
-  background: -webkit-gradient(linear, left top, right top, from(#ab00ab), to(#7700ff));
   background: linear-gradient(90deg, #ab00ab, #7700ff);
-  -webkit-box-shadow: 0 3px 20px 1px #b400ffad;
-          box-shadow: 0 3px 20px 1px #b400ffad;
-  -webkit-transition: 0.2s;
+  box-shadow: 0 3px 20px 1px rgba(180, 0, 255, 0.6784313725);
   transition: 0.2s;
-  border: 1px solid #c73ec7cc;
+  border: 1px solid rgba(199, 62, 199, 0.8);
 }
-
 .navigation .button-box-nav .active-nav:hover {
   border: 1px solid #ab00ab;
-}
+}/*# sourceMappingURL=style.css.map */

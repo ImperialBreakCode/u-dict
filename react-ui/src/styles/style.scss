@@ -24,7 +24,7 @@ $font-white: white;
 
 /* width */
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
   
   /* Track */
@@ -34,7 +34,7 @@ $font-white: white;
    
   /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #d3a0ff; 
+    background: #8b3fd6; 
     border-radius: 20px;
 }
   
@@ -51,13 +51,18 @@ body{
 
 main{
     width: 100%;
+    height: calc(100vh - 50px);
+}
+
+#top-pannel{
+    height: 50px;
 }
 
 #root{
     display: flex;
     flex-direction: row;
-    padding-top: 50px;
     min-height: calc(100vh - 50px);
+    overflow-y: scroll;
 }
 
 .purple-button{
